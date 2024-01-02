@@ -953,7 +953,7 @@ function sunburst(recipient, data, width, height, tooltip = true) {
     })
     .style("font-size", "11px")
     .style("fill", function(d) {
-      if (d.color !== "#82b92e") {
+      if (d.color !== "#0B579B") {
         return "white";
       }
     })
@@ -1746,7 +1746,7 @@ function print_phases_donut(recipient, phases, width, height) {
       .insert("path")
       .style("fill", function(d) {
         if (d.data.value == 0) {
-          return "#82b92e";
+          return "#0B579B";
         } else {
           return "#e63c52";
         }

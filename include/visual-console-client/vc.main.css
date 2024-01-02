@@ -45,7 +45,7 @@
 }
 
 .visual-console-item.is-editing.is-selected {
-  border: 2px dashed #82b92e;
+  border: 2px dashed #0B579B;
   cursor: move;
   z-index: 10;
 }
@@ -671,7 +671,7 @@ div.module-graph .gauge_d3_class {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: #82b92e;
+  background-color: #0B579B;
   margin-left: auto;
   margin-right: auto;
   border-radius: 1000px 1000px 0px 0px;
@@ -720,7 +720,7 @@ div.module-graph .gauge_d3_class {
   background: #4a83f3;
 }
 .green_background {
-  background: #82b92e;
+  background: #0B579B;
 }
 
 /* Styles for the solid icons */

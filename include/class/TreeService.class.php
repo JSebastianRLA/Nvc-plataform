@@ -424,7 +424,7 @@ class TreeService extends Tree
 
                     switch ($item->agent()->lastStatus()) {
                         case AGENT_STATUS_NORMAL:
-                            $tmp['statusImageHTML'] = html_print_div(['class' => 'tree-service-status', 'style' => 'background-color: #82b92e', 'title' => __('Normal status') ], true);
+                            $tmp['statusImageHTML'] = html_print_div(['class' => 'tree-service-status', 'style' => 'background-color: #0B579B', 'title' => __('Normal status') ], true);
                         break;
 
                         case AGENT_STATUS_CRITICAL:
@@ -634,7 +634,7 @@ class TreeService extends Tree
                     $tmp['rootID'] = $this->rootID;
                     switch ($item->service()->lastStatus()) {
                         case SERVICE_STATUS_NORMAL:
-                            $tmp['statusImageHTML'] = html_print_div(['class' => 'tree-service-status', 'style' => 'background-color: #82b92e', 'title' => __('Normal status') ], true);
+                            $tmp['statusImageHTML'] = html_print_div(['class' => 'tree-service-status', 'style' => 'background-color: #0B579B', 'title' => __('Normal status') ], true);
                         break;
 
                         case SERVICE_STATUS_CRITICAL:

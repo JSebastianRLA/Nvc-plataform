@@ -137,7 +137,7 @@ function draw_minimap() {
   }
 
   context_minimap.beginPath();
-  context_minimap.strokeStyle = "#82B92E";
+  context_minimap.strokeStyle = "#0B579B";
   context_minimap.strokeRect(
     (networkmap_dimensions[0] + node_radius - holding_area_dimensions[0]) *
       minimap_relation,

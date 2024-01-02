@@ -1563,7 +1563,7 @@ if ($step == 2) {
             minute: "2-digit",
             hour12: false
         },
-        eventColor: "#82b92e",
+        eventColor: "#0B579B",
         editable: is_management_allowed === 0 ? false : true,
         dayMaxEvents: 3,
         dayPopoverFormat: { weekday: "long" },

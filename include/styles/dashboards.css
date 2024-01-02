@@ -387,7 +387,7 @@ table.group_modules_status_box tr td > span {
 
 table.group_modules_status_box tr td div,
 table.widget_groups_status tr td div {
-  background-color: #82b92e;
+  background-color: #0B579B;
   width: 90%;
   padding: 3px;
   text-align: center;
@@ -739,7 +739,7 @@ form.modal-dashboard
   .container-info-module-meter
   .container-info-module-meter-graphs
   div.meter-graph-normal {
-  background-color: #82b92e;
+  background-color: #0B579B;
 }
 
 .container-grouped-meter
@@ -776,7 +776,7 @@ form.modal-dashboard
 .container-grouped-meter
   .container-info-module-meter
   .container-info-module-meter-data.meter-data-normal {
-  color: #82b92e;
+  color: #0B579B;
 }
 
 .dashboard-input-threshold {

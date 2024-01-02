@@ -75,11 +75,11 @@
         -webkit-border-radius: 3px;
         border-radius: 3px;
         background-color: white;
-        border: 1px solid #82b92e;
+        border: 1px solid #0B579B;
     }
 
     .modalokbuttontex {
-        color: #82b92e;
+        color: #0B579B;
         font-size: 13pt;
     }
 
@@ -90,11 +90,11 @@
         -webkit-border-radius: 3px;
         border-radius: 3px;
         background-color: white;
-        border: 1px solid #82b92e;
+        border: 1px solid #0B579B;
     }
 
     .modalgobuttontex {
-        color: #82b92e;
+        color: #0B579B;
         font-size: 10pt;
     }
 

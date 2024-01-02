@@ -105,7 +105,7 @@ a.update_manager_button:after {
 }
 
 #box_online #pkg_version {
-  color: #82b92e;
+  color: #0B579B;
   font-size: 6em;
   font-weight: bold;
   margin: 50px 0 !important;
@@ -144,7 +144,7 @@ a.update_manager_button:after {
 
 .update_text a {
   font-size: 11pt;
-  color: #82b92e;
+  color: #0B579B;
 }
 
 .update {
@@ -184,7 +184,7 @@ a.update_manager_button:after {
 }
 
 #drop_file a {
-  background-color: #82b92e;
+  background-color: #0B579B;
   border-radius: 2px;
   color: #ffffff;
   cursor: pointer;
@@ -416,7 +416,7 @@ div#box_online * {
 }
 
 div#upload span.browse {
-  background-color: #82b92e;
+  background-color: #0B579B;
   border-radius: 2px;
   color: #ffffff;
   cursor: pointer;
@@ -471,7 +471,7 @@ span.warning {
 
 .license_text a {
   font-size: 11pt;
-  color: #82b92e;
+  color: #0B579B;
 }
 
 input.error {
@@ -483,7 +483,7 @@ textarea#signature {
 }
 a.update_manager_button_open:hover {
   color: #fff;
-  background-color: #82b92e;
+  background-color: #0B579B;
 }
 
 #um-update-details-header {
@@ -565,8 +565,8 @@ a.update_manager_button_open {
   padding: 5px 10px;
   font-size: 16px;
   text-decoration: none;
-  border: 1px solid #82b92e;
-  color: #82b92e;
+  border: 1px solid #0B579B;
+  color: #0B579B;
   border-radius: 2px;
 }
 
