@@ -28,7 +28,7 @@
  */
 
 :root {
-  --primary-color: #14524f;
+  --primary-color: #38C5FF;
   --secondary-color: #ffffff;
   --input-border: #c0ccdc;
 }
@@ -1288,7 +1288,7 @@ p.center {
   top: 50%;
   background-color: #fff;
   border: 2px solid #0B579B;
-  box-shadow: 2px 2px 2px #9dbba1;
+  box-shadow: 2px 2px 2px #5c8798;
   padding: 20px;
   z-index: 100;
 }
@@ -1368,7 +1368,7 @@ input.sub[disabled] {
   font-weight: bold;
   padding-top: 5px;
   margin-left: 5px;
-  background: none repeat scroll 0% 0% #0B579B;
+  background: none repeat scroll 0% 0% #38C5FF;
   border-top-left-radius: 2px;
   border-top-right-radius: 2px;
   border-bottom-left-radius: 2px;
@@ -1532,7 +1532,7 @@ input.datos {
 /* global syles */
 .bg {
   /* op menu */
-  background: #0B579B;
+  background: #38C5FF;
   height: 20px;
 }
 
@@ -2900,7 +2900,7 @@ tr.group_view_crit,
 
 tr.group_view_ok,
 .group_view_ok {
-  background-color: #0B579B;
+  background-color: #38C5FF;
   color: #fff;
 }
 
@@ -2942,7 +2942,7 @@ tr.group_view_unk,
 .datos_green a,
 .datos_greenf9 a,
 .datos_green * {
-  background-color: #0B579B;
+  background-color: #38C5FF;
   color: #fff;
 }
 
@@ -3778,7 +3778,7 @@ table#policy_modules td * {
 
 #clippy_head_title {
   font-weight: bold;
-  background: #0B579B;
+  background: #38C5FF;
   color: #ffffff;
   margin-top: -15px;
   margin-left: -15px;
@@ -3993,7 +3993,7 @@ div.div_groups_status {
 
 .title_um {
   font-size: 20px;
-  color: #0B579B;
+  color: #38C5FF;
   text-align: center;
 }
 
@@ -4134,7 +4134,7 @@ div.simple_value > a > span.text p {
   width: 100%;
   height: 37px;
   left: 0px;
-  background-color: #0B579B;
+  background-color: #38C5FF;
 }
 
 .modalheadertext {
@@ -4150,7 +4150,7 @@ div.simple_value > a > span.text p {
   height: 26px;
   left: 0px;
   padding-top: 10px;
-  background-color: #0B579B;
+  background-color: #38C5FF;
   color: white;
   position: relative;
   font-size: 11pt;
@@ -4214,7 +4214,7 @@ div.simple_value > a > span.text p {
   width: 90px;
   height: 30px;
   background-color: white;
-  border: 1px solid #0B579B;
+  border: 1px solid #38C5FF;
 }
 
 .modalokbuttontext {
@@ -4225,7 +4225,7 @@ div.simple_value > a > span.text p {
   -webkit-transition-duration: 1s;
   -o-transition-property: background-color, color;
   -o-transition-duration: 1s;
-  color: #0B579B;
+  color: #38C5FF;
   font-size: 10pt;
   position: relative;
   top: 6px;
@@ -4239,7 +4239,7 @@ div.simple_value > a > span.text p {
   -webkit-transition-duration: 1s;
   -o-transition-property: background-color, color;
   -o-transition-duration: 1s;
-  background-color: #0B579B;
+  background-color: #38C5FF;
 }
 
 .modalokbutton:hover .modalokbuttontext {
@@ -4330,7 +4330,7 @@ div.simple_value > a > span.text p {
   width: 240px;
   height: 30px;
   background-color: white;
-  border: 1px solid #0B579B;
+  border: 1px solid #38C5FF;
 }
 
 .modalgobuttontext {
@@ -4341,7 +4341,7 @@ div.simple_value > a > span.text p {
   -webkit-transition-duration: 1s;
   -o-transition-property: background-color, color;
   -o-transition-duration: 1s;
-  color: #0B579B;
+  color: #38C5FF;
   font-size: 10pt;
   position: relative;
   top: 6px;
@@ -4355,7 +4355,7 @@ div.simple_value > a > span.text p {
   -webkit-transition-duration: 1s;
   -o-transition-property: background-color, color;
   -o-transition-duration: 1s;
-  background-color: #0B579B;
+  background-color: #38C5FF;
 }
 
 .modalgobutton:hover .modalgobuttontext {
@@ -5670,9 +5670,9 @@ table.info_table.agent_info_table table.info_table {
 }
 
 .agent_info_table_opened {
-  background-color: #0B579B;
+  background-color: #38C5FF;
   color: #fff;
-  border-color: #0B579B;
+  border-color: #38C5FF;
 }
 
 .agent_info_table_closed {
@@ -5752,9 +5752,9 @@ table.info_table.policy_sub_table {
 
 .pagination .page_number_active {
   font-weight: bold;
-  background-color: #0B579B;
+  background-color: #38C5FF;
   color: #fff;
-  border-color: #0B579B;
+  border-color: #38C5FF;
 }
 
 .pagination .page_number_active a {
@@ -6036,7 +6036,7 @@ div#bullets_modules div {
 }
 
 .green_background {
-  background: #0B579B;
+  background: #38C5FF;
 }
 
 .orange_color {
@@ -8183,8 +8183,8 @@ div.graph div.legend table {
   background-color: #f3b200;
 }
 
-.bg_0B579B {
-  background-color: #0B579B !important;
+.bg_38C5FF {
+  background-color: #38C5FF !important;
 }
 
 .bg_B2B2B2 {
@@ -9482,7 +9482,7 @@ div#err_msg_centralised {
   z-index: 10001;
   top: 0px;
   right: 0px;
-  border: 2px solid #0B579B;
+  border: 2px solid #38C5FF;
   border-radius: 5px;
   padding: 5px;
   width: 70px;
@@ -10286,8 +10286,8 @@ button.submitButton:not(.secondary):not(.link):not(.onlyIcon) {
     90deg,
     var(--primary-color) 0%,
     var(--primary-color) 49%,
-    #1d7873 50%,
-    #1d7873 100%
+    #0B579B 50%,
+    #0B579B 100%
   );
   background-size: 202% 1px;
   transition: ease-in 0.3s;
@@ -11898,7 +11898,7 @@ span.help_icon_15px > img {
   width: 100px;
   height: 100px;
   border-radius: 100%;
-  background: linear-gradient(#0B579B, #c1ccdc);
+  background: linear-gradient(#38C5FF, #c1ccdc);
   animation: animate 1.2s linear infinite;
   margin: auto;
   margin-bottom: 40px;
@@ -11908,7 +11908,7 @@ span.help_icon_15px > img {
   width: 100%;
   height: 100%;
   border-radius: 100%;
-  background: linear-gradient(#0B579B, #c1ccdc);
+  background: linear-gradient(#38C5FF, #c1ccdc);
 }
 .spinner-fixed span:nth-child(1) {
   filter: blur(4px);
@@ -12078,11 +12078,11 @@ div.parent_graph > p.legend_background > table > tbody > tr {
   margin-left: 10px;
 }
 .link {
-  color: #0B579B;
+  color: #38C5FF;
   text-decoration: none;
 }
 .signature a {
-  color: #0B579B;
+  color: #38C5FF;
   text-decoration: none;
 }
 

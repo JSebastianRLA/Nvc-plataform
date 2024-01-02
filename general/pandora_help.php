@@ -74,7 +74,7 @@ if (! $id || ! file_exists($help_file)) {
     echo "<div class='center bg-white'>";
 
     echo '</div>';
-    echo '<div class="msg msg_pandora_help">'.__("%s help system has been called with a help reference that currently don't exist. There is no help content to show.", get_product_name()).'</div></div></div>';
+    echo '<div class="msg msg_pandora_help">'.__(" help system has been called with a help reference that currently don't exist. There is no help content to show.", get_product_name()).'</div></div></div>';
     echo '<br /><br />';
     echo '<div id="footer_help">';
     // include 'footer.php';
