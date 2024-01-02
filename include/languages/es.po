@@ -13255,8 +13255,8 @@ msgstr "Restablecer la contraseña"
 #: ../../include/functions_config.php:2698
 #: ../../include/functions_config.php:2750 ../../general/login_page.php:527
 #: ../../general/login_page.php:530
-msgid "ONE TOOL TO RULE THEM ALL"
-msgstr "UNA HERRAMIENTA PARA GOBERNARLOS A TODOS"
+msgid "VISIBILITY AND MONITORING PLATFORM"
+msgstr "PLATAFORMA DE VISIBILIDAD Y MONITOREO"
 
 #: ../../enterprise/meta/include/reset_pass.php:147
 #: ../../enterprise/meta/general/login_page.php:335
