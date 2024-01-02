@@ -48,7 +48,7 @@ if ($current_package === null) {
 }
 
 echo __(
-    '%s %s - %s - MR %s',
+    '%s  -  - MR %s',
     get_product_name(),
     $pandora_version.' '.$config['lts_name'],
     $build_package_version,
