@@ -2900,7 +2900,7 @@ tr.group_view_crit,
 
 tr.group_view_ok,
 .group_view_ok {
-  background-color: #38C5FF;
+  background-color: #022243;
   color: #fff;
 }
 
@@ -2942,7 +2942,7 @@ tr.group_view_unk,
 .datos_green a,
 .datos_greenf9 a,
 .datos_green * {
-  background-color: #38C5FF;
+  background-color: #022243;
   color: #fff;
 }
 
@@ -4214,7 +4214,7 @@ div.simple_value > a > span.text p {
   width: 90px;
   height: 30px;
   background-color: white;
-  border: 1px solid #38C5FF;
+  border: 1px solid #022243;
 }
 
 .modalokbuttontext {
@@ -4330,7 +4330,7 @@ div.simple_value > a > span.text p {
   width: 240px;
   height: 30px;
   background-color: white;
-  border: 1px solid #38C5FF;
+  border: 1px solid #022243;
 }
 
 .modalgobuttontext {
@@ -4341,7 +4341,7 @@ div.simple_value > a > span.text p {
   -webkit-transition-duration: 1s;
   -o-transition-property: background-color, color;
   -o-transition-duration: 1s;
-  color: #38C5FF;
+  color: #022243;
   font-size: 10pt;
   position: relative;
   top: 6px;
@@ -5752,9 +5752,9 @@ table.info_table.policy_sub_table {
 
 .pagination .page_number_active {
   font-weight: bold;
-  background-color: #38C5FF;
+  background-color: #022243;
   color: #fff;
-  border-color: #38C5FF;
+  border-color: #022243;
 }
 
 .pagination .page_number_active a {
@@ -9482,7 +9482,7 @@ div#err_msg_centralised {
   z-index: 10001;
   top: 0px;
   right: 0px;
-  border: 2px solid #38C5FF;
+  border: 2px solid #022243;
   border-radius: 5px;
   padding: 5px;
   width: 70px;
@@ -11908,7 +11908,7 @@ span.help_icon_15px > img {
   width: 100%;
   height: 100%;
   border-radius: 100%;
-  background: linear-gradient(#38C5FF, #c1ccdc);
+  background: linear-gradient(#022243, #c1ccdc);
 }
 .spinner-fixed span:nth-child(1) {
   filter: blur(4px);
@@ -12078,11 +12078,11 @@ div.parent_graph > p.legend_background > table > tbody > tr {
   margin-left: 10px;
 }
 .link {
-  color: #38C5FF;
+  color: #0B579B;
   text-decoration: none;
 }
 .signature a {
-  color: #38C5FF;
+  color: #0B579B;
   text-decoration: none;
 }
 
