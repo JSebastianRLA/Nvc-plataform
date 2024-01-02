@@ -57533,7 +57533,7 @@ msgstr ""
 #~ msgstr "Crear tiempo de inactividad planificado"
 
 #~ msgid "Welcome to Pandora FMS"
-#~ msgstr "Bienvenido a Pandora FMS"
+#~ msgstr "Bienvenido a Nvc monitoring"
 
 #~ msgid "Message overview"
 #~ msgstr "Vista general de mensajes"

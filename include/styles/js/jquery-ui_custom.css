@@ -25,7 +25,7 @@
 /*center ui dialog center*/
 .ui-button-text-only .ui-button-text {
   font-size: 9pt;
-  color: #82b92e;
+  color: #0B579B;
 }
 .ui-datepicker .ui-datepicker-title *,
 .ui-datepicker th * {
@@ -78,7 +78,7 @@
   cursor: pointer;
   background: white;
   background-color: white;
-  border: 1px solid #82b92e;
+  border: 1px solid #0B579B;
   height: 30px;
   width: 90px;
 }
@@ -217,7 +217,7 @@ a.ui-button:active,
   bottom: -10%;
   height: 1px;
   width: 50%;
-  border-bottom: 4px solid #82b92e;
+  border-bottom: 4px solid #0B579B;
 }
 
 .ui-priority-secondary:hover {
@@ -225,7 +225,7 @@ a.ui-button:active,
   position: absolute;
   bottom: -5px;
   width: 100%;
-  border-bottom: 5px solid #82b92e;
+  border-bottom: 5px solid #0B579B;
 }
 
 .ui-priority-primary:hover {
@@ -234,7 +234,7 @@ a.ui-button:active,
   right: 5px;
   bottom: -5px;
   width: 100%;
-  border-bottom: 5px solid #82b92e;
+  border-bottom: 5px solid #0B579B;
 }
 
 .ui-state-active,
@@ -283,9 +283,9 @@ input[type="submit"].ui-button-dialog {
   cursor: pointer;
   background: white;
   background-color: white;
-  color: #82b92e;
+  color: #0B579B;
   text-align: center;
-  border: 1px solid #82b92e;
+  border: 1px solid #0B579B;
   height: 30px;
   width: 90px;
 }

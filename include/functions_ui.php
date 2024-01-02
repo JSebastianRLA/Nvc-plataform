@@ -3257,7 +3257,7 @@ function ui_progress(
     $progress,
     $width='100%',
     $height='2.5',
-    $color='#82b92e',
+    $color='#0B579B',
     $return=true,
     $text='',
     $ajax=false,
@@ -7897,7 +7897,7 @@ function ui_print_status_div($status)
 {
     switch ((int) $status) {
         case 0:
-            $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #82b92e;" title="OK" data-title="OK" data-use_title_for_force_title="1">&nbsp;</div>';
+            $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #0B579B;" title="OK" data-title="OK" data-use_title_for_force_title="1">&nbsp;</div>';
         break;
 
         case 1:

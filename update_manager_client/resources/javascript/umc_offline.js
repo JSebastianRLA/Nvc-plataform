@@ -66,7 +66,7 @@ function form_upload(url, auth, current_package) {
           "<li>" +
             '<input type="text" id="input-progress" ' +
             'value="0" data-width="55" data-height="55" ' +
-            'data-fgColor="#82b92e" data-readOnly="1" ' +
+            'data-fgColor="#0B579B" data-readOnly="1" ' +
             'data-bgColor="#3E4043" />' +
             "<p></p><span></span>" +
             "</li>"

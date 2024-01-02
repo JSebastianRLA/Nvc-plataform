@@ -73,12 +73,12 @@ div#head {
 
 .menu_full_classic #menu_tabs {
   height: 49px;
-  border-bottom: 1px solid #82b92e;
+  border-bottom: 1px solid #0B579B;
 }
 
 .menu_full_collapsed #menu_tabs {
   height: 49px;
-  border-bottom: 1px solid #82b92e;
+  border-bottom: 1px solid #0B579B;
   padding-bottom: 1px;
 }
 
@@ -212,7 +212,7 @@ input.pure_full {
 }
 
 ol.steps li.current {
-  border-left: 5px solid #82b92e;
+  border-left: 5px solid #0B579B;
   background-color: #545454;
 }
 
@@ -625,7 +625,7 @@ div#form_activate_licence #code {
 #menu_tab_frame,
 #menu_tab_frame_view,
 #menu_tab_frame_view_bc {
-  border-bottom: 1px solid #82b92e;
+  border-bottom: 1px solid #0B579B;
   background-color: #111 !important;
 }
 
@@ -647,7 +647,7 @@ div#form_activate_licence #code {
 input[type="submit"].submit-next:hover,
 button.submit-next.ui-button.ui-corner-all.ui-widget:hover,
 input[type="button"].submit-next:hover {
-  background: #82b92e;
+  background: #0B579B;
 }
 
 div.nf {
@@ -697,7 +697,7 @@ form#modal_form_feedback ul.wizard li > textarea {
 }
 
 #categories_library .card_category a:hover {
-  color: #82b92e;
+  color: #0B579B;
   text-decoration: none;
 }
 
@@ -880,7 +880,7 @@ text {
   border-radius: 4px;
 }
 .category_link:hover {
-  color: #82b92e;
+  color: #0B579B;
 }
 
 #container_servicemap_legend {
@@ -931,8 +931,8 @@ div.criticity {
 input[type="submit"].submit-next,
 button.submit-next.ui-button.ui-corner-all.ui-widget,
 input[type="button"].submit-next {
-  color: #82b92e;
-  border: 1px solid #82b92e;
+  color: #0B579B;
+  border: 1px solid #0B579B;
   background-color: #222 !important;
 
   padding: 5px;
@@ -967,7 +967,7 @@ button.submit-cancel:hover {
   background: #fb4444;
 }
 .submit-next:hover {
-  background: #82b92e;
+  background: #0B579B;
 }
 
 div#dashboard-controls {

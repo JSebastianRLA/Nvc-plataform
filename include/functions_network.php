@@ -151,7 +151,7 @@ function network_init_relation_map(&$relations, $parent, $child, $text='')
         'parent_type' => NODE_GENERIC,
         'child_type'  => NODE_GENERIC,
         'id_child'    => $child,
-        'link_color'  => '#82B92E',
+        'link_color'  => '#0B579B',
     ];
 
     if (empty($text) === false) {

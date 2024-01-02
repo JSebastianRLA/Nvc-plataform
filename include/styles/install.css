@@ -92,9 +92,9 @@ html {
   justify-content: center;
 }
 .step.active {
-  background-color: #82b92e;
+  background-color: #0B579B;
   color: #ffffff;
-  border-color: #82b92e;
+  border-color: #0B579B;
 }
 .step-separator {
   min-width: 15px;
@@ -119,16 +119,16 @@ html {
   margin-left: 10px;
 }
 .link {
-  color: #82b92e;
+  color: #0B579B;
   text-decoration: none;
 }
 .signature a {
-  color: #82b92e;
+  color: #0B579B;
   text-decoration: none;
 }
 .btn_primary {
   color: white;
-  background-color: #82b92e;
+  background-color: #0B579B;
   border: 20px;
   font-size: 15px;
   border-radius: 6px;
@@ -218,7 +218,7 @@ html {
   color: red;
 }
 .checked {
-  color: #82b92e;
+  color: #0B579B;
 }
 .row {
   display: flex;
@@ -371,11 +371,11 @@ html {
 }
 
 input:checked + .slider {
-  background-color: #82b92e;
+  background-color: #0B579B;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #82b92e;
+  box-shadow: 0 0 1px #0B579B;
 }
 
 input:checked + .slider:before {
@@ -416,12 +416,12 @@ input:checked + .slider:before {
   font-family: "Circular Std Book";
 }
 .popup .btn_primary.outline {
-  color: #82b92e;
-  border-color: #82b92e;
+  color: #0B579B;
+  border-color: #0B579B;
   margin: 0px 20px;
 }
 .popup-title {
-  background-color: #82b92e;
+  background-color: #0B579B;
   padding: 10px 20px;
   color: #fff;
   font-size: 12pt;
@@ -439,7 +439,7 @@ input:checked + .slider:before {
 }
 
 .popup-button-green {
-  background-color: #82b92e;
+  background-color: #0B579B;
   border: 1px solid transparent;
   color: #fff;
 }
@@ -450,11 +450,11 @@ input:checked + .slider:before {
 
 .popup-button-green:hover {
   background-color: transparent;
-  border: 1px solid #82b92e;
-  color: #82b92e;
+  border: 1px solid #0B579B;
+  color: #0B579B;
 }
 
 .popup-button-green:hover span {
-  color: #82b92e;
+  color: #0B579B;
 }
 /* POPUP -END */

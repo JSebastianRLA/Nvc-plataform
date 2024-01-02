@@ -44,7 +44,7 @@ div.container-button-play > button#button-start-search {
 }
 
 #tabs-sound-modal ul.tabs-sound-modal-options li.ui-tabs-active {
-  border-bottom: 2px solid #82b92e;
+  border-bottom: 2px solid #0B579B;
 }
 
 #tabs-sound-modal ul.wizard li label {
@@ -305,7 +305,7 @@ button#button-no-alerts.silence-alerts:hover {
 @keyframes progressbar-countdown {
   0% {
     width: 100%;
-    background: #82b92e;
+    background: #0B579B;
   }
   100% {
     width: 0%;

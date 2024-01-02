@@ -707,7 +707,7 @@ $(document).ready (function () {
                 minute: "2-digit",
                 hour12: false
             },
-            eventColor: "#82b92e",
+            eventColor: "#0B579B",
             editable: false,
             dayMaxEvents: 3,
             dayPopoverFormat: { weekday: "long" },

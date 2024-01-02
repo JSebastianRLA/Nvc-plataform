@@ -5986,7 +5986,7 @@ function reporting_get_events($data, $links=false)
         $table_events->style[1] = 'background-color:#f3b200';
         $table_events->data[0][1] = html_print_image('images/module_event_warning.png', true, ['title' => __('Warning events')]);
         $table_events->data[0][1] .= '&nbsp;&nbsp;&nbsp;'."<a class='font_12pt bolder color_white' style='".$style."' href='".$links['warning']."'>".format_numeric($data['warning']).'</a>';
-        $table_events->style[2] = 'background-color:#82b92e';
+        $table_events->style[2] = 'background-color:#0B579B';
         $table_events->data[0][2] = html_print_image('images/module_event_ok.png', true, ['title' => __('OK events')]);
         $table_events->data[0][2] .= '&nbsp;&nbsp;&nbsp;'."<a class='font_12pt bolder color_white' style='".$style."' href='".$links['normal']."'>".format_numeric($data['normal']).'</a>';
         $table_events->style[3] = 'background-color:#B2B2B2';

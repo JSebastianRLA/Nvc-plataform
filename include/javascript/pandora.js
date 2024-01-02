@@ -1707,7 +1707,7 @@ function paint_graph_status(
       .attr("y", legend_height_x - 30)
       .attr("width", 10)
       .attr("height", 10)
-      .style("fill", "#82B92E");
+      .style("fill", "#0B579B");
 
     //legend Warning text
     svg
@@ -1778,7 +1778,7 @@ function paint_graph_status(
       .attr("y", height_x)
       .attr("width", 20)
       .attr("height", 200)
-      .style("fill", "#82B92E");
+      .style("fill", "#0B579B");
 
     //controls the inverse warning
     if (inverse_w == 0) {

@@ -445,8 +445,8 @@ div.button_message_alert input {
   float: right;
   width: 87px;
   height: 33px;
-  color: #82b92e;
-  border: 1px solid #82b92e;
+  color: #0B579B;
+  border: 1px solid #0B579B;
   font-weight: bold;
   margin-right: 20px;
   margin-top: 20px;
@@ -490,8 +490,8 @@ div.button_message_alert_form input {
   float: right;
   width: 87px;
   height: 33px;
-  color: #82b92e;
-  border: 1px solid #82b92e;
+  color: #0B579B;
+  border: 1px solid #0B579B;
   font-weight: bold;
   font-size: 10pt;
   margin-right: 25px;
@@ -658,7 +658,7 @@ div.button_message_alert_form input {
   width: 100px;
   height: 100px;
   border-radius: 100%;
-  background: linear-gradient(#82b92e, #c1ccdc);
+  background: linear-gradient(#0B579B, #c1ccdc);
   animation: animate 1.2s linear infinite;
   margin: auto;
   margin-bottom: 40px;
@@ -668,7 +668,7 @@ div.button_message_alert_form input {
   width: 100%;
   height: 100%;
   border-radius: 100%;
-  background: linear-gradient(#82b92e, #c1ccdc);
+  background: linear-gradient(#0B579B, #c1ccdc);
 }
 .loader span:nth-child(1) {
   filter: blur(4px);
@@ -760,7 +760,7 @@ button.submitButton {
 
 button.buttonButton:not(.secondary):not(.link):not(.mini),
 button.submitButton:not(.secondary):not(.link):not(.mini) {
-  background: linear-gradient(90deg, #82b92e 0%, #0d312f 100%);
+  background: linear-gradient(90deg, #0B579B 0%, #0d312f 100%);
 }
 
 button.submitButton:hover {

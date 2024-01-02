@@ -350,7 +350,7 @@ function pandoraFlotHBars(
     "#f3b200",
     "#4a83f3",
     "#F2919D",
-    "#82b92e"
+    "#0B579B"
   ];
   values = values.split(separator2);
   font = font
@@ -2584,7 +2584,7 @@ function pandoraFlotArea(
         } else if (events_data.event_type.search("unknown") >= 0) {
           extra_color = "#4a83f3";
         } else if (events_data.event_type.search("normal") >= 0) {
-          extra_color = "#82b92e";
+          extra_color = "#0B579B";
         } else {
           extra_color = "#ffffff";
         }

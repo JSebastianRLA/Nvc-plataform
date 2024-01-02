@@ -148,7 +148,7 @@ switch ($config['dbtype']) {
 define('COL_CRITICAL', '#e63c52');
 define('COL_WARNING', '#f3b200');
 define('COL_WARNING_DARK', '#FFB900');
-define('COL_NORMAL', '#82b92e');
+define('COL_NORMAL', '#0B579B');
 define('COL_NOTINIT', '#4a83f3');
 define('COL_UNKNOWN', '#B2B2B2');
 define('COL_DOWNTIME', '#976DB1');

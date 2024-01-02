@@ -1,6 +1,6 @@
 .progress_main {
   height: 2.5em;
-  border: 2px solid #82b92e;
+  border: 2px solid #0B579B;
   position: relative;
   width: 100%;
   display: inline-block;
@@ -29,7 +29,7 @@
 
 .progress {
   width: 0%;
-  background: #82b92e;
+  background: #0B579B;
   height: 100%;
   float: left;
 }

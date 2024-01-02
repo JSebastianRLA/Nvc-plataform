@@ -130,7 +130,7 @@ div#edit-controls > div.visual-console-copy-delete button {
 div#edit-controls button.sub:hover,
 div#edit-controls input.sub:hover {
   border: 0px;
-  border-bottom: 3px solid #82b92e;
+  border-bottom: 3px solid #0B579B;
 }
 
 div#edit-controls button.sub[disabled],

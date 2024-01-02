@@ -207,7 +207,7 @@
 .element_submenu_selected {
   min-height: 0px !important;
   height: 20px;
-  border-left: 4px solid #82b92e;
+  border-left: 4px solid #0B579B;
   position: absolute;
   left: 4%;
   border-radius: 5px;
@@ -425,7 +425,7 @@ ul li {
 }
 
 .menu li.selected {
-  /* box-shadow: inset 4px 0 #82b92e; */
+  /* box-shadow: inset 4px 0 #0B579B; */
 }
 
 .operation {
@@ -612,7 +612,7 @@ ul li {
 }
 
 .tabs_selected {
-  background-color: #82b92e;
+  background-color: #0B579B;
 }
 
 .arrow_menu_down {
@@ -681,6 +681,7 @@ ul li {
 
 .logo_icon {
   margin-left: 16px;
+  scale: 2;
 }
 
 .head_tab_selected span {
@@ -692,8 +693,9 @@ ul li {
 }
 
 .logo_full {
-  width: 215px !important;
+  width: 175px !important;
   height: auto !important;
+  margin-left: 10px;
 }
 
 .fav-menu {

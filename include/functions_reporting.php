@@ -12181,7 +12181,7 @@ function get_color_progress_mobile($value)
     $color = '';
 
     if ((int) $value > 66) {
-        $color = '#82B92E';
+        $color = '#0B579BS';
     }
 
     if ((int) $value < 66) {

@@ -1604,7 +1604,7 @@ require 'include/php_to_js_values.php';
                         },
                         closeOnEscape: false,
                         open: function(event, ui) {
-                            $(".ui-dialog-titlebar-close").hide();
+                            $("Nvc monitoring-close").hide();
                         }
                     });
 
