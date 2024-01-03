@@ -416,6 +416,10 @@ div.icon_message_alert {
 
 div.icon_message_alert img {
   width: 85px;
+  scale: 1.5;
+  position: absolute;
+  left: 6%;
+  top: 18%;
 }
 
 div.content_message_alert {

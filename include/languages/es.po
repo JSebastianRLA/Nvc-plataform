@@ -46330,8 +46330,8 @@ msgid "Unknown option."
 msgstr "Opción desconocida."
 
 #: ../../include/functions_ui.php:1950 ../../include/functions_config.php:2686
-msgid "the Flexible Monitoring System"
-msgstr "Sistema Flexible de Monitorización"
+msgid "Visibility and monitoring platform"
+msgstr "Plataforma de visibilidad y monitoreo"
 
 #: ../../include/functions_ui.php:2329 ../../include/functions_ui.php:2355
 #, php-format
@@ -57532,8 +57532,8 @@ msgstr ""
 #~ msgid "Create Planned Downtime"
 #~ msgstr "Crear tiempo de inactividad planificado"
 
-#~ msgid "Welcome to Pandora FMS"
-#~ msgstr "Bienvenido a Nvc monitoring"
+#~ msgid "Welcome to Ngeek visibility center NVC"
+#~ msgstr "Bienvenido a Ngeek visibility center NVC"
 
 #~ msgid "Message overview"
 #~ msgstr "Vista general de mensajes"
