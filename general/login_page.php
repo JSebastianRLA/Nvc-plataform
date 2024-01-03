@@ -524,10 +524,10 @@ if (file_exists(ENTERPRISE_DIR.'/load_enterprise.php')) {
     if ($config['custom_title1_login']) {
         echo io_safe_output($config['custom_title1_login']);
     } else {
-        echo __('ONE TOOL TO RULE THEM ALL');
+        echo __('VISIBILITY AND MONITORING PLATFORM');
     }
 } else {
-    echo __('ONE TOOL TO RULE THEM ALL');
+    echo __('VISIBILITY AND MONITORING PLATFORM');
 }
 
 echo '</span></div>';

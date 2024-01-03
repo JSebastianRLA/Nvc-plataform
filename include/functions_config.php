@@ -28,8 +28,8 @@
  */
 
 // Config functions.
-require_once __DIR__.'/../vendor/autoload.php';
-require_once __DIR__.'/functions.php';
+require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/functions.php';
 enterprise_include_once('include/functions_config.php');
 
 use PandoraFMS\Core\DBMaintainer;
@@ -67,11 +67,11 @@ function config_create_value($token, $value)
  *
  * @return boolean True if success. False on failure.
  */
-function config_update_value($token, $value, $noticed=false, $password=false)
+function config_update_value($token, $value, $noticed = false, $password = false)
 {
     global $config;
     // Include functions_io to can call __() function.
-    include_once $config['homedir'].'/include/functions_io.php';
+    include_once $config['homedir'] . '/include/functions_io.php';
 
     if ($token === 'list_ACL_IPs_for_API') {
         $value = str_replace(
@@ -141,7 +141,7 @@ function config_update_config()
     global $config;
 
     // Include functions_io to can call __() function.
-    include_once $config['homedir'].'/include/functions_io.php';
+    include_once $config['homedir'] . '/include/functions_io.php';
 
     // If user is not even log it, don't try this.
     if (isset($config['id_user']) === false) {
@@ -217,7 +217,8 @@ function config_update_config()
                     }
 
                     $attachment_store = (string) get_parameter('attachment_store');
-                    if (file_exists($attachment_store) === false
+                    if (
+                        file_exists($attachment_store) === false
                         || is_writable($attachment_store) === false
                     ) {
                         $error_update[] = __('Attachment store');
@@ -269,12 +270,12 @@ function config_update_config()
                     } else {
                         if (empty($config['netflow_name_dir']) === false && $config['netflow_name_dir'] !== '') {
                             $path = get_parameter('general_network_path');
-                            config_update_value('netflow_path', $path.$config['netflow_name_dir']);
+                            config_update_value('netflow_path', $path . $config['netflow_name_dir']);
                         }
 
                         if (empty($config['sflow_name_dir']) === false && $config['sflow_name_dir'] !== '') {
                             $path = get_parameter('general_network_path');
-                            config_update_value('sflow_path', $path.$config['sflow_name_dir']);
+                            config_update_value('sflow_path', $path . $config['sflow_name_dir']);
                         }
                     }
 
@@ -430,7 +431,7 @@ function config_update_config()
                     if (config_update_value('inventory_changes_blacklist', implode(',', $inventory_changes_blacklist), true) === false) {
                         $error_update[] = __('Inventory changes blacklist');
                     }
-                break;
+                    break;
 
                 case 'enterprise':
                     if (isset($config['enterprise_installed']) === true && (bool) $config['enterprise_installed'] === true) {
@@ -494,7 +495,7 @@ function config_update_config()
                             $error_update[] = __('Ipam Ocuppied Manager Warning');
                         }
                     }
-                break;
+                    break;
 
                 case 'pass':
                     if (isset($config['enterprise_installed']) === true && (bool) $config['enterprise_installed'] === true) {
@@ -550,7 +551,7 @@ function config_update_config()
                             $error_update[] = __('Exclusion word list for passwords');
                         }
                     }
-                break;
+                    break;
 
                 case 'auth':
                     $validatedCSRF = validate_csrf_code();
@@ -834,7 +835,7 @@ function config_update_config()
                     } else if (isset($config['fallback_local_auth']) === true && (int) $config['fallback_local_auth'] === 1) {
                         config_update_value('ad_save_password', 1);
                     }
-                break;
+                    break;
 
                 case 'perf':
                     // PERFORMANCE SETUP.
@@ -971,13 +972,13 @@ function config_update_config()
                     // Walk the array with defaults.
                     $defaultAgentWizardOptions = json_decode(io_safe_output($config['agent_wizard_defaults']));
                     foreach ($defaultAgentWizardOptions as $key => $value) {
-                        $selectedAgentWizardOptions[$key] = get_parameter_switch('agent_wizard_defaults_'.$key);
+                        $selectedAgentWizardOptions[$key] = get_parameter_switch('agent_wizard_defaults_' . $key);
                     }
 
                     if (config_update_value('agent_wizard_defaults', json_encode($selectedAgentWizardOptions), true) === false) {
                         $error_update[] = __('SNMP Interface Agent Wizard');
                     }
-                break;
+                    break;
 
                 case 'vis':
                     // VISUAL STYLES SETUP.
@@ -1384,10 +1385,11 @@ function config_update_config()
                         $error_update[] = __('Default zoom graphs');
                     }
 
-                    if (config_update_value(
-                        'graph_image_height',
-                        (int) get_parameter('graph_image_height', 130)
-                    ) === false
+                    if (
+                        config_update_value(
+                            'graph_image_height',
+                            (int) get_parameter('graph_image_height', 130)
+                        ) === false
                     ) {
                         $error_update[] = __(
                             'Default height of the chart image'
@@ -1407,10 +1409,11 @@ function config_update_config()
                     if ($custom_value_add === true) {
                         include_once 'include/functions_post_process.php';
 
-                        if (post_process_add_custom_value(
-                            $custom_text,
-                            (string) $custom_value
-                        ) === false
+                        if (
+                            post_process_add_custom_value(
+                                $custom_text,
+                                (string) $custom_value
+                            ) === false
                         ) {
                             $error_update[] = __('Add the custom post process');
                         }
@@ -1501,23 +1504,23 @@ function config_update_config()
                     }
 
                     if (config_update_value('custom_report_front_font', get_parameter('custom_report_front_font'), true) === false) {
-                        $error_update[] = __('Custom report front').' - '.__('Font family');
+                        $error_update[] = __('Custom report front') . ' - ' . __('Font family');
                     }
 
                     if (config_update_value('custom_report_front_logo', get_parameter('custom_report_front_logo'), true) === false) {
-                        $error_update[] = __('Custom report front').' - '.__('Custom logo');
+                        $error_update[] = __('Custom report front') . ' - ' . __('Custom logo');
                     }
 
                     if (config_update_value('custom_report_front_header', get_parameter('custom_report_front_header'), true) === false) {
-                        $error_update[] = __('Custom report front').' - '.__('Header');
+                        $error_update[] = __('Custom report front') . ' - ' . __('Header');
                     }
 
                     if (config_update_value('custom_report_front_firstpage', get_parameter('custom_report_front_firstpage'), true) === false) {
-                        $error_update[] = __('Custom report front').' - '.__('First page');
+                        $error_update[] = __('Custom report front') . ' - ' . __('First page');
                     }
 
                     if (config_update_value('custom_report_front_footer', get_parameter('custom_report_front_footer'), true) === false) {
-                        $error_update[] = __('Custom report front').' - '.__('Footer');
+                        $error_update[] = __('Custom report front') . ' - ' . __('Footer');
                     }
 
                     if (config_update_value('csv_divider', (string) get_parameter('csv_divider', ';'), true) === false) {
@@ -1540,7 +1543,7 @@ function config_update_config()
                             $error_update[] = __('Thousand separator');
                         }
                     }
-                break;
+                    break;
 
                 case 'net':
                     if (config_update_value('netflow_name_dir', get_parameter('netflow_name_dir'), true) === false) {
@@ -1548,7 +1551,7 @@ function config_update_config()
                     } else {
                         if (empty($config['general_network_path']) === false && $config['general_network_path'] !== '') {
                             $name = get_parameter('netflow_name_dir');
-                            config_update_value('netflow_path', $config['general_network_path'].$name);
+                            config_update_value('netflow_path', $config['general_network_path'] . $name);
                         }
                     }
 
@@ -1579,7 +1582,7 @@ function config_update_config()
                     if (config_update_value('netflow_get_ip_hostname', (int) get_parameter('netflow_get_ip_hostname'), true) === false) {
                         $error_update[] = __('Name resolution for IP address');
                     }
-                break;
+                    break;
 
                 case 'sflow':
                     if (config_update_value('sflow_name_dir', get_parameter('sflow_name_dir'), true) === false) {
@@ -1587,7 +1590,7 @@ function config_update_config()
                     } else {
                         if (empty($config['general_network_path']) === false && $config['general_network_path'] !== '') {
                             $name = get_parameter('sflow_name_dir');
-                            config_update_value('sflow_path', $config['general_network_path'].$name);
+                            config_update_value('sflow_path', $config['general_network_path'] . $name);
                         }
                     }
 
@@ -1622,7 +1625,7 @@ function config_update_config()
                     if (config_update_value('sflow_get_ip_hostname', (int) get_parameter('sflow_get_ip_hostname'), true) === false) {
                         $error_update[] = __('Name resolution for IP address');
                     }
-                break;
+                    break;
 
                 case 'log':
                     if (config_update_value('elasticsearch_ip', get_parameter('elasticsearch_ip'), true) === false) {
@@ -1640,10 +1643,11 @@ function config_update_config()
                     if (config_update_value('Days_purge_old_information', (int) get_parameter('Days_purge_old_information'), true) === false) {
                         $error_update[] = __('Days to purge old information');
                     }
-                break;
+                    break;
 
                 case 'hist_db':
-                    if ($config['dbname'] === get_parameter('history_db_name')
+                    if (
+                        $config['dbname'] === get_parameter('history_db_name')
                         && $config['dbport'] === get_parameter('history_db_port')
                         && $config['dbhost'] === io_input_password(get_parameter('history_db_host'))
                     ) {
@@ -1689,7 +1693,8 @@ function config_update_config()
                     }
 
                     $history_db_days = get_parameter('history_db_days');
-                    if (is_numeric($history_db_days) === false
+                    if (
+                        is_numeric($history_db_days) === false
                         || $history_db_days <= 0
                         || config_update_value('history_db_days', $history_db_days) === false
                     ) {
@@ -1702,15 +1707,16 @@ function config_update_config()
 
                     $history_db_string_days = get_parameter('history_db_string_days');
                     if ((is_numeric($history_db_string_days) === false
-                        || $history_db_string_days <= 0
-                        || config_update_value('history_db_string_days', $history_db_string_days) === false)
+                            || $history_db_string_days <= 0
+                            || config_update_value('history_db_string_days', $history_db_string_days) === false)
                         && get_parameter_switch('history_db_adv', 0) === 1
                     ) {
                         $error_update[] = __('String Days');
                     }
 
                     $history_event_days = get_parameter('history_event_days');
-                    if (is_numeric($history_event_days) === false
+                    if (
+                        is_numeric($history_event_days) === false
                         || $history_event_days <= 0
                         || config_update_value('history_event_days', $history_event_days) === false
                     ) {
@@ -1718,7 +1724,8 @@ function config_update_config()
                     }
 
                     $history_trap_days = get_parameter('history_trap_days');
-                    if (is_numeric($history_trap_days) === false
+                    if (
+                        is_numeric($history_trap_days) === false
                         || $history_trap_days <= 0
                         || config_update_value('history_trap_days', $history_trap_days) === false
                     ) {
@@ -1726,7 +1733,8 @@ function config_update_config()
                     }
 
                     $trap_history_purge = get_parameter('history_traps_days_purge');
-                    if (is_numeric($trap_history_purge) === false
+                    if (
+                        is_numeric($trap_history_purge) === false
                         || $trap_history_purge <= 0
                         || config_update_value('trap_history_purge', $trap_history_purge) === false
                     ) {
@@ -1734,7 +1742,8 @@ function config_update_config()
                     }
 
                     $history_db_step = get_parameter('history_db_step');
-                    if (!is_numeric($history_db_step)
+                    if (
+                        !is_numeric($history_db_step)
                         || $history_db_step <= 0
                         || !config_update_value('history_db_step', $history_db_step)
                     ) {
@@ -1742,7 +1751,8 @@ function config_update_config()
                     }
 
                     $history_db_delay = get_parameter('history_db_delay');
-                    if (!is_numeric($history_db_delay)
+                    if (
+                        !is_numeric($history_db_delay)
                         || $history_db_delay <= 0
                         || !config_update_value('history_db_delay', $history_db_delay)
                     ) {
@@ -1761,7 +1771,8 @@ function config_update_config()
                         );
 
                         // Performs several checks and installs if needed.
-                        if ($dbm->checkDatabaseDefinition() === true
+                        if (
+                            $dbm->checkDatabaseDefinition() === true
                             && $dbm->isInstalled() === false
                         ) {
                             // Target is ready but several tasks are pending.
@@ -1773,42 +1784,47 @@ function config_update_config()
 
                         if ($dbm->check() === true) {
                             // Historical configuration tokens (stored in historical db).
-                            if ($dbm->setConfigToken(
-                                'days_purge',
-                                get_parameter('history_dbh_purge')
-                            ) !== true
+                            if (
+                                $dbm->setConfigToken(
+                                    'days_purge',
+                                    get_parameter('history_dbh_purge')
+                                ) !== true
                             ) {
                                 $error_update[] = __('Historical database purge');
                             }
 
-                            if ($dbm->setConfigToken(
-                                'history_partitions_auto',
-                                get_parameter_switch('history_partitions_auto', 0)
-                            ) !== true
+                            if (
+                                $dbm->setConfigToken(
+                                    'history_partitions_auto',
+                                    get_parameter_switch('history_partitions_auto', 0)
+                                ) !== true
                             ) {
                                 $error_update[] = __('Historical database partitions');
                             }
 
-                            if ($dbm->setConfigToken(
-                                'event_purge',
-                                get_parameter('history_dbh_events_purge')
-                            ) !== true
+                            if (
+                                $dbm->setConfigToken(
+                                    'event_purge',
+                                    get_parameter('history_dbh_events_purge')
+                                ) !== true
                             ) {
                                 $error_update[] = __('Historical database events purge');
                             }
 
-                            if ($dbm->setConfigToken(
-                                'trap_history_purge',
-                                get_parameter('history_traps_days_purge')
-                            ) !== true
+                            if (
+                                $dbm->setConfigToken(
+                                    'trap_history_purge',
+                                    get_parameter('history_traps_days_purge')
+                                ) !== true
                             ) {
                                 $error_update[] = __('Historical database traps purge');
                             }
 
-                            if ($dbm->setConfigToken(
-                                'string_purge',
-                                get_parameter('history_dbh_string_purge')
-                            ) !== true
+                            if (
+                                $dbm->setConfigToken(
+                                    'string_purge',
+                                    get_parameter('history_dbh_string_purge')
+                                ) !== true
                             ) {
                                 $error_update[] = __('Historical database string purge');
                             }
@@ -1817,7 +1833,7 @@ function config_update_config()
                             $dbm->setConfigToken('history_db_enabled', 0);
                         }
                     }
-                break;
+                    break;
 
                 case 'ehorus':
                     if (config_update_value('ehorus_enabled', (int) get_parameter('ehorus_enabled', 0), true) === false) {
@@ -1851,7 +1867,7 @@ function config_update_config()
                     if (config_update_value('ehorus_custom_field', (string) get_parameter('ehorus_custom_field', $config['ehorus_custom_field']), true) === false) {
                         $error_update[] = __('eHorus id custom field');
                     }
-                break;
+                    break;
 
                 case 'integria':
                     if (config_update_value('integria_user_level_conf', (int) get_parameter('integria_user_level_conf', 0), true) === false) {
@@ -1874,9 +1890,9 @@ function config_update_config()
 
                     if (parse_url($integria_hostname, PHP_URL_SCHEME) === null) {
                         if (empty($_SERVER['HTTPS']) === false) {
-                            $integria_hostname = 'https://'.$integria_hostname;
+                            $integria_hostname = 'https://' . $integria_hostname;
                         } else {
-                            $integria_hostname = 'http://'.$integria_hostname;
+                            $integria_hostname = 'http://' . $integria_hostname;
                         }
                     }
 
@@ -1951,7 +1967,7 @@ function config_update_config()
                     if (config_update_value('cr_incident_content', (string) get_parameter('cr_incident_content', $config['cr_incident_content']), true) === false) {
                         $error_update[] = __('Integria custom response default ticket content');
                     }
-                break;
+                    break;
 
                 case 'module_library':
                     if (config_update_value('module_library_user', get_parameter('module_library_user'), true) === false) {
@@ -1961,7 +1977,7 @@ function config_update_config()
                     if (config_update_value('module_library_password', get_parameter('module_library_password'), true) === false) {
                         $error_update[] = __('Module Library Password');
                     }
-                break;
+                    break;
 
                 case 'websocket_engine':
                     if (config_update_value('ws_bind_address', get_parameter('ws_bind_address'), true) === false) {
@@ -1975,16 +1991,16 @@ function config_update_config()
                     if (config_update_value('ws_proxy_url', get_parameter('ws_proxy_url'), true) === false) {
                         $error_update[] = __('WebSocket proxy url');
                     }
-                break;
+                    break;
 
                 default:
                     // Ignore.
-                break;
+                    break;
             }
 
         default:
             // Ignore.
-        break;
+            break;
     }
 
     if (count($error_update) > 0) {
@@ -2041,7 +2057,7 @@ function config_process_config()
     $configs = db_get_all_rows_in_table('tconfig');
 
     if (empty($configs)) {
-        include $config['homedir'].'/general/error_emptyconfig.php';
+        include $config['homedir'] . '/general/error_emptyconfig.php';
         exit;
     }
 
@@ -2061,7 +2077,7 @@ function config_process_config()
 
     if (isset($config['homeurl']) && (strlen($config['homeurl']) > 0)) {
         if ($config['homeurl'][0] != '/') {
-            $config['homeurl'] = '/'.$config['homeurl'];
+            $config['homeurl'] = '/' . $config['homeurl'];
         }
     }
 
@@ -2097,7 +2113,7 @@ function config_process_config()
     }
 
     if (!isset($config['loginhash_pwd'])) {
-        config_update_value('loginhash_pwd', io_input_password((rand(0, 1000) * rand(0, 1000)).'pandorahash'));
+        config_update_value('loginhash_pwd', io_input_password((rand(0, 1000) * rand(0, 1000)) . 'pandorahash'));
     }
 
     if (!isset($config['trap2agent'])) {
@@ -2225,21 +2241,21 @@ function config_process_config()
         switch (PHP_OS) {
             case 'FreeBSD':
                 config_update_value('snmpwalk', '/usr/local/bin/snmpwalk');
-            break;
+                break;
 
             case 'NetBSD':
                 config_update_value('snmpwalk', '/usr/pkg/bin/snmpwalk');
-            break;
+                break;
 
             case 'WIN32':
             case 'WINNT':
             case 'Windows':
                 config_update_value('snmpwalk', 'snmpwalk');
-            break;
+                break;
 
             default:
                 config_update_value('snmpwalk', 'snmpbulkwalk');
-            break;
+                break;
         }
     }
 
@@ -2555,18 +2571,18 @@ function config_process_config()
      * }
      */
 
-    include_once $config['homedir'].'/include/auth/mysql.php';
-    include_once $config['homedir'].'/include/functions_io.php';
+    include_once $config['homedir'] . '/include/auth/mysql.php';
+    include_once $config['homedir'] . '/include/functions_io.php';
 
     // Next is the directory where "/attachment" directory is placed,
     // to upload files stores. This MUST be writtable by http server
     // user, and should be in pandora root. By default, Pandora adds
     // /attachment to this, so by default is the pandora console home
     // dir.
-    $attachment_store_path = $config['homedir'].'/attachment';
+    $attachment_store_path = $config['homedir'] . '/attachment';
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
         // Windows.
-        $attachment_store_path = $config['homedir'].'\attachment';
+        $attachment_store_path = $config['homedir'] . '\attachment';
     }
 
     if (!isset($config['attachment_store'])) {
@@ -2695,7 +2711,7 @@ function config_process_config()
     }
 
     if (!isset($config['custom_title1_login'])) {
-        config_update_value('custom_title1_login', __('ONE TOOL TO RULE THEM ALL'));
+        config_update_value('custom_title1_login', __('VISIBILITY AND MONITORING PLATFORM'));
     }
 
     if (!isset($config['custom_title2_login'])) {
@@ -2747,7 +2763,7 @@ function config_process_config()
     }
 
     if (!isset($config['meta_custom_title1_login'])) {
-        config_update_value('meta_custom_title1_login', __('ONE TOOL TO RULE THEM ALL'));
+        config_update_value('meta_custom_title1_login', __('ONVISIBILITY AND MONITORING PLATFORM'));
     }
 
     if (!isset($config['meta_custom_title2_login'])) {
@@ -3372,8 +3388,9 @@ function config_process_config()
         }
     }
 
-    if (!isset($config['relative_path']) && (isset($_POST['nick'])
-        || isset($config['id_user'])) && isset($config['enterprise_installed'])
+    if (
+        !isset($config['relative_path']) && (isset($_POST['nick'])
+            || isset($config['id_user'])) && isset($config['enterprise_installed'])
     ) {
         $isFunctionSkins = enterprise_include_once('include/functions_skins.php');
         if ($isFunctionSkins !== ENTERPRISE_NOT_HOOK) {
@@ -3795,7 +3812,7 @@ function config_check()
 {
     global $config;
 
-    include_once __DIR__.'/class/ConsoleSupervisor.php';
+    include_once __DIR__ . '/class/ConsoleSupervisor.php';
 
     // Enterprise customers launch supervisor using discovery task.
     if (enterprise_installed() === false) {
@@ -3824,7 +3841,7 @@ function get_um_url()
         $url = 'https://licensing.pandorafms.com/pandoraupdate7/';
         config_update_value(
             'url_update_manager',
-            $url.'/server.php'
+            $url . '/server.php'
         );
     }
 
@@ -3853,7 +3870,7 @@ function config_return_in_bytes($val)
             $val *= 1024;
         default:
             // Ignore.
-        break;
+            break;
     }
 
     return $val;

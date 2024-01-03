@@ -13262,7 +13262,7 @@ msgstr ""
 #: ../../include/functions_config.php:2698
 #: ../../include/functions_config.php:2750 ../../general/login_page.php:527
 #: ../../general/login_page.php:530
-msgid "ONE TOOL TO RULE THEM ALL"
+msgid "VISIBILITY AND MONITORING PLATFORM"
 msgstr ""
 
 #: ../../enterprise/meta/include/reset_pass.php:147
