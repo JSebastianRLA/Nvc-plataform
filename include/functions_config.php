@@ -2763,7 +2763,7 @@ function config_process_config()
     }
 
     if (!isset($config['meta_custom_title1_login'])) {
-        config_update_value('meta_custom_title1_login', __('ONVISIBILITY AND MONITORING PLATFORM'));
+        config_update_value('meta_custom_title1_login', __('VISIBILITY AND MONITORING PLATFORM'));
     }
 
     if (!isset($config['meta_custom_title2_login'])) {
