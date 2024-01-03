@@ -91,7 +91,7 @@ $output .= html_print_button(
     '',
     [
         'onclick' => 'close_dialog()',
-        'class'   => 'secondary mini',
+        'class'   => 'mini',
     ],
     true
 );

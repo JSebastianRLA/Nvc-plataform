@@ -5087,11 +5087,11 @@ div#dialog_messages table th:last-child {
 }
 
 input:checked + .p-slider {
-  background-color: #1d7873;
+  background-color: #4472FF;
 }
 
 input:focus + .p-slider {
-  box-shadow: 0 0 1px #1d7873;
+  box-shadow: 0 0 1px #4472FF;
 }
 
 input:checked + .p-slider:before {
@@ -6678,11 +6678,11 @@ form#modal_form_feedback ul.wizard li > textarea {
 
 /* Generic classes to reuse and facilitate the creation of custom themes */
 .pandora_green_text {
-  color: #1d7873;
+  color: #4472FF;
 }
 
 .pandora_green_bg {
-  background-color: #1d7873;
+  background-color: #4472FF;
 }
 
 .default_container {
@@ -9405,8 +9405,8 @@ div.stat-win-spinner img {
 .select2-container--default
   .select2-selection--multiple
   .select2-selection__choice {
-  background-color: #1d7873 !important;
-  border: 1px solid #1d7873 !important;
+  background-color: #4472FF !important;
+  border: 1px solid #4472FF !important;
   padding: 0.3em 0.6em !important;
   color: #fff;
   font-size: 1em;
@@ -10215,7 +10215,7 @@ input[type="submit"] {
 
 input[type="button"]:hover,
 input[type="submit"]:hover {
-  background-color: #1d7873;
+  background-color: #4472FF;
 }
 
 input[type="button"]:active,
@@ -10235,8 +10235,8 @@ input[type="submit"].secondary {
 
 input[type="button"].secondary:hover,
 input[type="submit"].secondary:hover {
-  border: 2px solid #1d7873;
-  color: #1d7873;
+  border: 2px solid #4472FF;
+  color: #4472FF;
 }
 
 input[type="button"].secondary:active,
@@ -10504,13 +10504,13 @@ button.submitButton.secondary > div {
 
 button.buttonButton.secondary:hover,
 button.submitButton.secondary:hover {
-  color: #1d7873 !important;
-  border-color: #1d7873 !important;
+  color: #4472FF !important;
+  border-color: #4472FF !important;
 }
 
 button.buttonButton.secondary:hover > div,
 button.submitButton.secondary:hover > div {
-  background-color: #1d7873 !important;
+  background-color: #4472FF !important;
 }
 
 button.buttonButton.secondary:active,
@@ -10541,13 +10541,13 @@ button.submitButton.link > div {
 
 button.buttonButton.link:hover,
 button.submitButton.link:hover {
-  color: #1d7873 !important;
+  color: #4472FF !important;
   text-decoration: underline;
 }
 
 button.buttonButton.link:hover > div,
 button.submitButton.link:hover > div {
-  background-color: #1d7873 !important;
+  background-color: #4472FF !important;
 }
 
 button.buttonButton.link:active,
@@ -10746,8 +10746,8 @@ button.ui-button.ui-widget.submit-next {
 }
 
 button.ui-button.ui-widget.submit-next:hover {
-  background-color: #1d7873;
-  border-color: #1d7873;
+  background-color: #4472FF;
+  border-color: #4472FF;
 }
 
 button.ui-button.ui-widget.submit-next:active {
@@ -11826,8 +11826,8 @@ div.ui-dialog-buttonset > button.ui-button.ui-corner-all.ui-widget {
 }
 
 div.ui-dialog-buttonset > button.ui-button.ui-corner-all.ui-widget:hover {
-  background-color: #1d7873;
-  border-color: #1d7873;
+  background-color: #4472FF;
+  border-color: #4472FF;
 }
 
 div.ui-dialog-buttonset > button.ui-button.ui-corner-all.ui-widget:active {
@@ -12114,9 +12114,9 @@ div.parent_graph > p.legend_background > table > tbody > tr {
 }
 
 .step.visited {
-  background-color: #1d7873 !important;
+  background-color: #4472FF !important;
   color: #ffffff !important;
-  border-color: #1d7873 !important;
+  border-color: #4472FF !important;
 }
 
 .steps {
@@ -12143,7 +12143,7 @@ div.parent_graph > p.legend_background > table > tbody > tr {
 }
 
 .step-separator.visited {
-  border-top: 2px solid #1d7873 !important;
+  border-top: 2px solid #4472FF !important;
   border-image: none;
 }
 
