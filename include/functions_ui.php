@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Library. User interface functions.
  *
@@ -33,12 +34,12 @@ global $config;
 
 // Check to avoid error when load this library in error screen situations.
 if (isset($config['homedir'])) {
-    include_once $config['homedir'].'/include/functions_agents.php';
-    include_once $config['homedir'].'/include/functions_modules.php';
-    include_once $config['homedir'].'/include/functions.php';
-    include_once $config['homedir'].'/include/functions_groups.php';
-    include_once $config['homedir'].'/include/functions_users.php';
-    include_once $config['homedir'].'/include/functions_html.php';
+    include_once $config['homedir'] . '/include/functions_agents.php';
+    include_once $config['homedir'] . '/include/functions_modules.php';
+    include_once $config['homedir'] . '/include/functions.php';
+    include_once $config['homedir'] . '/include/functions_groups.php';
+    include_once $config['homedir'] . '/include/functions_users.php';
+    include_once $config['homedir'] . '/include/functions_html.php';
 }
 
 
@@ -50,7 +51,7 @@ if (isset($config['homedir'])) {
  *
  * @return string HTML.
  */
-function ui_bbcode_to_html($text, $allowed_tags=['[url]'])
+function ui_bbcode_to_html($text, $allowed_tags = ['[url]'])
 {
     if (array_search('[url]', $allowed_tags) !== false || a) {
         // Replace bbcode format [url=www.example.org] String [/url] with or without http and slashes
@@ -59,11 +60,11 @@ function ui_bbcode_to_html($text, $allowed_tags=['[url]'])
             $url = $matches[1];
             // Truncate text
             $t_text = ui_print_truncate_text($matches[2]);
-             // If link hasn't http, add it.
+            // If link hasn't http, add it.
             if (preg_match('/https?:\/\//', $text)) {
-                $return = '<a target="_blank" rel="noopener noreferrer" href="'.$matches[1].'">'.$t_text.'</a>';
+                $return = '<a target="_blank" rel="noopener noreferrer" href="' . $matches[1] . '">' . $t_text . '</a>';
             } else {
-                $return = '<a target="_blank" rel="noopener noreferrer" href="http://'.$matches[1].'">'.$t_text.'</a>';
+                $return = '<a target="_blank" rel="noopener noreferrer" href="http://' . $matches[1] . '">' . $t_text . '</a>';
             }
         } else {
             $return = ui_print_truncate_text($text);
@@ -88,7 +89,7 @@ function ui_bbcode_to_html($text, $allowed_tags=['[url]'])
  *
  * @return string Truncated text.
  */
-function ui_print_truncate_text($text, $numChars=GENERIC_SIZE_TEXT, $showTextInAToopTip=true, $return=true, $showTextInTitle=true, $suffix='&hellip;', $style=false)
+function ui_print_truncate_text($text, $numChars = GENERIC_SIZE_TEXT, $showTextInAToopTip = true, $return = true, $showTextInTitle = true, $suffix = '&hellip;', $style = false)
 {
     global $config;
 
@@ -96,31 +97,31 @@ function ui_print_truncate_text($text, $numChars=GENERIC_SIZE_TEXT, $showTextInA
         switch ($numChars) {
             case 'agent_small':
                 $numChars = $config['agent_size_text_small'];
-            break;
+                break;
 
             case 'agent_medium':
                 $numChars = $config['agent_size_text_medium'];
-            break;
+                break;
 
             case 'module_small':
                 $numChars = $config['module_size_text_small'];
-            break;
+                break;
 
             case 'module_medium':
                 $numChars = $config['module_size_text_medium'];
-            break;
+                break;
 
             case 'description':
                 $numChars = $config['description_size_text'];
-            break;
+                break;
 
             case 'item_title':
                 $numChars = $config['item_title_size_text'];
-            break;
+                break;
 
             default:
                 $numChars = (int) $numChars;
-            break;
+                break;
         }
     }
 
@@ -159,15 +160,15 @@ function ui_print_truncate_text($text, $numChars=GENERIC_SIZE_TEXT, $showTextInA
         );
 
         // Recover the html entities to avoid XSS attacks.
-        $truncateText = ($text_has_entities) ? io_safe_input($truncateText).$suffix.io_safe_input($truncateText2) : $truncateText.$suffix.$truncateText2;
+        $truncateText = ($text_has_entities) ? io_safe_input($truncateText) . $suffix . io_safe_input($truncateText2) : $truncateText . $suffix . $truncateText2;
 
         if ($showTextInTitle) {
             if ($style === null) {
                 $truncateText = $truncateText;
             } else if ($style !== false) {
-                $truncateText = '<span style="'.$style.'" title="'.$text.'">'.$truncateText.'</span>';
+                $truncateText = '<span style="' . $style . '" title="' . $text . '">' . $truncateText . '</span>';
             } else {
-                $truncateText = '<span title="'.$text.'">'.$truncateText.'</span>';
+                $truncateText = '<span title="' . $text . '">' . $truncateText . '</span>';
             }
         }
 
@@ -176,15 +177,15 @@ function ui_print_truncate_text($text, $numChars=GENERIC_SIZE_TEXT, $showTextInA
                 $text = ui_print_truncate_text($showTextInAToopTip, ($numChars * 2), false, true, false);
             }
 
-            $truncateText = $truncateText.ui_print_help_tip(htmlspecialchars($text), true);
+            $truncateText = $truncateText . ui_print_help_tip(htmlspecialchars($text), true);
         } else {
             if ($style !== false) {
-                $truncateText = '<span style="'.$style.'">'.$truncateText.'</span>';
+                $truncateText = '<span style="' . $style . '">' . $truncateText . '</span>';
             }
         }
     } else {
         if ($style !== false) {
-            $truncateText = '<span style="'.$style.'">'.$text.'</span>';
+            $truncateText = '<span style="' . $style . '">' . $text . '</span>';
         } else {
             $truncateText = $text;
         }
@@ -206,7 +207,7 @@ function ui_print_truncate_text($text, $numChars=GENERIC_SIZE_TEXT, $showTextInA
  *
  * @return string HTML.
  */
-function printSmallFont($string, $return=true)
+function printSmallFont($string, $return = true)
 {
     $str = io_safe_output($string);
     $length = strlen($str);
@@ -220,7 +221,7 @@ function printSmallFont($string, $return=true)
         $size = 1;
     }
 
-    $s = '<span style="font-size: '.$size.'em;">';
+    $s = '<span style="font-size: ' . $size . 'em;">';
     $s .= $string;
     $s .= '</span>';
     if ($return) {
@@ -244,7 +245,7 @@ function printSmallFont($string, $return=true)
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_message($message, $class='', $attributes='', $return=false, $tag='h3')
+function ui_print_message($message, $class = '', $attributes = '', $return = false, $tag = 'h3')
 {
     global $config;
 
@@ -301,18 +302,18 @@ function ui_print_message($message, $class='', $attributes='', $return=false, $t
             case 'info':
                 $classes[] = 'info_box_information';
                 $text_title = __('Information');
-            break;
+                break;
             case 'error':
                 $text_title = __('Error');
-            break;
+                break;
 
             case 'suc':
                 $text_title = __('Success');
-            break;
+                break;
 
             case 'warning':
                 $text_title = __('Warning');
-            break;
+                break;
         }
     }
 
@@ -321,27 +322,27 @@ function ui_print_message($message, $class='', $attributes='', $return=false, $t
             default:
             case 'info':
                 $icon_image = 'images/information_big.png';
-            break;
+                break;
             case 'error':
                 $icon_image = 'images/err.png';
-            break;
+                break;
 
             case 'suc':
                 $icon_image = 'images/suc.png';
-            break;
+                break;
 
             case 'warning':
                 $icon_image = 'images/warning_big.png';
-            break;
+                break;
         }
 
         $icon_image = $icon_image;
     }
 
-    $id = 'info_box_'.uniqid();
+    $id = 'info_box_' . uniqid();
 
     if (empty($force_class) === false) {
-        $class = $class.' '.$force_class;
+        $class = $class . ' ' . $force_class;
     }
 
     if ($no_close_bool === false) {
@@ -349,7 +350,7 @@ function ui_print_message($message, $class='', $attributes='', $return=false, $t
         // the base console.
         $iconCloseButton = html_print_anchor(
             [
-                'href'    => 'javascript: close_info_box(\''.$id.'\')',
+                'href'    => 'javascript: close_info_box(\'' . $id . '\')',
                 'content' => html_print_image(
                     'images/close@svg.svg',
                     true,
@@ -375,8 +376,8 @@ function ui_print_message($message, $class='', $attributes='', $return=false, $t
     $messageTable = new stdClass();
     $messageTable->cellpadding = 0;
     $messageTable->cellspacing = 0;
-    $messageTable->id = 'table_'.$id;
-    $messageTable->class = 'info_box '.$class.' textodialogo';
+    $messageTable->id = 'table_' . $id;
+    $messageTable->class = 'info_box ' . $class . ' textodialogo';
     $messageTable->styleTable = $force_style;
 
     $messageTable->rowclass = [];
@@ -385,9 +386,9 @@ function ui_print_message($message, $class='', $attributes='', $return=false, $t
     $messageTable->colspan[1][0] = 2;
 
     $messageTable->data = [];
-    $messageTable->data[0][0] = '<b>'.$text_title.'</b>';
+    $messageTable->data[0][0] = '<b>' . $text_title . '</b>';
     $messageTable->data[0][1] = $closeButton;
-    $messageTable->data[1][0] = '<span>'.$text_message.'</b>';
+    $messageTable->data[1][0] = '<span>' . $text_message . '</b>';
 
     // JavaScript help vars.
     $messageCreated = html_print_table($messageTable, true);
@@ -413,7 +414,7 @@ function ui_print_message($message, $class='', $attributes='', $return=false, $t
     $output = html_print_div(
         [
             'id'      => $id,
-            'style'   => 'top: '.$position.'px;',
+            'style'   => 'top: ' . $position . 'px;',
             'class'   => implode(' ', $classes),
             'content' => $messageCreated,
         ],
@@ -440,7 +441,7 @@ function ui_print_message($message, $class='', $attributes='', $return=false, $t
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_error_message($message, $attributes='', $return=false, $tag='h3')
+function ui_print_error_message($message, $attributes = '', $return = false, $tag = 'h3')
 {
     return ui_print_message($message, 'error', $attributes, $return, $tag);
 }
@@ -458,7 +459,7 @@ function ui_print_error_message($message, $attributes='', $return=false, $tag='h
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_success_message($message, $attributes='', $return=false, $tag='h3')
+function ui_print_success_message($message, $attributes = '', $return = false, $tag = 'h3')
 {
     return ui_print_message($message, 'suc', $attributes, $return, $tag);
 }
@@ -476,7 +477,7 @@ function ui_print_success_message($message, $attributes='', $return=false, $tag=
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_info_message($message, $attributes='', $return=false, $tag='h3')
+function ui_print_info_message($message, $attributes = '', $return = false, $tag = 'h3')
 {
     return ui_print_message($message, 'info', $attributes, $return, $tag);
 }
@@ -494,7 +495,7 @@ function ui_print_info_message($message, $attributes='', $return=false, $tag='h3
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_empty_data($message, $attributes='', $return=false, $tag='h3')
+function ui_print_empty_data($message, $attributes = '', $return = false, $tag = 'h3')
 {
     return ui_print_message($message, 'info', $attributes, $return, $tag);
 }
@@ -516,7 +517,7 @@ function ui_print_empty_data($message, $attributes='', $return=false, $tag='h3')
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_result_message($result, $good='', $bad='', $attributes='', $return=false, $tag='h3')
+function ui_print_result_message($result, $good = '', $bad = '', $attributes = '', $return = false, $tag = 'h3')
 {
     if (empty($good) === true || $good === false) {
         $good = __('Request successfully processed');
@@ -546,7 +547,7 @@ function ui_print_result_message($result, $good='', $bad='', $attributes='', $re
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_warning_message($message, $attributes='', $return=false, $tag='h3')
+function ui_print_warning_message($message, $attributes = '', $return = false, $tag = 'h3')
 {
     return ui_print_message($message, 'warning', $attributes, $return, $tag);
 }
@@ -567,7 +568,7 @@ function ui_print_warning_message($message, $attributes='', $return=false, $tag=
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_timestamp($unixtime, $return=false, $option=[])
+function ui_print_timestamp($unixtime, $return = false, $option = [])
 {
     global $config;
 
@@ -586,9 +587,9 @@ function ui_print_timestamp($unixtime, $return=false, $option=[])
     }
 
     if (empty($option['style']) === true) {
-        $style = 'class="'.($option['class'] ?? 'nowrap').'"';
+        $style = 'class="' . ($option['class'] ?? 'nowrap') . '"';
     } else {
-        $style = 'style="'.$option['style'].'"';
+        $style = 'style="' . $option['style'] . '"';
     }
 
     if (empty($option['prominent']) === false) {
@@ -603,7 +604,7 @@ function ui_print_timestamp($unixtime, $return=false, $option=[])
 
     // Prominent_time is either timestamp or comparation.
     if ($unixtime <= 0) {
-        $title = __('Unknown').'/'.__('Never');
+        $title = __('Unknown') . '/' . __('Never');
         $data = __('Unknown');
     } else if ($prominent == 'timestamp') {
         pandora_setlocale();
@@ -626,19 +627,19 @@ function ui_print_timestamp($unixtime, $return=false, $option=[])
         $data = human_time_comparation($unixtime, $units);
     }
 
-    $output = '<'.$tag;
+    $output = '<' . $tag;
     switch ($tag) {
         default:
             // Usually tags have title attributes, so by default we add,
             // then fall through to add attributes and data.
-            $output .= ' title="'.$title.'" '.$style.'>'.$data.'</'.$tag.'>';
-        break;
+            $output .= ' title="' . $title . '" ' . $style . '>' . $data . '</' . $tag . '>';
+            break;
         case 'h1':
         case 'h2':
         case 'h3':
             // Above tags don't have title attributes.
-            $output .= ' '.$attributes.' '.$style.'>'.$data.'</'.$tag.'>';
-        break;
+            $output .= ' ' . $attributes . ' ' . $style . '>' . $data . '</' . $tag . '>';
+            break;
     }
 
     if ($return === true) {
@@ -658,7 +659,7 @@ function ui_print_timestamp($unixtime, $return=false, $option=[])
  *
  * @return void|string HTML code if return parameter is true.
  */
-function ui_print_username($username, $fullname=false, $return=false)
+function ui_print_username($username, $fullname = false, $return = false)
 {
     return html_print_anchor(
         [
@@ -677,7 +678,7 @@ function ui_print_username($username, $fullname=false, $return=false)
  *
  * @return string HTML.
  */
-function ui_print_tags_warning($return=false)
+function ui_print_tags_warning($return = false)
 {
     $msg = '<div id="notify_conf" class="notify">';
     $msg .= __('Is possible that this view uses part of information which your user has not access');
@@ -706,7 +707,7 @@ function ui_print_tags_warning($return=false)
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_group_icon($id_group, $return=false, $path='', $style='', $link=true, $force_show_image=false, $show_as_image=false, $class='', $tactical_view=false)
+function ui_print_group_icon($id_group, $return = false, $path = '', $style = '', $link = true, $force_show_image = false, $show_as_image = false, $class = '', $tactical_view = false)
 {
     global $config;
 
@@ -732,24 +733,24 @@ function ui_print_group_icon($id_group, $return=false, $path='', $style='', $lin
 
     if ($link === true) {
         if ($tactical_view === true) {
-            $output = '<a href="'.$config['homeurl'].'index.php?sec=gagent&sec2=godmode/groups/tactical&id_group='.$id_group.'">';
+            $output = '<a href="' . $config['homeurl'] . 'index.php?sec=gagent&sec2=godmode/groups/tactical&id_group=' . $id_group . '">';
         } else {
-            $output = '<a href="'.$config['homeurl'].'index.php?sec=estado&amp;sec2=operation/agentes/estado_agente&amp;refr=60&amp;group_id='.$id_group.'">';
+            $output = '<a href="' . $config['homeurl'] . 'index.php?sec=estado&amp;sec2=operation/agentes/estado_agente&amp;refr=60&amp;group_id=' . $id_group . '">';
         }
     }
 
     if ((bool) $config['show_group_name'] === true) {
-        $output .= '<span title="'.groups_get_name($id_group, true).'">'.groups_get_name($id_group, true).'&nbsp;</span>';
+        $output .= '<span title="' . groups_get_name($id_group, true) . '">' . groups_get_name($id_group, true) . '&nbsp;</span>';
     } else {
         if (empty($icon) === true) {
-            $output .= '<span title="'.groups_get_name($id_group, true).'">';
+            $output .= '<span title="' . groups_get_name($id_group, true) . '">';
             $output .= '</span>';
             $output .= html_print_image(
                 'images/unknown@groups.svg',
                 true,
                 [
                     'style' => $style,
-                    'class' => 'main_menu_icon invert_filter '.$class,
+                    'class' => 'main_menu_icon invert_filter ' . $class,
                     'alt'   => groups_get_name($id_group, true),
                     'title' => groups_get_name($id_group, true),
                 ],
@@ -767,18 +768,18 @@ function ui_print_group_icon($id_group, $return=false, $path='', $style='', $lin
                 }
             }
 
-            $icon = (str_contains($icon, '.svg') === true || str_contains($icon, '.png') === true) ? $icon : $icon.'.svg';
+            $icon = (str_contains($icon, '.svg') === true || str_contains($icon, '.png') === true) ? $icon : $icon . '.svg';
             $folder = '';
             if (str_contains($icon, '.png')) {
                 $folder = 'groups_small/';
             }
 
             $output .= html_print_image(
-                'images/'.$folder.$icon,
+                'images/' . $folder . $icon,
                 true,
                 [
                     'style' => $style,
-                    'class' => 'main_menu_icon invert_filter '.$class,
+                    'class' => 'main_menu_icon invert_filter ' . $class,
                     'alt'   => groups_get_name($id_group, true),
                     'title' => groups_get_name($id_group, true),
                 ],
@@ -814,7 +815,7 @@ function ui_print_group_icon($id_group, $return=false, $path='', $style='', $lin
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_group_icon_path($id_group, $return=false, $path='images', $style='', $link=true)
+function ui_print_group_icon_path($id_group, $return = false, $path = 'images', $style = '', $link = true)
 {
     if ($id_group > 0) {
         $icon = (string) db_get_value('icon', 'tgrupo', 'id_grupo', (int) $id_group);
@@ -828,13 +829,13 @@ function ui_print_group_icon_path($id_group, $return=false, $path='images', $sty
 
     $output = '';
     if ($link) {
-        $output = '<a href="index.php?sec=estado&amp;sec2=operation/agentes/estado_agente&amp;refr=60&amp;group_id='.$id_group.'">';
+        $output = '<a href="index.php?sec=estado&amp;sec2=operation/agentes/estado_agente&amp;refr=60&amp;group_id=' . $id_group . '">';
     }
 
     if (empty($icon)) {
-        $output .= '<span title="'.groups_get_name($id_group, true).'">&nbsp;-&nbsp</span>';
+        $output .= '<span title="' . groups_get_name($id_group, true) . '">&nbsp;-&nbsp</span>';
     } else {
-        $output .= '<img style="'.$style.'" class="bot" src="'.$path.'/'.$icon.'.png" alt="'.groups_get_name($id_group, true).'" title="'.groups_get_name($id_group, true).'" />';
+        $output .= '<img style="' . $style . '" class="bot" src="' . $path . '/' . $icon . '.png" alt="' . groups_get_name($id_group, true) . '" title="' . groups_get_name($id_group, true) . '" />';
     }
 
     if ($link) {
@@ -866,14 +867,14 @@ function ui_print_group_icon_path($id_group, $return=false, $path='images', $sty
  */
 function ui_print_os_icon(
     $id_os,
-    $name=true,
-    $return=false,
-    $apply_skin=true,
-    $networkmap=false,
-    $only_src=false,
-    $relative=false,
-    $options=false,
-    $big_icons=false
+    $name = true,
+    $return = false,
+    $apply_skin = true,
+    $networkmap = false,
+    $only_src = false,
+    $relative = false,
+    $options = false,
+    $big_icons = false
 ) {
     $subfolder = '.';
     if ($networkmap) {
@@ -896,7 +897,8 @@ function ui_print_os_icon(
         $icon .= '.png';
     }
 
-    if (empty($extension) === true || $extension === 'png'
+    if (
+        empty($extension) === true || $extension === 'png'
         || $extension === 'jpg' || $extension === 'gif' && $subfolder === '.'
     ) {
         $subfolder = 'os_icons';
@@ -906,7 +908,7 @@ function ui_print_os_icon(
     if (empty($icon) === true) {
         if ($only_src) {
             $output = html_print_image(
-                'images/'.$subfolder.'/unknown.png',
+                'images/' . $subfolder . '/unknown.png',
                 true,
                 $options,
                 true,
@@ -920,7 +922,7 @@ function ui_print_os_icon(
     } else if ($apply_skin) {
         if ($only_src) {
             $output = html_print_image(
-                'images/'.$subfolder.'/'.$icon,
+                'images/' . $subfolder . '/' . $icon,
                 true,
                 $options,
                 true,
@@ -934,7 +936,7 @@ function ui_print_os_icon(
             }
 
             $output = html_print_image(
-                'images/'.$subfolder.'/'.$icon,
+                'images/' . $subfolder . '/' . $icon,
                 true,
                 $options,
                 false,
@@ -945,11 +947,11 @@ function ui_print_os_icon(
         }
     } else {
         // $output = "<img src='images/os_icons/" . $icon . "' alt='" . $os_name . "' title='" . $os_name . "'>";
-        $output = 'images/'.$subfolder.'/'.$icon;
+        $output = 'images/' . $subfolder . '/' . $icon;
     }
 
     if ($name === true) {
-        $output .= '&nbsp;&nbsp;'.$os_name;
+        $output .= '&nbsp;&nbsp;' . $os_name;
     }
 
     if (!$return) {
@@ -973,12 +975,12 @@ function ui_print_os_icon(
  * @return string HTML.
  */
 function ui_print_type_agent_icon(
-    $id_os=false,
-    $remote_contact=false,
-    $contact=false,
-    $return=false,
-    $remote=0,
-    $version=''
+    $id_os = false,
+    $remote_contact = false,
+    $contact = false,
+    $return = false,
+    $remote = 0,
+    $version = ''
 ) {
     global $config;
 
@@ -1051,15 +1053,15 @@ function ui_print_type_agent_icon(
  */
 function ui_print_agent_name(
     $id_agent,
-    $return=false,
-    $cutoff='agent_medium',
-    $style='',
-    $cutname=false,
-    $server_url='',
-    $extra_params='',
-    $known_agent_name=false,
-    $link=true,
-    $alias=true
+    $return = false,
+    $cutoff = 'agent_medium',
+    $style = '',
+    $cutname = false,
+    $server_url = '',
+    $extra_params = '',
+    $known_agent_name = false,
+    $link = true,
+    $alias = true
 ) {
     if ($known_agent_name === false) {
         if ($alias) {
@@ -1082,11 +1084,11 @@ function ui_print_agent_name(
     }
 
     if ($link) {
-        $url = $server_url.'index.php?sec=estado&amp;sec2=operation/agentes/ver_agente&amp;id_agente='.$id_agent.$extra_params;
+        $url = $server_url . 'index.php?sec=estado&amp;sec2=operation/agentes/ver_agente&amp;id_agente=' . $id_agent . $extra_params;
 
-        $output = '<a style="'.$style.'" href="'.$url.'" title="'.$agent_name_full.'"><b><span style="'.$style.'">'.$agent_name.'</span></b></a>';
+        $output = '<a style="' . $style . '" href="' . $url . '" title="' . $agent_name_full . '"><b><span style="' . $style . '">' . $agent_name . '</span></b></a>';
     } else {
-        $output = '<b><span style="'.$style.'">'.$agent_name.'</span></b>';
+        $output = '<b><span style="' . $style . '">' . $agent_name . '</span></b>';
     }
 
     // TODO: Add a pretty javascript (using jQuery) popup-box with agent details.
@@ -1110,9 +1112,9 @@ function ui_print_agent_name(
  */
 function ui_format_alert_row(
     $alert,
-    $agent=true,
-    $url='',
-    $agent_style=false
+    $agent = true,
+    $url = '',
+    $agent_style = false
 ) {
     global $config;
 
@@ -1125,12 +1127,12 @@ function ui_format_alert_row(
         $server_data = $alert['server_data'];
         $server_name = $server_data['server_name'];
         $server_id = $server_data['id'];
-        $console_url = $server_data['server_url'].'/';
+        $console_url = $server_data['server_url'] . '/';
         $url_hash = metaconsole_get_servers_url_hash($server_data);
     }
 
     $actionText = '';
-    include_once $config['homedir'].'/include/functions_alerts.php';
+    include_once $config['homedir'] . '/include/functions_alerts.php';
     $isFunctionPolicies = enterprise_include_once('include/functions_policies.php');
     $id_group = (int) get_parameter('ag_group', 0);
     // 0 is the All group (selects all groups).
@@ -1251,7 +1253,8 @@ function ui_format_alert_row(
 
     // Validate checkbox.
     if (is_metaconsole() === false) {
-        if (check_acl($config['id_user'], $id_group, 'LW')
+        if (
+            check_acl($config['id_user'], $id_group, 'LW')
             || check_acl($config['id_user'], $id_group, 'LM')
         ) {
             $data[$index['validate']] = '';
@@ -1294,9 +1297,9 @@ function ui_format_alert_row(
             }
 
             if (is_metaconsole() === false) {
-                $data[$index['policy']] = '<a href="?sec=gmodules&amp;sec2=enterprise/godmode/policies/policies&amp;id='.$policyInfo['id'].'">'.html_print_image($img, true, ['title' => $policyInfo['name'], 'class' => 'invert_filter main_menu_icon']).'</a>';
+                $data[$index['policy']] = '<a href="?sec=gmodules&amp;sec2=enterprise/godmode/policies/policies&amp;id=' . $policyInfo['id'] . '">' . html_print_image($img, true, ['title' => $policyInfo['name'], 'class' => 'invert_filter main_menu_icon']) . '</a>';
             } else {
-                $data[$index['policy']] = '<a href="?sec=gmodules&amp;sec2=advanced/policymanager&amp;id='.$policyInfo['id'].'">'.html_print_image($img, true, ['title' => $policyInfo['name'], 'class' => 'invert_filter main_menu_icon']).'</a>';
+                $data[$index['policy']] = '<a href="?sec=gmodules&amp;sec2=advanced/policymanager&amp;id=' . $policyInfo['id'] . '">' . html_print_image($img, true, ['title' => $policyInfo['name'], 'class' => 'invert_filter main_menu_icon']) . '</a>';
             }
         }
 
@@ -1324,7 +1327,7 @@ function ui_format_alert_row(
 
             $forceExecButtons[] = html_print_anchor(
                 [
-                    'href'    => $url.'&amp;id_alert='.$alert['id'].'&amp;refr=60'.$additionUrl,
+                    'href'    => $url . '&amp;id_alert=' . $alert['id'] . '&amp;refr=60' . $additionUrl,
                     'content' => html_print_image(
                         'images/force@svg.svg',
                         true,
@@ -1340,7 +1343,7 @@ function ui_format_alert_row(
 
         $forceExecButtons[] = html_print_anchor(
             [
-                'href'    => 'ajax.php?page=godmode/alerts/alert_templates&get_template_tooltip=1&id_template='.$template['id'],
+                'href'    => 'ajax.php?page=godmode/alerts/alert_templates&get_template_tooltip=1&id_template=' . $template['id'],
                 'class'   => 'template_details',
                 'content' => html_print_image(
                     'images/details.svg',
@@ -1353,7 +1356,7 @@ function ui_format_alert_row(
     } else {
         $forceExecButtons[] = html_print_anchor(
             [
-                'href'    => ui_get_full_url('/', false, false, false).'/ajax.php?page=enterprise/meta/include/ajax/tree_view.ajax&action=get_template_tooltip&id_template='.$template['id'].'&server_name='.$alert['server_data']['server_name'],
+                'href'    => ui_get_full_url('/', false, false, false) . '/ajax.php?page=enterprise/meta/include/ajax/tree_view.ajax&action=get_template_tooltip&id_template=' . $template['id'] . '&server_name=' . $alert['server_data']['server_name'],
                 'class'   => 'template_details',
                 'content' => html_print_image(
                     'images/details.svg',
@@ -1388,22 +1391,22 @@ function ui_format_alert_row(
         if (is_metaconsole() === true) {
             // Do not show link if user cannot access node
             if ((bool) can_user_access_node() === true) {
-                $url = $server['server_url'].'/index.php?'.'sec=estado&'.'sec2=operation/agentes/ver_agente&'.'id_agente='.$agente['id_agente'];
+                $url = $server['server_url'] . '/index.php?' . 'sec=estado&' . 'sec2=operation/agentes/ver_agente&' . 'id_agente=' . $agente['id_agente'];
                 $data[$index['agent_name']] .= html_print_anchor(
                     [
                         'href'    => $url,
-                        'content' => '<span class="bolder" title="'.$agente['nombre'].'">'.$agente['alias'].'</span>',
+                        'content' => '<span class="bolder" title="' . $agente['nombre'] . '">' . $agente['alias'] . '</span>',
                     ],
                     true
                 );
             } else {
-                $data[$index['agent_name']] .= '<span class="bolder" title="'.$agente['nombre'].'">'.$agente['alias'].'</span>';
+                $data[$index['agent_name']] .= '<span class="bolder" title="' . $agente['nombre'] . '">' . $agente['alias'] . '</span>';
             }
         } else {
             $data[$index['agent_name']] .= html_print_anchor(
                 [
-                    'href'    => 'index.php?sec=estado&sec2=operation/agentes/ver_agente&id_agente='.$id_agent,
-                    'content' => '<span class="bolder" title="'.$agente['nombre'].'">'.$agente['alias'].'</span>',
+                    'href'    => 'index.php?sec=estado&sec2=operation/agentes/ver_agente&id_agente=' . $id_agent,
+                    'content' => '<span class="bolder" title="' . $agente['nombre'] . '">' . $agente['alias'] . '</span>',
                 ],
                 true
             );
@@ -1418,19 +1421,19 @@ function ui_format_alert_row(
 
     $actionDefault = db_get_value_sql(
         'SELECT id_alert_action
-		FROM talert_templates WHERE id = '.$alert['id_alert_template']
+		FROM talert_templates WHERE id = ' . $alert['id_alert_template']
     );
 
-    $data[$index['description']] .= $disabledHtmlStart.ui_print_truncate_text(io_safe_output($description), 'description', false, true, true, '[&hellip;]', '').$disabledHtmlEnd;
+    $data[$index['description']] .= $disabledHtmlStart . ui_print_truncate_text(io_safe_output($description), 'description', false, true, true, '[&hellip;]', '') . $disabledHtmlEnd;
 
     $actions = alerts_get_alert_agent_module_actions($alert['id'], false, $alert['server_data']['id']);
 
     if (empty($actions) === false || $actionDefault != '') {
         $actionText = '<div><ul class="action_list">';
         foreach ($actions as $action) {
-            $actionText .= '<div class="mrgn_btn_5px" ><span class="action_name"><li>'.$action['name'];
+            $actionText .= '<div class="mrgn_btn_5px" ><span class="action_name"><li>' . $action['name'];
             if ($action['fires_min'] != $action['fires_max']) {
-                $actionText .= ' ('.$action['fires_min'].' / '.$action['fires_max'].')';
+                $actionText .= ' (' . $action['fires_min'] . ' / ' . $action['fires_max'] . ')';
             }
 
             $actionText .= '</li></span></div>';
@@ -1444,20 +1447,20 @@ function ui_format_alert_row(
                     'SELECT name FROM talert_actions WHERE id = %d',
                     $actionDefault
                 )
-            ).' <i>('.__('Default').')</i>';
+            ) . ' <i>(' . __('Default') . ')</i>';
         }
     }
 
     $data[$index['action']] = $actionText;
 
-    $data[$index['last_fired']] = $disabledHtmlStart.ui_print_timestamp($alert['last_fired'], true).$disabledHtmlEnd;
+    $data[$index['last_fired']] = $disabledHtmlStart . ui_print_timestamp($alert['last_fired'], true) . $disabledHtmlEnd;
 
     $status = STATUS_ALERT_NOT_FIRED;
     $title = '';
 
     if ($alert['times_fired'] > 0) {
         $status = STATUS_ALERT_FIRED;
-        $title = __('Alert fired').' '.$alert['internal_counter'].' '.__('time(s)');
+        $title = __('Alert fired') . ' ' . $alert['internal_counter'] . ' ' . __('time(s)');
     } else if ($alert['disabled'] > 0) {
         $status = STATUS_ALERT_DISABLED;
         $title = __('Alert disabled');
@@ -1482,7 +1485,7 @@ function ui_format_alert_row(
  *
  * @return string HTML string.
  */
-function ui_print_string_substr($string, $cutoff=16, $return=false, $fontsize=0)
+function ui_print_string_substr($string, $cutoff = 16, $return = false, $fontsize = 0)
 {
     if (empty($string)) {
         return '';
@@ -1498,11 +1501,11 @@ function ui_print_string_substr($string, $cutoff=16, $return=false, $fontsize=0)
     $font_size_mod = '';
 
     if ($fontsize > 0) {
-        $font_size_mod = "style='font-size: ".$fontsize."pt'";
+        $font_size_mod = "style='font-size: " . $fontsize . "pt'";
     }
 
-    $string = '<span '.$font_size_mod.' title="'.io_safe_input($string2).'">';
-    $string .= mb_substr($string2, 0, $cutoff, 'UTF-8').$string3.'</span>';
+    $string = '<span ' . $font_size_mod . ' title="' . io_safe_input($string2) . '">';
+    $string .= mb_substr($string2, 0, $cutoff, 'UTF-8') . $string3 . '</span>';
 
     if ($return === false) {
         echo $string;
@@ -1522,7 +1525,7 @@ function ui_print_string_substr($string, $cutoff=16, $return=false, $fontsize=0)
  *
  * @return An HTML string if return was true.
  */
-function ui_print_alert_template_example($id_alert_template, $return=false, $print_values=true)
+function ui_print_alert_template_example($id_alert_template, $return = false, $print_values = true)
 {
     $output = '';
 
@@ -1534,12 +1537,12 @@ function ui_print_alert_template_example($id_alert_template, $return=false, $pri
         case 'equal':
             // Do not translate the HTML attributes.
             $output .= __('The alert would fire when the value is <span id="value"></span>');
-        break;
+            break;
 
         case 'not_equal':
             // Do not translate the HTML attributes.
             $output .= __('The alert would fire when the value is not <span id="value"></span>');
-        break;
+            break;
 
         case 'regex':
             if ($template['matches_value']) {
@@ -1551,7 +1554,7 @@ function ui_print_alert_template_example($id_alert_template, $return=false, $pri
             }
 
             $value = $template['value'];
-        break;
+            break;
 
         case 'max_min':
             if ($template['matches_value']) {
@@ -1561,32 +1564,32 @@ function ui_print_alert_template_example($id_alert_template, $return=false, $pri
                 // End if.
                 $output .= __('The alert would fire when the value is not between <span id="min"></span> and <span id="max"></span>');
             }
-        break;
+            break;
 
         case 'max':
             // Do not translate the HTML attributes.
             $output .= __('The alert would fire when the value is over <span id="max"></span>');
-        break;
+            break;
 
         case 'min':
             // Do not translate the HTML attributes.
             $output .= __('The alert would fire when the value is under <span id="min"></span>');
-        break;
+            break;
 
         case 'warning':
             // Do not translate the HTML attributes.
             $output .= __('The alert would fire when the module is in warning status');
-        break;
+            break;
 
         case 'critical':
             // Do not translate the HTML attributes.
             $output .= __('The alert would fire when the module is in critical status');
-        break;
+            break;
 
         default:
             // Do nothing.
             $output .= __('Unknown option.');
-        break;
+            break;
     }
 
     if ($print_values) {
@@ -1624,12 +1627,12 @@ function ui_print_alert_template_example($id_alert_template, $return=false, $pri
  */
 function ui_print_help_icon(
     $help_id,
-    $return=false,
-    $home_url='',
-    $image='images/info@svg.svg',
-    $is_relative=false,
-    $id='',
-    $isHeader=false
+    $return = false,
+    $home_url = '',
+    $image = 'images/info@svg.svg',
+    $is_relative = false,
+    $id = '',
+    $isHeader = false
 ) {
     global $config;
 
@@ -1649,7 +1652,7 @@ function ui_print_help_icon(
     }
 
     if (is_metaconsole() === true) {
-        $home_url = '../../'.$home_url;
+        $home_url = '../../' . $home_url;
     }
 
     $url = get_help_info($help_id);
@@ -1657,15 +1660,15 @@ function ui_print_help_icon(
 
     $help_handler = 'index.php?sec=view&sec2=general/help_feedback';
     // Needs to use url encoded to avoid anchor lost.
-    $help_handler .= '&b='.$b;
-    $help_handler .= '&pure=1&url='.$url;
+    $help_handler .= '&b=' . $b;
+    $help_handler .= '&pure=1&url=' . $url;
     $output = html_print_image(
         $image,
         true,
         [
-            'class'   => 'img_help '.$iconClass,
+            'class'   => 'img_help ' . $iconClass,
             'title'   => __('Help'),
-            'onclick' => "open_help ('".ui_get_full_url($help_handler)."')",
+            'onclick' => "open_help ('" . ui_get_full_url($help_handler) . "')",
             'id'      => $id,
         ],
         false,
@@ -1696,18 +1699,18 @@ function ui_print_help_icon(
  *
  * @return boolean True if the file was added. False if the file doesn't exist.
  */
-function ui_require_css_file($name, $path='include/styles/', $echo_tag=false)
+function ui_require_css_file($name, $path = 'include/styles/', $echo_tag = false)
 {
     global $config;
 
-    $filename = $path.$name.'.css';
+    $filename = $path . $name . '.css';
 
     if ($echo_tag === true) {
-        echo '<link type="text/css" rel="stylesheet" href="'.ui_get_full_url($filename, false, false, false).'">';
+        echo '<link type="text/css" rel="stylesheet" href="' . ui_get_full_url($filename, false, false, false) . '">';
         return null;
     }
 
-    if (! isset($config['css'])) {
+    if (!isset($config['css'])) {
         $config['css'] = [];
     }
 
@@ -1715,18 +1718,20 @@ function ui_require_css_file($name, $path='include/styles/', $echo_tag=false)
         return true;
     }
 
-    if (! file_exists($filename)
-        && ! file_exists($config['homedir'].'/'.$filename)
-        && ! file_exists($config['homedir'].'/'.ENTERPRISE_DIR.'/'.$filename)
+    if (
+        !file_exists($filename)
+        && !file_exists($config['homedir'] . '/' . $filename)
+        && !file_exists($config['homedir'] . '/' . ENTERPRISE_DIR . '/' . $filename)
     ) {
         return false;
     }
 
-    if (is_metaconsole()
+    if (
+        is_metaconsole()
         && (isset($config['requirements_use_base_url']) === false
-        || $config['requirements_use_base_url'] === false)
+            || $config['requirements_use_base_url'] === false)
     ) {
-        $config['css'][$name] = '/../../'.$filename;
+        $config['css'][$name] = '/../../' . $filename;
     } else {
         $config['css'][$name] = $filename;
     }
@@ -1753,18 +1758,18 @@ function ui_require_css_file($name, $path='include/styles/', $echo_tag=false)
  *
  * @return boolean True if the file was added. False if the file doesn't exist.
  */
-function ui_require_javascript_file($name, $path='include/javascript/', $echo_tag=false)
+function ui_require_javascript_file($name, $path = 'include/javascript/', $echo_tag = false)
 {
     global $config;
 
-    $filename = $path.$name.'.js';
+    $filename = $path . $name . '.js';
 
     if ($echo_tag) {
-        echo '<script type="text/javascript" src="'.ui_get_full_url($filename, false, false, false).'"></script>';
+        echo '<script type="text/javascript" src="' . ui_get_full_url($filename, false, false, false) . '"></script>';
         return null;
     }
 
-    if (! isset($config['js'])) {
+    if (!isset($config['js'])) {
         $config['js'] = [];
     }
 
@@ -1773,15 +1778,16 @@ function ui_require_javascript_file($name, $path='include/javascript/', $echo_ta
     }
 
     // We checks two paths because it may fails on enterprise.
-    if (! file_exists($filename) && ! file_exists($config['homedir'].'/'.$filename)) {
+    if (!file_exists($filename) && !file_exists($config['homedir'] . '/' . $filename)) {
         return false;
     }
 
-    if (is_metaconsole()
+    if (
+        is_metaconsole()
         && (isset($config['requirements_use_base_url']) === false
-        || $config['requirements_use_base_url'] === false)
+            || $config['requirements_use_base_url'] === false)
     ) {
-        $config['js'][$name] = '../../'.$filename;
+        $config['js'][$name] = '../../' . $filename;
     } else {
         $config['js'][$name] = $filename;
     }
@@ -1811,7 +1817,7 @@ function ui_require_javascript_file($name, $path='include/javascript/', $echo_ta
  *
  * @return boolean True if the file was added. False if the file doesn't exist.
  */
-function ui_require_javascript_file_enterprise($name, $disabled_metaconsole=false)
+function ui_require_javascript_file_enterprise($name, $disabled_metaconsole = false)
 {
     global $config;
 
@@ -1820,9 +1826,9 @@ function ui_require_javascript_file_enterprise($name, $disabled_metaconsole=fals
         $metaconsole_hack = '../../';
     }
 
-    $filename = $metaconsole_hack.ENTERPRISE_DIR.'/include/javascript/'.$name.'.js';
+    $filename = $metaconsole_hack . ENTERPRISE_DIR . '/include/javascript/' . $name . '.js';
 
-    if (! isset($config['js'])) {
+    if (!isset($config['js'])) {
         $config['js'] = [];
     }
 
@@ -1831,8 +1837,9 @@ function ui_require_javascript_file_enterprise($name, $disabled_metaconsole=fals
     }
 
     // We checks two paths because it may fails on enterprise.
-    if (!file_exists($filename)
-        && !file_exists($config['homedir'].'/'.$filename)
+    if (
+        !file_exists($filename)
+        && !file_exists($config['homedir'] . '/' . $filename)
     ) {
         return false;
     }
@@ -1862,18 +1869,18 @@ function ui_require_javascript_file_enterprise($name, $disabled_metaconsole=fals
  *
  * @return boolean True if the file was added. False if the file doesn't exist.
  */
-function ui_require_jquery_file($name, $path='include/javascript/', $echo_tag=false)
+function ui_require_jquery_file($name, $path = 'include/javascript/', $echo_tag = false)
 {
     global $config;
 
-    $filename = $path.'jquery.'.$name.'.js';
+    $filename = $path . 'jquery.' . $name . '.js';
 
     if ($echo_tag) {
-        echo '<script type="text/javascript" src="'.ui_get_full_url(false, false, false, false).$filename.'"></script>';
+        echo '<script type="text/javascript" src="' . ui_get_full_url(false, false, false, false) . $filename . '"></script>';
         return null;
     }
 
-    if (! isset($config['jquery'])) {
+    if (!isset($config['jquery'])) {
         $config['jquery'] = [];
     }
 
@@ -1882,8 +1889,9 @@ function ui_require_jquery_file($name, $path='include/javascript/', $echo_tag=fa
     }
 
     // We checks two paths because it may fails on enterprise.
-    if (! file_exists($filename)
-        && ! file_exists($config['homedir'].'/'.$filename)
+    if (
+        !file_exists($filename)
+        && !file_exists($config['homedir'] . '/' . $filename)
     ) {
         return false;
     }
@@ -1925,10 +1933,12 @@ function ui_process_page_head($string, $bitfield)
     }
 
     // If user is logged or displayed view is the public view of visual console.
-    if ($config_refr > 0
+    if (
+        $config_refr > 0
         && (isset($config['id_user']) || $vc_public_view == 1)
     ) {
-        if ($config['enable_refr']
+        if (
+            $config['enable_refr']
             || $_GET['sec2'] == 'operation/agentes/estado_agente'
             || $_GET['sec2'] == 'operation/agentes/tactical'
             || $_GET['sec2'] == 'operation/agentes/group_view'
@@ -1947,28 +1957,28 @@ function ui_process_page_head($string, $bitfield)
         }
     }
 
-    $text_subtitle = isset($config['rb_product_name_alt']) ? '' : ' - '.__('Visibility and monitoring platformem');
+    $text_subtitle = isset($config['rb_product_name_alt']) ? '' : ' - ' . __('Visibility and monitoring platformem');
 
     $output .= "\n\t";
-    $output .= '<title>'.get_product_name().$text_subtitle.'</title>
+    $output .= '<title>' . get_product_name() . $text_subtitle . '</title>
 		<meta http-equiv="expires" content="never" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 		<meta http-equiv="Content-Style-Type" content="text/css" />
 		<meta name="resource-type" content="document" />
 		<meta name="distribution" content="global" />
-		<meta name="author" content="'.get_copyright_notice().'" />
-		<meta name="copyright" content="(c) '.get_copyright_notice().'" />
+		<meta name="author" content="' . get_copyright_notice() . '" />
+		<meta name="copyright" content="(c) ' . get_copyright_notice() . '" />
 		<meta name="robots" content="index, follow" />';
-        $output .= '<link rel="icon" href="'.ui_get_full_url('/').ui_get_favicon().'" type="image/ico" />';
-        $output .= '<link rel="shortcut icon" href="'.ui_get_full_url('/').ui_get_favicon().'" type="image/x-icon" />
+    $output .= '<link rel="icon" href="' . ui_get_full_url('/') . ui_get_favicon() . '" type="image/ico" />';
+    $output .= '<link rel="shortcut icon" href="' . ui_get_full_url('/') . ui_get_favicon() . '" type="image/x-icon" />
 		<link rel="alternate" href="operation/events/events_rss.php" title="Pandora RSS Feed" type="application/rss+xml" />';
 
     if ($config['language'] != 'en') {
         // Load translated strings - load them last so they overload all
         // the objects.
-        ui_require_javascript_file('time_'.$config['language']);
-        ui_require_javascript_file('date'.$config['language']);
-        ui_require_javascript_file('countdown_'.$config['language']);
+        ui_require_javascript_file('time_' . $config['language']);
+        ui_require_javascript_file('date' . $config['language']);
+        ui_require_javascript_file('countdown_' . $config['language']);
     }
 
     $output .= "\n\t";
@@ -1982,7 +1992,7 @@ function ui_process_page_head($string, $bitfield)
     }
 
     $login_ok = true;
-    if (! isset($config['id_user']) && isset($_GET['login'])) {
+    if (!isset($config['id_user']) && isset($_GET['login'])) {
         if (isset($_POST['nick']) && isset($_POST['pass'])) {
             $nick = get_parameter_post('nick');
             // This is the variable with the login.
@@ -2022,7 +2032,7 @@ function ui_process_page_head($string, $bitfield)
         $exists_skin = enterprise_hook('skins_is_path_set');
         if ($exists_skin) {
             $skin_path = enterprise_hook('skins_get_skin_path');
-            $skin_styles = themes_get_css($skin_path.'include/styles/');
+            $skin_styles = themes_get_css($skin_path . 'include/styles/');
             $exists_css = !empty($skin_styles);
         }
     }
@@ -2038,14 +2048,14 @@ function ui_process_page_head($string, $bitfield)
     // If the theme is the default, we don't load it twice.
     if ($config['style'] !== 'pandora') {
         // It loads the last of all.
-        $config['css']['theme'] = 'include/styles/'.$config['style'].'.css';
+        $config['css']['theme'] = 'include/styles/' . $config['style'] . '.css';
     }
 
     // If skin's css files exists then add them.
     if ($exists_css) {
         foreach ($skin_styles as $filename => $name) {
             $style = substr($filename, 0, (strlen($filename) - 4));
-            $config['css'][$style] = $skin_path.'include/styles/'.$filename;
+            $config['css'][$style] = $skin_path . 'include/styles/' . $filename;
         }
     } else {
         // Otherwise assign default and user's css.
@@ -2075,7 +2085,7 @@ function ui_process_page_head($string, $bitfield)
         array_push($loaded, $name);
 
         $url_css = ui_get_full_url($filename, false, false, false);
-        $output .= '<link rel="stylesheet" href="'.$url_css.'?v='.$config['current_package'].'" type="text/css" />'."\n\t";
+        $output .= '<link rel="stylesheet" href="' . $url_css . '?v=' . $config['current_package'] . '" type="text/css" />' . "\n\t";
     }
 
     /*
@@ -2115,8 +2125,8 @@ function ui_process_page_head($string, $bitfield)
     }
 
     // Include the datapicker language if exists.
-    if (file_exists('include/languages/datepicker/jquery.ui.datepicker-'.$config['language'].'.js')) {
-        $config['jquery']['datepicker_language'] = 'include/languages/datepicker/jquery.ui.datepicker-'.$config['language'].'.js';
+    if (file_exists('include/languages/datepicker/jquery.ui.datepicker-' . $config['language'] . '.js')) {
+        $config['jquery']['datepicker_language'] = 'include/languages/datepicker/jquery.ui.datepicker-' . $config['language'] . '.js';
     }
 
     // Include countdown library.
@@ -2132,7 +2142,7 @@ function ui_process_page_head($string, $bitfield)
         array_push($loaded, $name);
 
         $url_js = ui_get_full_url($filename, false, false, false);
-        $output .= '<script type="text/javascript" src="'.$url_js.'?v='.$config['current_package'].'"></script>'."\n\t";
+        $output .= '<script type="text/javascript" src="' . $url_js . '?v=' . $config['current_package'] . '"></script>' . "\n\t";
     }
 
     /*
@@ -2177,14 +2187,14 @@ function ui_process_page_head($string, $bitfield)
         array_push($loaded, $name);
 
         $url_js = ui_get_full_url($filename, false, false, false);
-        $output .= '<script type="text/javascript" src="'.$url_js.'?v='.$config['current_package'].'"></script>'."\n\t";
+        $output .= '<script type="text/javascript" src="' . $url_js . '?v=' . $config['current_package'] . '"></script>' . "\n\t";
     }
 
     /*
      * End load JS
      */
 
-    include_once __DIR__.'/graphs/functions_flot.php';
+    include_once __DIR__ . '/graphs/functions_flot.php';
     $output .= include_javascript_dependencies_flot_graph(true);
 
     $output .= '<!--[if gte IE 6]>
@@ -2209,14 +2219,15 @@ function ui_process_page_body($string, $bitfield)
 {
     global $config;
 
-    if (isset($config['ignore_callback'])
+    if (
+        isset($config['ignore_callback'])
         && $config['ignore_callback'] == true
     ) {
         return null;
     }
 
     // Show custom background.
-    $output = '<body'.(($config['pure']) ? ' class="pure"' : '').'>';
+    $output = '<body' . (($config['pure']) ? ' class="pure"' : '') . '>';
 
     $output .= $string;
 
@@ -2248,19 +2259,19 @@ function ui_process_page_body($string, $bitfield)
  */
 function ui_pagination(
     $count,
-    $url=false,
-    $offset=0,
-    $pagination=0,
-    $return=false,
-    $offset_name='offset',
-    $print_total_items=true,
-    $other_class='',
-    $script='',
-    $parameter_script=[
+    $url = false,
+    $offset = 0,
+    $pagination = 0,
+    $return = false,
+    $offset_name = 'offset',
+    $print_total_items = true,
+    $other_class = '',
+    $script = '',
+    $parameter_script = [
         'count'  => '',
         'offset' => 'offset_param',
     ],
-    $set_id=''
+    $set_id = ''
 ) {
     global $config;
     ui_require_css_file('tables');
@@ -2283,7 +2294,7 @@ function ui_pagination(
     }
 
     if (empty($set_id) === false) {
-        $set_id = " id = '".$set_id."'";
+        $set_id = " id = '" . $set_id . "'";
     }
 
     // Pagination links for users include delete, create and other params,
@@ -2302,7 +2313,8 @@ function ui_pagination(
 
     $finalUrl = [];
     foreach ($url as $key => $value) {
-        if (strpos($value, $remove[0]) === false
+        if (
+            strpos($value, $remove[0]) === false
             && strpos($value, $remove[1]) === false
             && strpos($value, $remove[2]) === false
         ) {
@@ -2324,9 +2336,9 @@ function ui_pagination(
     // Visualize only $block_limit blocks.
     if ($count <= $pagination) {
         if ($print_total_items) {
-            $output = "<div class='".$other_class."' ".$set_id.'>';
+            $output = "<div class='" . $other_class . "' " . $set_id . '>';
             // Show the count of items.
-            $output .= '<div class="total_pages">'.sprintf(__('Total items: %s'), $count).'</div>';
+            $output .= '<div class="total_pages">' . sprintf(__('Total items: %s'), $count) . '</div>';
             // End div and layout.
             $output .= '</div>';
 
@@ -2348,11 +2360,11 @@ function ui_pagination(
         $end_page = ($number_of_pages - 1);
     }
 
-    $output = "<div class='".$other_class."' ".$set_id.'>';
+    $output = "<div class='" . $other_class . "' " . $set_id . '>';
 
     // Show the count of items.
     if ($print_total_items) {
-        $output .= '<div class="total_pages">'.sprintf(__('Total items: %s'), $count).'</div>';
+        $output .= '<div class="total_pages">' . sprintf(__('Total items: %s'), $count) . '</div>';
     }
 
     $output .= "<div class='total_number'>";
@@ -2372,15 +2384,15 @@ function ui_pagination(
                 $script_modified
             );
 
-            $firstHref = 'javascript: '.$script_modified.';';
+            $firstHref = 'javascript: ' . $script_modified . ';';
         } else {
-            $firstHref = io_safe_output($url).'&amp;'.$offset_name.'=0';
+            $firstHref = io_safe_output($url) . '&amp;' . $offset_name . '=0';
         }
 
         $output .= html_print_anchor(
             [
                 'href'    => $firstHref,
-                'class'   => 'pandora_pagination '.$other_class.' offset_0 previous',
+                'class'   => 'pandora_pagination ' . $other_class . ' offset_0 previous',
                 'content' => __('First'),
             ],
             true
@@ -2412,15 +2424,15 @@ function ui_pagination(
                 $script_modified
             );
 
-            $previousHref = 'javascript: '.$script_modified.';';
+            $previousHref = 'javascript: ' . $script_modified . ';';
         } else {
-            $previousHref = io_safe_output($url).'&amp;'.$offset_name.'='.$offset_previous_page;
+            $previousHref = io_safe_output($url) . '&amp;' . $offset_name . '=' . $offset_previous_page;
         }
 
         $output .= html_print_anchor(
             [
                 'href'    => $previousHref,
-                'class'   => 'pandora_pagination '.$other_class.' offset_'.$offset_previous_page,
+                'class'   => 'pandora_pagination ' . $other_class . ' offset_' . $offset_previous_page,
                 'content' => __('Previous'),
             ],
             true
@@ -2448,9 +2460,9 @@ function ui_pagination(
                 $script_modified
             );
 
-            $anchorHref = 'javascript: '.$script_modified.';';
+            $anchorHref = 'javascript: ' . $script_modified . ';';
         } else {
-            $anchorHref = $url.'&amp;'.$offset_name.'='.$offset_page;
+            $anchorHref = $url . '&amp;' . $offset_name . '=' . $offset_page;
         }
 
         $output .= html_print_anchor(
@@ -2493,15 +2505,15 @@ function ui_pagination(
                 $script_modified
             );
 
-            $nextHref = 'javascript: '.$script_modified.';';
+            $nextHref = 'javascript: ' . $script_modified . ';';
         } else {
-            $nextHref = $url.'&amp;'.$offset_name.'='.$offset_next_page;
+            $nextHref = $url . '&amp;' . $offset_name . '=' . $offset_next_page;
         }
 
         $output .= html_print_anchor(
             [
                 'href'    => $nextHref,
-                'class'   => 'pandora_pagination '.$other_class.' offset_'.$offset_next_page,
+                'class'   => 'pandora_pagination ' . $other_class . ' offset_' . $offset_next_page,
                 'content' => __('Next'),
             ],
             true
@@ -2525,15 +2537,15 @@ function ui_pagination(
                 $script_modified
             );
 
-            $lastHref = 'javascript: '.$script_modified.';';
+            $lastHref = 'javascript: ' . $script_modified . ';';
         } else {
-            $lastHref = $url.'&amp;'.$offset_name.'='.$offset_lastpage;
+            $lastHref = $url . '&amp;' . $offset_name . '=' . $offset_lastpage;
         }
 
         $output .= html_print_anchor(
             [
                 'href'    => $lastHref,
-                'class'   => 'pandora_pagination '.$other_class.' offset_'.$offset_lastpage.' next',
+                'class'   => 'pandora_pagination ' . $other_class . ' offset_' . $offset_lastpage . ' next',
                 'content' => __('Last'),
             ],
             true
@@ -2561,7 +2573,7 @@ function ui_pagination(
  *
  * @return string HTML code if return parameter is true.
  */
-function ui_print_session_action_icon($action, $return=false)
+function ui_print_session_action_icon($action, $return = false)
 {
     global $config;
 
@@ -2594,7 +2606,7 @@ function ui_print_session_action_icon($action, $return=false)
     $output = '';
     foreach ($key_icon as $key => $icon) {
         if (stristr($action, $key) !== false) {
-            $output = html_print_image($icon, true, ['title' => $action, 'class' => 'main_menu_icon invert_filter'], false, false, false, true).' ';
+            $output = html_print_image($icon, true, ['title' => $action, 'class' => 'main_menu_icon invert_filter'], false, false, false, true) . ' ';
             break;
         }
     }
@@ -2620,17 +2632,17 @@ function ui_print_session_action_icon($action, $return=false)
  */
 function ui_print_help_tip(
     $text,
-    $return=false,
-    $img='images/info@svg.svg',
-    $is_relative=false,
-    $style='',
-    $blink=false
+    $return = false,
+    $img = 'images/info@svg.svg',
+    $is_relative = false,
+    $style = '',
+    $blink = false
 ) {
     if (empty($img) === true) {
         $img = 'images/info@svg.svg';
     }
 
-    $output = '<a href="javascript:" class="tip" style="'.$style.'" >';
+    $output = '<a href="javascript:" class="tip" style="' . $style . '" >';
     $output .= html_print_image(
         $img,
         true,
@@ -2641,7 +2653,7 @@ function ui_print_help_tip(
         ],
         false,
         $is_relative && is_metaconsole()
-    ).'</a>';
+    ) . '</a>';
 
     if ($return) {
         return $output;
@@ -2662,16 +2674,16 @@ function ui_print_help_tip(
  */
 function ui_print_input_placeholder(
     string $text,
-    bool $return=false,
-    array $options=[]
+    bool $return = false,
+    array $options = []
 ) {
     $wrapper = (isset($options['wrapper']) === true) ? $options['wrapper'] : 'span';
     $attibutes = [];
-    $attibutes[] = 'class="'.((isset($options['class']) === true) ? $options['class'] : 'input_sub_placeholder').'"';
+    $attibutes[] = 'class="' . ((isset($options['class']) === true) ? $options['class'] : 'input_sub_placeholder') . '"';
     $attibutes[] = (isset($options['rawattributes']) === true) ? $options['rawattributes'] : '';
-    $attibutes[] = (isset($options['style']) === true) ? 'style="'.$options['style'].'"' : '';
-    $attibutes[] = (isset($options['id']) === true) ? 'id="'.$options['id'].'"' : '';
-    $attibutes[] = (isset($options['title']) === true) ? 'title="'.$options['title'].'"' : '';
+    $attibutes[] = (isset($options['style']) === true) ? 'style="' . $options['style'] . '"' : '';
+    $attibutes[] = (isset($options['id']) === true) ? 'id="' . $options['id'] . '"' : '';
+    $attibutes[] = (isset($options['title']) === true) ? 'title="' . $options['title'] . '"' : '';
 
     $output = sprintf(
         '<%s %s>%s</%s>',
@@ -2701,17 +2713,17 @@ function ui_print_input_placeholder(
  */
 function ui_print_help_tip_border(
     $text,
-    $return=false,
-    $img='images/tip_border.png',
-    $is_relative=false
+    $return = false,
+    $img = 'images/tip_border.png',
+    $is_relative = false
 ) {
-    $output = '<a href="javascript:" class="tip" >'.html_print_image(
+    $output = '<a href="javascript:" class="tip" >' . html_print_image(
         $img,
         true,
         ['title' => $text],
         false,
         $is_relative && is_metaconsole()
-    ).'</a>';
+    ) . '</a>';
 
     if ($return) {
         return $output;
@@ -2731,10 +2743,10 @@ function ui_print_help_tip_border(
  *
  * @return boolean Tru if the debug was actived. False if not.
  */
-function ui_debug($var, $backtrace=true)
+function ui_debug($var, $backtrace = true)
 {
     global $config;
-    if (! isset($config['debug'])) {
+    if (!isset($config['debug'])) {
         return false;
     }
 
@@ -2745,8 +2757,8 @@ function ui_debug($var, $backtrace=true)
 
     if ($backtrace) {
         echo '<div class="debug">';
-        echo '<a href="#" onclick="$(\'#trace-'.$id.'\').toggle ();return false;">Backtrace</a>';
-        echo '<div id="trace-'.$id.'" class="backtrace invisible">';
+        echo '<a href="#" onclick="$(\'#trace-' . $id . '\').toggle ();return false;">Backtrace</a>';
+        echo '<div id="trace-' . $id . '" class="backtrace invisible">';
         echo '<ol>';
         $traces = debug_backtrace();
         // Ignore debug function.
@@ -2761,25 +2773,25 @@ function ui_debug($var, $backtrace=true)
 
             echo '<li>';
             if (isset($trace['class'])) {
-                echo '<span class="class">'.$trace['class'].'</span>';
+                echo '<span class="class">' . $trace['class'] . '</span>';
             }
 
             if (isset($trace['type'])) {
-                echo '<span class="type">'.$trace['type'].'</span>';
+                echo '<span class="type">' . $trace['type'] . '</span>';
             }
 
             echo '<span class="function">';
-            echo '<a href="#" onclick="$(\'#args-'.$trace_id.'\').toggle ();return false;">'.$trace['function'].'()</a>';
+            echo '<a href="#" onclick="$(\'#args-' . $trace_id . '\').toggle ();return false;">' . $trace['function'] . '()</a>';
             echo '</span>';
             if (isset($trace['file'])) {
                 echo ' - <span class="filename">';
-                echo str_replace($config['homedir'].'/', '', $trace['file']);
-                echo ':'.$trace['line'].'</span>';
+                echo str_replace($config['homedir'] . '/', '', $trace['file']);
+                echo ':' . $trace['line'] . '</span>';
             } else {
                 echo ' - <span class="filename"><em>Unknown file</em></span>';
             }
 
-            echo '<pre id="args-'.$trace_id.'" class="invisible">';
+            echo '<pre id="args-' . $trace_id . '" class="invisible">';
             echo '<div class="parameters">Parameter values:</div>';
             echo '<ol>';
             foreach ($trace['args'] as $arg) {
@@ -2819,10 +2831,10 @@ function ui_debug($var, $backtrace=true)
  */
 function ui_print_moduletype_icon(
     $id_moduletype,
-    $return=false,
-    $relative=false,
-    $options=true,
-    $src=false
+    $return = false,
+    $relative = false,
+    $options = true,
+    $src = false
 ) {
     global $config;
 
@@ -2841,9 +2853,9 @@ function ui_print_moduletype_icon(
         $type['icon'] = 'b_down.png';
     }
 
-    $imagepath = 'images/'.$type['icon'];
-    if (! file_exists($config['homedir'].'/'.$imagepath)) {
-        $imagepath = ENTERPRISE_DIR.'/'.$imagepath;
+    $imagepath = 'images/' . $type['icon'];
+    if (!file_exists($config['homedir'] . '/' . $imagepath)) {
+        $imagepath = ENTERPRISE_DIR . '/' . $imagepath;
     }
 
     if ($src) {
@@ -2894,9 +2906,9 @@ function ui_print_module_warn_value(
     $max_critical,
     $min_critical,
     $str_critical,
-    $warning_inverse=0,
-    $critical_inverse=0,
-    $attributes=''
+    $warning_inverse = 0,
+    $critical_inverse = 0,
+    $attributes = ''
 ) {
     $war_inv = '';
     $crit_inv = '';
@@ -2909,10 +2921,10 @@ function ui_print_module_warn_value(
         $crit_inv = ' (inv)';
     }
 
-    $data = '<span '.$attributes.' title="'.__('Warning').': '.__('Max').$max_warning.'/'.__('Min').$min_warning.$war_inv.' - '.__('Critical').': '.__('Max').$max_critical.'/'.__('Min').$min_critical.$crit_inv.'">';
+    $data = '<span ' . $attributes . ' title="' . __('Warning') . ': ' . __('Max') . $max_warning . '/' . __('Min') . $min_warning . $war_inv . ' - ' . __('Critical') . ': ' . __('Max') . $max_critical . '/' . __('Min') . $min_critical . $crit_inv . '">';
 
     if ($max_warning != $min_warning) {
-        $data .= format_for_graph($max_warning).'/'.format_for_graph($min_warning);
+        $data .= format_for_graph($max_warning) . '/' . format_for_graph($min_warning);
     } else {
         $data .= __('N/A');
     }
@@ -2920,7 +2932,7 @@ function ui_print_module_warn_value(
     $data .= ' - ';
 
     if ($max_critical != $min_critical) {
-        $data .= format_for_graph($max_critical).'/'.format_for_graph($min_critical);
+        $data .= format_for_graph($max_critical) . '/' . format_for_graph($min_critical);
     } else {
         $data .= __('N/A');
     }
@@ -2948,13 +2960,13 @@ function ui_format_filesize($bytes)
         'TB',
     ];
     if ($bytes <= 0) {
-        return '0 '.$strs[0];
+        return '0 ' . $strs[0];
     }
 
     $con = 1024;
     $log = (int) (log($bytes, $con));
 
-    return format_numeric(($bytes / pow($con, $log)), 1).' '.$strs[$log];
+    return format_numeric(($bytes / pow($con, $log)), 1) . ' ' . $strs[$log];
 }
 
 
@@ -2986,7 +2998,7 @@ function ui_get_status_images_path()
     $imagewidth  = $array_split_size[0];
     $imageheight = $array_split_size[1];
 
-    $imagespath = 'images/status_sets/'.$imageset;
+    $imagespath = 'images/status_sets/' . $imageset;
 
     return [$imagespath];
 }
@@ -3007,12 +3019,12 @@ function ui_get_status_images_path()
  */
 function ui_print_status_image(
     $type,
-    $title='',
-    $return=false,
-    $options=false,
-    $path=false,
-    $image_with_css=false,
-    $extra_info=''
+    $title = '',
+    $return = false,
+    $options = false,
+    $path = false,
+    $image_with_css = false,
+    $extra_info = ''
 ) {
     if ($path === false) {
         $imagepath_array = ui_get_status_images_path();
@@ -3030,7 +3042,7 @@ function ui_print_status_image(
         // $shape_status['is_tree_view'] = true;
         return ui_print_status_sets($type, $title, $return, $shape_status, $extra_info);
     } else {
-        $imagepath .= '/'.$type;
+        $imagepath .= '/' . $type;
         if ($options === false) {
             $options = [];
         }
@@ -3055,20 +3067,20 @@ function ui_print_status_image(
  */
 function ui_print_module_status(
     $status,
-    $return=false,
-    $class='status_rounded_rectangles',
-    $title=null,
-    $div_content=''
+    $return = false,
+    $class = 'status_rounded_rectangles',
+    $title = null,
+    $div_content = ''
 ) {
     $color = modules_get_color_status($status, true);
     if ($title === null) {
         $title = modules_get_modules_status($status);
     }
 
-    $output = '<div style="background: '.$color;
-    $output .= '" class="'.$class;
-    $output .= ' forced_title" data-title="'.$title.'" title="';
-    $output .= $title.'" data-use_title_for_force_title="1">'.$div_content.'</div>';
+    $output = '<div style="background: ' . $color;
+    $output .= '" class="' . $class;
+    $output .= ' forced_title" data-title="' . $title . '" title="';
+    $output .= $title . '" data-use_title_for_force_title="1">' . $div_content . '</div>';
 
     if ($return === false) {
         echo $output;
@@ -3088,7 +3100,7 @@ function ui_print_module_status(
 function get_shape_status_set($type)
 {
     switch ($type) {
-        // Rounded rectangles.
+            // Rounded rectangles.
         case STATUS_ALERT_NOT_FIRED:
         case STATUS_ALERT_FIRED:
         case STATUS_ALERT_DISABLED:
@@ -3106,16 +3118,16 @@ function get_shape_status_set($type)
         case STATUS_AGENT_DOWN:
         case STATUS_AGENT_NO_MONITORS:
             $return = ['class' => 'status_rounded_rectangles'];
-        break;
+            break;
 
-        // Small squares.
+            // Small squares.
         case STATUS_SERVER_OK:
         case STATUS_SERVER_DOWN:
         case STATUS_SERVER_CRASH:
             $return = ['class' => 'status_small_squares'];
-        break;
+            break;
 
-        // Balls.
+            // Balls.
         case STATUS_AGENT_CRITICAL_BALL:
         case STATUS_AGENT_WARNING_BALL:
         case STATUS_AGENT_DOWN_BALL:
@@ -3127,9 +3139,9 @@ function get_shape_status_set($type)
         case STATUS_SERVER_DOWN_BALL:
         case STATUS_SERVER_CRASH_BALL:
             $return = ['class' => 'status_balls'];
-        break;
+            break;
 
-        // Small Balls.
+            // Small Balls.
         case STATUS_MODULE_OK_BALL:
         case STATUS_MODULE_CRITICAL_BALL:
         case STATUS_MODULE_WARNING_BALL:
@@ -3140,11 +3152,11 @@ function get_shape_status_set($type)
         case STATUS_ALERT_DISABLED_BALL:
             $return = ['class' => 'status_small_balls'];
             // $return = ['class' => 'status_balls'];
-        break;
+            break;
 
         default:
             // Ignored.
-        break;
+            break;
     }
 
     return $return;
@@ -3164,11 +3176,11 @@ function get_shape_status_set($type)
  */
 function ui_print_status_sets(
     $status,
-    $title='',
-    $return=false,
-    $options=false,
-    $extra_info='',
-    $get_status_color=true
+    $title = '',
+    $return = false,
+    $options = false,
+    $extra_info = '',
+    $get_status_color = true
 ) {
     global $config;
 
@@ -3183,7 +3195,7 @@ function ui_print_status_sets(
     }
 
     if ($get_status_color === true) {
-        $options['style'] .= ' background: '.modules_get_color_status($status).';';
+        $options['style'] .= ' background: ' . modules_get_color_status($status) . ';';
     }
 
     if (isset($options['is_tree_view']) === true) {
@@ -3193,8 +3205,8 @@ function ui_print_status_sets(
     }
 
     if (empty($title) === false) {
-        $options['title'] = (empty($extra_info) === true) ? $title : $title.'&#10'.$extra_info;
-        $options['data-title'] = (empty($extra_info) === true) ? $title : $title.'<br>'.$extra_info;
+        $options['title'] = (empty($extra_info) === true) ? $title : $title . '&#10' . $extra_info;
+        $options['data-title'] = (empty($extra_info) === true) ? $title : $title . '<br>' . $extra_info;
         $options['data-use_title_for_force_title'] = 1;
         if (isset($options['class']) === true) {
             $options['class'] .= ' forced_title';
@@ -3205,7 +3217,7 @@ function ui_print_status_sets(
 
     $output = '<div ';
     foreach ($options as $k => $v) {
-        $output .= $k.'="'.$v.'"';
+        $output .= $k . '="' . $v . '"';
     }
 
     $output .= '>&nbsp;</div>';
@@ -3255,13 +3267,13 @@ function ui_print_status_sets(
  */
 function ui_progress(
     $progress,
-    $width='100%',
-    $height='2.5',
-    $color='#0B579B',
-    $return=true,
-    $text='',
-    $ajax=false,
-    $otherStyles=''
+    $width = '100%',
+    $height = '2.5',
+    $color = '#0B579B',
+    $return = true,
+    $text = '',
+    $ajax = false,
+    $otherStyles = ''
 ) {
     if (!$progress) {
         $progress = 0;
@@ -3276,15 +3288,15 @@ function ui_progress(
     }
 
     if (empty($text)) {
-        $text = $progress.'%';
+        $text = $progress . '%';
     }
 
     $id = uniqid();
 
     ui_require_css_file('progress');
-    $output = '<span id="'.$id.'" class="progress_main" data-label="'.$text;
-    $output .= '" style="width: '.$width.'; height: '.$height.'em; border-color: '.$color.'; '.$otherStyles.'">';
-    $output .= '<span id="'.$id.'_progress" class="progress" style="width: '.$progress.'%; background: '.$color.'"></span>';
+    $output = '<span id="' . $id . '" class="progress_main" data-label="' . $text;
+    $output .= '" style="width: ' . $width . '; height: ' . $height . 'em; border-color: ' . $color . '; ' . $otherStyles . '">';
+    $output .= '<span id="' . $id . '_progress" class="progress" style="width: ' . $progress . '%; background: ' . $color . '"></span>';
     $output .= '</span>';
 
     if ($ajax !== false && is_array($ajax)) {
@@ -3293,27 +3305,27 @@ function ui_progress(
     $(document).ready(function() {
         setInterval(() => {
                 $.post({
-                    url: "'.ui_get_full_url('ajax.php', false, false, false).'",
+                    url: "' . ui_get_full_url('ajax.php', false, false, false) . '",
                     data: {';
             if (is_array($ajax['data'])) {
                 foreach ($ajax['data'] as $token => $value) {
                     $output .= '
-                            '.$token.':"'.$value.'",';
+                            ' . $token . ':"' . $value . '",';
                 }
             }
 
             $output .= '
-                        page: "'.$ajax['page'].'"
+                        page: "' . $ajax['page'] . '"
                     },
                     success: function(data) {
                         try {
                             val = JSON.parse(data);
-                            $("#'.$id.'").attr("data-label", val + " %");
-                            $("#'.$id.'_progress").width(val+"%");';
+                            $("#' . $id . '").attr("data-label", val + " %");
+                            $("#' . $id . '_progress").width(val+"%");';
             if (isset($ajax['oncomplete'])) {
                 $output .= '
                             if (val == 100) {
-                                '.$ajax['oncomplete'].'($("#'.$id.'"));
+                                ' . $ajax['oncomplete'] . '($("#' . $id . '"));
                             }
                 ';
             }
@@ -3324,54 +3336,54 @@ function ui_progress(
                         }
                     }
                 });
-            }, '.($ajax['interval'] > 0 ? $ajax['interval'] * 1000 : 30000 ).');
+            }, ' . ($ajax['interval'] > 0 ? $ajax['interval'] * 1000 : 30000) . ');
     });
     </script>';
         } else {
             $output .= '<script type="text/javascript">
     $(document).ready(function() {
         setInterval(() => {
-                last = $("#'.$id.'").attr("data-label").split(" ")[0]*1;
-                width = $("#'.$id.'_progress").width() / $("#'.$id.'_progress").parent().width() * 100;
-                width_interval = '.$ajax['interval'].';
+                last = $("#' . $id . '").attr("data-label").split(" ")[0]*1;
+                width = $("#' . $id . '_progress").width() / $("#' . $id . '_progress").parent().width() * 100;
+                width_interval = ' . $ajax['interval'] . ';
                 if (last % 10 == 0) {
                     $.post({
-                        url: "'.ui_get_full_url('ajax.php', false, false, false).'",
+                        url: "' . ui_get_full_url('ajax.php', false, false, false) . '",
                         data: {';
             if (is_array($ajax['data'])) {
                 foreach ($ajax['data'] as $token => $value) {
                     $output .= '
-                                '.$token.':"'.$value.'",';
+                                ' . $token . ':"' . $value . '",';
                 }
             }
 
             $output .= '
-                            page: "'.$ajax['page'].'"
+                            page: "' . $ajax['page'] . '"
                         },
                         success: function(data) {
                             try {
                                 val = JSON.parse(data);
                                 if (isNaN(val["last_contact"]) == false) {
-                                    $("#'.$id.'").attr("data-label", val["last_contact"]+" s");
+                                    $("#' . $id . '").attr("data-label", val["last_contact"]+" s");
                                 }
 
-                                $("#'.$id.'_progress").width(val["progress"]+"%");
+                                $("#' . $id . '_progress").width(val["progress"]+"%");
                             } catch (e) {
                                 console.error(e);
                                 $(".progress_text").attr("data-label", (last -1) + " s");
                                 if (width < 100) {
-                                    $("#'.$id.'_progress").width((width+width_interval) + "%");
+                                    $("#' . $id . '_progress").width((width+width_interval) + "%");
                                 }
                             }
                         }
                     });
                 } else {
                     if (isNaN(last) === false) {
-                        $("#'.$id.'").attr("data-label", (last -1) + " s");
+                        $("#' . $id . '").attr("data-label", (last -1) + " s");
                     }
 
                     if (width < 100) {
-                        $("#'.$id.'_progress").width((width+width_interval) + "%");
+                        $("#' . $id . '_progress").width((width+width_interval) + "%");
                     }
                 }
             }, 1000);
@@ -3442,16 +3454,16 @@ function ui_progress_extend(
 
     // Main container.
     $output = '<div class="progress_main_noborder" ';
-    $output .= '" style="width:'.$data['width'].'%;';
-    $output .= ' height:'.$data['height'].'em;">';
+    $output .= '" style="width:' . $data['width'] . '%;';
+    $output .= ' height:' . $data['height'] . 'em;">';
 
     foreach ($data['slices'] as $label => $def) {
         $width = ($def['value'] * 100 / $total);
         $output .= '<div class="progress forced_title" ';
-        $output .= ' data-title="'.$label.': '.$def['value'].'" ';
+        $output .= ' data-title="' . $label . ': ' . $def['value'] . '" ';
         $output .= ' data-use_title_for_force_title="1"';
-        $output .= ' style="width:'.$width.'%;';
-        $output .= ' background-color:'.$def['color'].';';
+        $output .= ' style="width:' . $width . '%;';
+        $output .= ' background-color:' . $def['color'] . ';';
         $output .= '">';
         $output .= '</div>';
     }
@@ -3556,7 +3568,7 @@ function ui_print_datatable(array $parameters)
 
     if (isset($parameters['id'])) {
         $table_id = $parameters['id'];
-        $form_id = 'form_'.$parameters['id'];
+        $form_id = 'form_' . $parameters['id'];
     } else {
         $table_id = uniqid('datatable_');
         $form_id = uniqid('datatable_filter_');
@@ -3566,7 +3578,8 @@ function ui_print_datatable(array $parameters)
         throw new Exception('[ui_print_datatable]: You must define columns for datatable');
     }
 
-    if (isset($parameters['column_names'])
+    if (
+        isset($parameters['column_names'])
         && is_array($parameters['column_names'])
         && count($parameters['columns']) != count($parameters['column_names'])
     ) {
@@ -3618,7 +3631,7 @@ function ui_print_datatable(array $parameters)
             }
         }
 
-        $order .= ', "'.$parameters['order']['direction'].'"';
+        $order .= ', "' . $parameters['order']['direction'] . '"';
     }
 
     if (!isset($parameters['ajax_data'])) {
@@ -3659,7 +3672,8 @@ function ui_print_datatable(array $parameters)
         ];
     }
 
-    if (isset($parameters['datacolumns']) === false
+    if (
+        isset($parameters['datacolumns']) === false
         || is_array($parameters['datacolumns']) === false
     ) {
         $parameters['datacolumns'] = $parameters['columns'];
@@ -3671,7 +3685,7 @@ function ui_print_datatable(array $parameters)
 
     $dom_elements = '"plfrtiB"';
     if (isset($parameters['dom_elements'])) {
-        $dom_elements = '"'.$parameters['dom_elements'].'"';
+        $dom_elements = '"' . $parameters['dom_elements'] . '"';
     }
 
     $filter = '';
@@ -3699,10 +3713,10 @@ function ui_print_datatable(array $parameters)
             $form_js = '';
         }
 
-        $filter = '<form class="'.$form_class.'" ';
-        $filter .= ' id="'.$form_id.'" ';
-        $filter .= ' style="'.$form_style.'" ';
-        $filter .= ' onsubmit="'.$form_js.';return false;">';
+        $filter = '<form class="' . $form_class . '" ';
+        $filter .= ' id="' . $form_id . '" ';
+        $filter .= ' style="' . $form_style . '" ';
+        $filter .= ' onsubmit="' . $form_js . ';return false;">';
 
         if (isset($parameters['form']['html'])) {
             $filter .= $parameters['form']['html'];
@@ -3717,7 +3731,8 @@ function ui_print_datatable(array $parameters)
         $filter .= '</ul>';
         // Extra buttons.
         $extra_buttons = '';
-        if (isset($parameters['form']['extra_buttons']) === true
+        if (
+            isset($parameters['form']['extra_buttons']) === true
             && is_array($parameters['form']['extra_buttons']) === true
         ) {
             foreach ($parameters['form']['extra_buttons'] as $button) {
@@ -3743,7 +3758,7 @@ function ui_print_datatable(array $parameters)
                 'class'   => 'action-buttons',
                 'content' => html_print_submit_button(
                     __('Filter'),
-                    $form_id.'_search_bt',
+                    $form_id . '_search_bt',
                     false,
                     [
                         'icon'  => 'search',
@@ -3751,7 +3766,7 @@ function ui_print_datatable(array $parameters)
                         'class' => $search_button_class,
                     ],
                     true
-                ).$extra_buttons,
+                ) . $extra_buttons,
             ],
             true
         );
@@ -3760,33 +3775,33 @@ function ui_print_datatable(array $parameters)
         if (isset($parameters['form']['no_toggle']) === false) {
             $filter = ui_toggle(
                 $filter,
-                '<span class="subsection_header_title">'.__('Filters').'</span>',
+                '<span class="subsection_header_title">' . __('Filters') . '</span>',
                 '',
                 '',
                 $parameters['toggle_collapsed'],
                 false,
                 '',
                 'no-border filter-datatable-submain',
-                'filter-datatable-main '.$parameters['filter_main_class']
+                'filter-datatable-main ' . $parameters['filter_main_class']
             );
         }
     } else if (isset($parameters['form_html'])) {
         $filter = ui_toggle(
             $parameters['form_html'],
-            '<span class="subsection_header_title">'.__('Filters').'</span>',
+            '<span class="subsection_header_title">' . __('Filters') . '</span>',
             '',
             '',
             $parameters['toggle_collapsed'],
             false,
             '',
             'no-border filter-datatable-submain',
-            'box-float white_table_graph filter-datatable-main '.$parameters['filter_main_class']
+            'box-float white_table_graph filter-datatable-main ' . $parameters['filter_main_class']
         );
     }
 
     // Languages.
     $processing = '<div class=\'processing-datatables-inside\'>';
-    $processing .= '<i>'.__('Processing').'</i> ';
+    $processing .= '<i>' . __('Processing') . '</i> ';
     $processing .= str_replace(
         '"',
         "'",
@@ -3807,12 +3822,13 @@ function ui_print_datatable(array $parameters)
     }
 
     // Base table.
-    $table = '<table id="'.$table_id.'" ';
-    $table .= 'class="'.$parameters['class'].' invisible"';
-    $table .= 'style="'.$parameters['style'].'">';
+    $table = '<table id="' . $table_id . '" ';
+    $table .= 'class="' . $parameters['class'] . ' invisible"';
+    $table .= 'style="' . $parameters['style'] . '">';
     $table .= '<thead><tr class="datatables_thead_tr">';
 
-    if (isset($parameters['column_names'])
+    if (
+        isset($parameters['column_names'])
         && is_array($parameters['column_names'])
     ) {
         $names = $parameters['column_names'];
@@ -3822,16 +3838,16 @@ function ui_print_datatable(array $parameters)
 
     foreach ($names as $column) {
         if (is_array($column)) {
-            $table .= '<th id="'.$column['id'].'" class="'.$column['class'].'" ';
+            $table .= '<th id="' . $column['id'] . '" class="' . $column['class'] . '" ';
             if (isset($column['title']) === true) {
-                $table .= 'title="'.__($column['title']).'" ';
+                $table .= 'title="' . __($column['title']) . '" ';
             }
 
-            $table .= ' style="'.$column['style'].'">'.__($column['text']);
+            $table .= ' style="' . $column['style'] . '">' . __($column['text']);
             $table .= $column['extra'];
             $table .= '</th>';
         } else {
-            $table .= '<th>'.__($column).'</th>';
+            $table .= '<th>' . __($column) . '</th>';
         }
     }
 
@@ -3842,7 +3858,7 @@ function ui_print_datatable(array $parameters)
         foreach ($parameters['data_element'] as $row) {
             $table .= '<tr>';
             foreach ($row as $td_data) {
-                $table .= '<td>'.$td_data.'</td>';
+                $table .= '<td>' . $td_data . '</td>';
             }
 
             $table .= '</tr>';
@@ -3852,14 +3868,14 @@ function ui_print_datatable(array $parameters)
 
         $js = '<script>
             $.fn.dataTable.ext.classes.sPageButton = "pandora_pagination mini-pandora-pagination"
-            var table = $("#'.$table_id.'").DataTable({
-                "dom": "'.$parameters['dom_elements'].'"
+            var table = $("#' . $table_id . '").DataTable({
+                "dom": "' . $parameters['dom_elements'] . '"
             });
             $("div.spinner-fixed").hide();
-            $("table#'.$table_id.'").removeClass("invisible");
-            $("#'.$table_id.'_filter > label > input").addClass("mini-search-input");
+            $("table#' . $table_id . '").removeClass("invisible");
+            $("#' . $table_id . '_filter > label > input").addClass("mini-search-input");
             if (table.page.info().pages == 1) {
-                $("#'.$table_id.'_paginate").hide();
+                $("#' . $table_id . '_paginate").hide();
             }
         </script>';
     }
@@ -3874,14 +3890,15 @@ function ui_print_datatable(array $parameters)
     $columns = '';
     for ($i = 1; $i <= (count($parameters['columns']) - 3); $i++) {
         if ($i != (count($parameters['columns']) - 3)) {
-            $columns .= $i.',';
+            $columns .= $i . ',';
         } else {
             $columns .= $i;
         }
     }
 
     $export_columns = '';
-    if (isset($parameters['csv_exclude_latest']) === true
+    if (
+        isset($parameters['csv_exclude_latest']) === true
         && $parameters['csv_exclude_latest'] === true
     ) {
         $export_columns = ',columns: \'th:not(:last-child)\'';
@@ -3890,17 +3907,17 @@ function ui_print_datatable(array $parameters)
     if (isset($parameters['data_element']) === false || isset($parameters['print_pagination_search_csv'])) {
         if (isset($parameters['ajax_url'])) {
             $type_data = 'ajax: {
-                url: "'.ui_get_full_url('ajax.php', false, false, false).'",
+                url: "' . ui_get_full_url('ajax.php', false, false, false) . '",
                 type: "POST",
                 dataSrc: function (json) {
-                    if($("#'.$form_id.'_search_bt") != undefined) {
-                        $("#'.$form_id.'_loading").remove();
+                    if($("#' . $form_id . '_search_bt") != undefined) {
+                        $("#' . $form_id . '_loading").remove();
                     }
 
                     if (json.error) {
                         console.error(json.error);
-                        $("#error-'.$table_id.'").html(json.error);
-                        $("#error-'.$table_id.'").dialog({
+                        $("#error-' . $table_id . '").html(json.error);
+                        $("#error-' . $table_id . '").dialog({
                             title: "Filter failed",
                             width: 630,
                             resizable: true,
@@ -3915,14 +3932,15 @@ function ui_print_datatable(array $parameters)
                         }).parent().addClass("ui-state-error");
                     } else {';
 
-            if (isset($parameters['ajax_return_operation']) === true
+            if (
+                isset($parameters['ajax_return_operation']) === true
                 && empty($parameters['ajax_return_operation']) === false
                 && isset($parameters['ajax_return_operation_function']) === true
                 && empty($parameters['ajax_return_operation_function']) === false
             ) {
                 $type_data .= '
-            if (json.'.$parameters['ajax_return_operation'].' !== undefined) {
-                '.$parameters['ajax_return_operation_function'].'(json.'.$parameters['ajax_return_operation'].');
+            if (json.' . $parameters['ajax_return_operation'] . ' !== undefined) {
+                ' . $parameters['ajax_return_operation_function'] . '(json.' . $parameters['ajax_return_operation'] . ');
             }
         ';
             }
@@ -3931,7 +3949,7 @@ function ui_print_datatable(array $parameters)
                 $type_data .= '
                     if (json.data) {
                         json.data.forEach(function(item) {
-                            '.$parameters['ajax_postprocess'].'
+                            ' . $parameters['ajax_postprocess'] . '
                         });
                     } else {
                         json.data = {};
@@ -3943,19 +3961,19 @@ function ui_print_datatable(array $parameters)
                     }
                 },
                 data: function (data) {
-                    if($("#button-'.$form_id.'_search_bt") != undefined) {
-                        var loading = \''.html_print_image(
-                        'images/spinner.gif',
-                        true,
-                        [
-                            'id'    => $form_id.'_loading',
-                            'class' => 'loading-search-datatables-button',
-                        ]
-                    ).'\';
-                        $("#button-'.$form_id.'_search_bt").parent().append(loading);
+                    if($("#button-' . $form_id . '_search_bt") != undefined) {
+                        var loading = \'' . html_print_image(
+                'images/spinner.gif',
+                true,
+                [
+                    'id'    => $form_id . '_loading',
+                    'class' => 'loading-search-datatables-button',
+                ]
+            ) . '\';
+                        $("#button-' . $form_id . '_search_bt").parent().append(loading);
                     }
 
-                    inputs = $("#'.$form_id.' :input");
+                    inputs = $("#' . $form_id . ' :input");
 
                     values = {};
                     inputs.each(function() {
@@ -3963,22 +3981,22 @@ function ui_print_datatable(array $parameters)
                     })
 
                     $.extend(data, {
-                        filter: values,'."\n";
+                        filter: values,' . "\n";
 
             if (is_array($parameters['ajax_data'])) {
                 foreach ($parameters['ajax_data'] as $k => $v) {
-                    $type_data .= $k.':'.json_encode($v).",\n";
+                    $type_data .= $k . ':' . json_encode($v) . ",\n";
                 }
             }
 
-            $type_data .= 'page: "'.$parameters['ajax_url'].'"
+            $type_data .= 'page: "' . $parameters['ajax_url'] . '"
                     });
 
                     return data;
                 }
             },';
         } else {
-            $type_data = 'data: '.json_encode($parameters['data_element']).',';
+            $type_data = 'data: ' . json_encode($parameters['data_element']) . ',';
         }
 
         $serverside = 'true';
@@ -3990,40 +4008,40 @@ function ui_print_datatable(array $parameters)
         $js = '<script type="text/javascript">
         $(document).ready(function(){
             $.fn.dataTable.ext.errMode = "none";
-            $.fn.dataTable.ext.classes.sPageButton = "'.$pagination_class.'";
+            $.fn.dataTable.ext.classes.sPageButton = "' . $pagination_class . '";
 
             var settings_datatable = {
                 drawCallback: function(settings) {';
 
         if (!isset($parameters['data_element'])) {
-            $js .= 'if (dt_'.$table_id.'.page.info().pages > 1) {
-                        $("#'.$table_id.'_wrapper > .dataTables_paginate.paging_simple_numbers").show()
+            $js .= 'if (dt_' . $table_id . '.page.info().pages > 1) {
+                        $("#' . $table_id . '_wrapper > .dataTables_paginate.paging_simple_numbers").show()
                     } else {
-                        $("#'.$table_id.'_wrapper > .dataTables_paginate.paging_simple_numbers").hide()
+                        $("#' . $table_id . '_wrapper > .dataTables_paginate.paging_simple_numbers").hide()
                     }';
         }
 
-        $js .= 'if ($("#'.$table_id.' tr td").length == 1) {
-                    $(".datatable-msg-info-'.$table_id.'").show();
-                    $(".datatable-msg-info-'.$table_id.'").removeClass(\'invisible_important\');
-                    $("table#'.$table_id.'").hide();
+        $js .= 'if ($("#' . $table_id . ' tr td").length == 1) {
+                    $(".datatable-msg-info-' . $table_id . '").show();
+                    $(".datatable-msg-info-' . $table_id . '").removeClass(\'invisible_important\');
+                    $("table#' . $table_id . '").hide();
                     $("div.dataTables_paginate").hide();
                     $("div.dataTables_info").hide();
                     $("div.dataTables_length").hide();
                     $("div.dt-buttons").hide();
 
-                    if (dt_'.$table_id.'.page.info().pages > 1) {
+                    if (dt_' . $table_id . '.page.info().pages > 1) {
                         $(".dataTables_paginate.paging_simple_numbers").show()
                     }
                 } else {
-                    $(".datatable-msg-info-'.$table_id.'").hide();
-                    $("table#'.$table_id.'").show();
+                    $(".datatable-msg-info-' . $table_id . '").hide();
+                    $("table#' . $table_id . '").show();
                     $("div.dataTables_paginate").show();
                     $("div.dataTables_info").hide();
                     $("div.dataTables_length").show();
                     $("div.dt-buttons").show();
 
-                    if (dt_'.$table_id.'.page.info().pages == 1) {
+                    if (dt_' . $table_id . '.page.info().pages == 1) {
                         $(".dataTables_paginate.paging_simple_numbers").hide()
                     }
                 }';
@@ -4048,25 +4066,25 @@ function ui_print_datatable(array $parameters)
 
         $js .= '
                 processing: true,
-                serverSide: '.$serverside.',
-                paging: '.$parameters['paging'].',
-                pageLength: '.$parameters['default_pagination'].',
-                searching: '.$searching.',
+                serverSide: ' . $serverside . ',
+                paging: ' . $parameters['paging'] . ',
+                pageLength: ' . $parameters['default_pagination'] . ',
+                searching: ' . $searching . ',
                 responsive: true,
-                dom: '.$dom_elements.',
+                dom: ' . $dom_elements . ',
                 language: {
-                    url: "/pandora_console/include/javascript/i18n/dataTables.'.$languaje.'.json",
-                    processing:"'.$processing.'",
-                    zeroRecords:"'.$zeroRecords.'",
-                    emptyTable:"'.$emptyTable.'",
+                    url: "/pandora_console/include/javascript/i18n/dataTables.' . $languaje . '.json",
+                    processing:"' . $processing . '",
+                    zeroRecords:"' . $zeroRecords . '",
+                    emptyTable:"' . $emptyTable . '",
                 },
-                buttons: '.$parameters['csv'].'== 1 ? [
+                buttons: ' . $parameters['csv'] . '== 1 ? [
                     {
                         extend: "csv",
-                        text : "'.__('Export current page to CSV').'",
-                        titleAttr: "'.__('Export current page to CSV').'",
-                        title: "export_'.$parameters['id'].'_current_page_'.date('Y-m-d').'",
-                        fieldSeparator: "'.$config['csv_divider'].'",
+                        text : "' . __('Export current page to CSV') . '",
+                        titleAttr: "' . __('Export current page to CSV') . '",
+                        title: "export_' . $parameters['id'] . '_current_page_' . date('Y-m-d') . '",
+                        fieldSeparator: "' . $config['csv_divider'] . '",
                         action: function ( e, dt, node, config ) {
                             blockResubmit(node);
                             // Call the default csvHtml5 action method to create the CSV file
@@ -4078,16 +4096,16 @@ function ui_print_datatable(array $parameters)
                                 order : "current",
                                 page : "All",
                                 search : "applied"
-                            }'.$export_columns.'
+                            }' . $export_columns . '
                         },
                     }
                 ] : [],
-                lengthMenu: '.json_encode($pagination_options).',
+                lengthMenu: ' . json_encode($pagination_options) . ',
                 columnDefs: [
                     { className: "no-class", targets: "_all" },
-                    { bSortable: false, targets: '.$no_sortable_columns.' }
+                    { bSortable: false, targets: ' . $no_sortable_columns . ' }
                 ],
-                ordering: '.$ordering.',
+                ordering: ' . $ordering . ',
                 initComplete: function(settings, json) {
                     // Move elements to table_action_buttons bar.
                     $(".action_buttons_right_content").html("<div class=\"pagination-child-div\"></div>");
@@ -4095,45 +4113,46 @@ function ui_print_datatable(array $parameters)
                     $(".action_buttons_right_content").html("<div class=\"pagination-child-div\"></div>");
                     $(".action_buttons_right_content").html("<div class=\"pagination-child-div\"></div>");
 
-                    $(".pagination-child-div").append($("#'.$table_id.'_wrapper > .dataTables_paginate.paging_simple_numbers"));
-                    $(".pagination-child-div").append($("#'.$table_id.'_wrapper > .dataTables_length"));
-                    $(".pagination-child-div").append($("#'.$table_id.'_wrapper > .dt-buttons"));
-                    $(".pagination-child-div").append($("#'.$table_id.'_wrapper > .dataTables_filter"));
+                    $(".pagination-child-div").append($("#' . $table_id . '_wrapper > .dataTables_paginate.paging_simple_numbers"));
+                    $(".pagination-child-div").append($("#' . $table_id . '_wrapper > .dataTables_length"));
+                    $(".pagination-child-div").append($("#' . $table_id . '_wrapper > .dt-buttons"));
+                    $(".pagination-child-div").append($("#' . $table_id . '_wrapper > .dataTables_filter"));
                     $("div.spinner-fixed").hide();
                 },
                 columns: [';
 
         foreach ($parameters['datacolumns'] as $data) {
             if (is_array($data)) {
-                $js .= '{data : "'.$data['text'].'",className: "'.$data['class'].'"},';
+                $js .= '{data : "' . $data['text'] . '",className: "' . $data['class'] . '"},';
             } else {
-                $js .= '{data : "'.$data.'",className: "no-class"},';
+                $js .= '{data : "' . $data . '",className: "no-class"},';
             }
         }
 
-                $js .= '
+        $js .= '
                 ],
-                order: [[ '.$order.' ]],';
-                $js .= $type_data;
-                $js .= '
+                order: [[ ' . $order . ' ]],';
+        $js .= $type_data;
+        $js .= '
             };
 
-            dt_'.$table_id.' = $("#'.$table_id.'").DataTable(settings_datatable);
+            dt_' . $table_id . ' = $("#' . $table_id . '").DataTable(settings_datatable);
 
-            $("#button-'.$form_id.'_search_bt").click(function (){
-                dt_'.$table_id.'.draw().page(0)
+            $("#button-' . $form_id . '_search_bt").click(function (){
+                dt_' . $table_id . '.draw().page(0)
             });
             ';
 
-        if (isset($parameters['caption']) === true
+        if (
+            isset($parameters['caption']) === true
             && empty($parameters['caption']) === false
         ) {
-            $js .= '$("#'.$table_id.'").append("<caption>'.$parameters['caption'].'</caption>");';
+            $js .= '$("#' . $table_id . '").append("<caption>' . $parameters['caption'] . '</caption>");';
             $js .= '$(".datatables_thead_tr").css("height", 0);';
         }
 
         if (isset($parameters['csv']) === true) {
-            $js."'$('#".$table_id."').on( 'buttons-processing', function ( e, indicator ) {
+            $js . "'$('#" . $table_id . "').on( 'buttons-processing', function ( e, indicator ) {
                 if ( indicator ) {
                     console.log('a');
                 }
@@ -4142,7 +4161,7 @@ function ui_print_datatable(array $parameters)
                 }";
         }
 
-        $js .= '$("table#'.$table_id.'").removeClass("invisible");
+        $js .= '$("table#' . $table_id . '").removeClass("invisible");
             });';
         $js .= '
         $(function() {
@@ -4160,18 +4179,18 @@ function ui_print_datatable(array $parameters)
     // Order.
     $info_msg_arr = [];
     $info_msg_arr['message'] = $emptyTable;
-    $info_msg_arr['div_class'] = 'info_box_container invisible_important datatable-msg-info-'.$table_id;
+    $info_msg_arr['div_class'] = 'info_box_container invisible_important datatable-msg-info-' . $table_id;
 
     $spinner = '<div class="spinner-fixed"><span></span><span></span><span></span><span></span></div>';
 
-    $info_msg = '<div>'.ui_print_info_message($info_msg_arr).'</div>';
-    $err_msg = '<div id="error-'.$table_id.'"></div>';
-    $output = $info_msg.$err_msg.$filter.$extra.$spinner.$table.$js;
+    $info_msg = '<div>' . ui_print_info_message($info_msg_arr) . '</div>';
+    $err_msg = '<div id="error-' . $table_id . '"></div>';
+    $output = $info_msg . $err_msg . $filter . $extra . $spinner . $table . $js;
     if (is_ajax() === false) {
         ui_require_css_file('datatables.min', 'include/styles/js/');
         ui_require_css_file('tables');
         if (is_metaconsole()) {
-            ui_require_css_file('meta_tables', ENTERPRISE_DIR.'/include/styles/');
+            ui_require_css_file('meta_tables', ENTERPRISE_DIR . '/include/styles/');
         }
 
         ui_require_javascript_file('datatables.min');
@@ -4188,7 +4207,7 @@ function ui_print_datatable(array $parameters)
             false,
             false
         );
-        $output .= '?v='.$config['current_package'].'"/>';
+        $output .= '?v=' . $config['current_package'] . '"/>';
         // Load tables.css.
         $output .= '<link rel="stylesheet" href="';
         $output .= ui_get_full_url(
@@ -4197,17 +4216,17 @@ function ui_print_datatable(array $parameters)
             false,
             false
         );
-        $output .= '?v='.$config['current_package'].'"/>';
+        $output .= '?v=' . $config['current_package'] . '"/>';
         if (is_metaconsole() === true) {
             // Load meta_tables.css.
             $output .= '<link rel="stylesheet" href="';
             $output .= ui_get_full_url(
-                ENTERPRISE_DIR.'/include/styles/meta_tables.css',
+                ENTERPRISE_DIR . '/include/styles/meta_tables.css',
                 false,
                 false,
                 false
             );
-            $output .= '?v='.$config['current_package'].'"/>';
+            $output .= '?v=' . $config['current_package'] . '"/>';
         }
 
         // Load datatables.js.
@@ -4284,8 +4303,8 @@ function ui_print_datatable(array $parameters)
  */
 function ui_print_event_type(
     $type,
-    $return=false,
-    $mini=false
+    $return = false,
+    $mini = false
 ) {
     global $config;
 
@@ -4297,7 +4316,7 @@ function ui_print_event_type(
         case EVENTS_ALERT_MANUAL_VALIDATION:
             $text = __('ALERT');
             $color = COL_ALERTFIRED;
-        break;
+            break;
 
         case EVENTS_RECON_HOST_DETECTED:
         case EVENTS_SYSTEM:
@@ -4306,32 +4325,32 @@ function ui_print_event_type(
         case EVENTS_CONFIGURATION_CHANGE:
             $text = __('SYSTEM');
             $color = COL_MAINTENANCE;
-        break;
+            break;
 
         case EVENTS_GOING_UP_WARNING:
         case EVENTS_GOING_DOWN_WARNING:
             $color = COL_WARNING;
             $text = __('WARNING');
-        break;
+            break;
 
         case EVENTS_GOING_DOWN_NORMAL:
         case EVENTS_GOING_UP_NORMAL:
             $color = COL_NORMAL;
             $text = __('NORMAL');
-        break;
+            break;
 
         case EVENTS_GOING_DOWN_CRITICAL:
         case EVENTS_GOING_UP_CRITICAL:
             $color = COL_CRITICAL;
             $text = __('CRITICAL');
-        break;
+            break;
 
         case EVENTS_UNKNOWN:
         case EVENTS_GOING_UNKNOWN:
         default:
             $color = COL_UNKNOWN;
             $text = __('UNKNOWN');
-        break;
+            break;
     }
 
     if ($mini === true) {
@@ -4349,7 +4368,7 @@ function ui_print_event_type(
         $output .= $text;
         $output .= '" data-use_title_for_force_title="1" ';
         $output .= 'class="forced_title mini-criticity" ';
-        $output .= 'style="background: '.$color.'">';
+        $output .= 'style="background: ' . $color . '">';
         $output .= '</div>';
     }
 
@@ -4374,8 +4393,8 @@ function ui_print_event_type(
  */
 function ui_print_event_priority(
     $priority,
-    $return=false,
-    $mini=false
+    $return = false,
+    $mini = false
 ) {
     global $config;
 
@@ -4384,46 +4403,46 @@ function ui_print_event_priority(
         case EVENT_CRIT_MAINTENANCE:
             $color = COL_MAINTENANCE;
             $criticity = __('MAINTENANCE');
-        break;
+            break;
 
         case EVENT_CRIT_INFORMATIONAL:
             $color = COL_INFORMATIONAL;
             $criticity = __('INFORMATIONAL');
-        break;
+            break;
 
         case EVENT_CRIT_NORMAL:
             $color = COL_NORMAL;
             $criticity = __('NORMAL');
-        break;
+            break;
 
         case EVENT_CRIT_WARNING:
             $color = COL_WARNING;
             $criticity = __('WARNING');
-        break;
+            break;
 
         case EVENT_CRIT_CRITICAL:
             $color = COL_CRITICAL;
             $criticity = __('CRITICAL');
-        break;
+            break;
 
         case EVENT_CRIT_MINOR:
             $color = COL_MINOR;
             $criticity = __('MINOR');
-        break;
+            break;
 
         case EVENT_CRIT_MAJOR:
             $color = COL_MAJOR;
             $criticity = __('MAJOR');
-        break;
+            break;
 
         default:
             $color = COL_UNKNOWN;
             $criticity = __('UNKNOWN');
-        break;
+            break;
     }
 
     if ($mini === true) {
-        $output = '<div class="criticity" style="background: '.$color.'">';
+        $output = '<div class="criticity" style="background: ' . $color . '">';
         $output .= $criticity;
         $output .= '</div>';
     } else {
@@ -4431,7 +4450,7 @@ function ui_print_event_priority(
         $output .= $criticity;
         $output .= '" data-use_title_for_force_title="1" ';
         $output .= 'class="forced_title mini-criticity" ';
-        $output .= 'style="background: '.$color.'">';
+        $output .= 'style="background: ' . $color . '">';
         $output .= '</div>';
     }
 
@@ -4468,24 +4487,24 @@ function ui_print_event_priority(
 function ui_toggle(
     $code,
     $name,
-    $title='',
-    $id='',
-    $hidden_default=true,
-    $return=false,
-    $toggle_class='',
-    $container_class='white-box-content',
-    $main_class='box-flat white_table_graph',
-    $img_a='images/arrow@svg.svg',
-    $img_b='images/arrow@svg.svg',
-    $clean=false,
-    $reverseImg=false,
-    $switch=false,
-    $attributes_switch='',
-    $toggl_attr='',
-    $switch_on=null,
-    $switch_name=null,
-    $disableToggle=false,
-    $id_table=false
+    $title = '',
+    $id = '',
+    $hidden_default = true,
+    $return = false,
+    $toggle_class = '',
+    $container_class = 'white-box-content',
+    $main_class = 'box-flat white_table_graph',
+    $img_a = 'images/arrow@svg.svg',
+    $img_b = 'images/arrow@svg.svg',
+    $clean = false,
+    $reverseImg = false,
+    $switch = false,
+    $attributes_switch = '',
+    $toggl_attr = '',
+    $switch_on = null,
+    $switch_name = null,
+    $disableToggle = false,
+    $id_table = false
 ) {
     // Generate unique Id.
     $uniqid = uniqid('');
@@ -4520,12 +4539,12 @@ function ui_toggle(
     }
 
     // Link to toggle.
-    $output = '<div class="'.$main_class.'" id="'.$id.'" '.$toggl_attr.'>';
-    $output .= '<div class="'.$header_class.'" '.(($disableToggle === false) ? 'style="cursor: pointer;" ' : '').' id="tgl_ctrl_'.$uniqid.'">';
+    $output = '<div class="' . $main_class . '" id="' . $id . '" ' . $toggl_attr . '>';
+    $output .= '<div class="' . $header_class . '" ' . (($disableToggle === false) ? 'style="cursor: pointer;" ' : '') . ' id="tgl_ctrl_' . $uniqid . '">';
     if ($reverseImg === false) {
         if ($switch === true) {
             if (empty($switch_name) === true) {
-                $switch_name = 'box_enable_toggle'.$uniqid;
+                $switch_name = 'box_enable_toggle' . $uniqid;
             }
 
             $output .= html_print_div(
@@ -4549,9 +4568,9 @@ function ui_toggle(
                 true,
                 [
                     'class' => 'float-left main_menu_icon mrgn_right_10px invert_filter',
-                    'style' => 'object-fit: contain; margin-right:10px; rotate:'.$imageRotate,
+                    'style' => 'object-fit: contain; margin-right:10px; rotate:' . $imageRotate,
                     'title' => $title,
-                    'id'    => 'image_'.$uniqid,
+                    'id'    => 'image_' . $uniqid,
                 ]
             );
         }
@@ -4564,7 +4583,7 @@ function ui_toggle(
                 [
                     'class'   => 'float-left',
                     'content' => html_print_checkbox_switch_extended(
-                        'box_enable_toggle'.$uniqid,
+                        'box_enable_toggle' . $uniqid,
                         1,
                         ($hidden_default === true) ? 0 : 1,
                         false,
@@ -4581,9 +4600,9 @@ function ui_toggle(
                 true,
                 [
                     'class' => 'main_menu_icon mrgn_right_10px invert_filter',
-                    'style' => 'object-fit: contain; float:right; margin-right:10px; rotate:'.$imageRotate,
+                    'style' => 'object-fit: contain; float:right; margin-right:10px; rotate:' . $imageRotate,
                     'title' => $title,
-                    'id'    => 'image_'.$uniqid,
+                    'id'    => 'image_' . $uniqid,
                 ]
             );
         }
@@ -4592,53 +4611,53 @@ function ui_toggle(
     $output .= '</div>';
 
     // Code into a div
-    $output .= "<div id='tgl_div_".$uniqid."' style='".$style.";margin-top: -1px;' class='".$toggle_class."'>\n";
-    $output .= '<div class="'.$container_class.'">';
+    $output .= "<div id='tgl_div_" . $uniqid . "' style='" . $style . ";margin-top: -1px;' class='" . $toggle_class . "'>\n";
+    $output .= '<div class="' . $container_class . '">';
     $output .= $code;
     $output .= '</div>';
     $output .= '</div>';
 
     $class_table = '';
     if ($id_table !== false) {
-        $class_table = '$("#'.$id_table.'_wrapper").addClass("w100p");'."\n";
+        $class_table = '$("#' . $id_table . '_wrapper").addClass("w100p");' . "\n";
     }
 
     if ($disableToggle === false) {
         // JQuery Toggle.
-        $output .= '<script type="text/javascript">'."\n";
-        $output .= '	var hide_tgl_ctrl_'.$uniqid.' = '.(int) $hidden_default.";\n";
-        $output .= '	var is_metaconsole = '.(int) is_metaconsole().";\n";
-        $output .= '	/* <![CDATA[ */'."\n";
+        $output .= '<script type="text/javascript">' . "\n";
+        $output .= '	var hide_tgl_ctrl_' . $uniqid . ' = ' . (int) $hidden_default . ";\n";
+        $output .= '	var is_metaconsole = ' . (int) is_metaconsole() . ";\n";
+        $output .= '	/* <![CDATA[ */' . "\n";
         $output .= "	$(document).ready (function () {\n";
-        $output .= '	    var switch_enable = '.(int) $switch.";\n";
-        $output .= "		$('#checkbox-".$switch_name."').click(function() {\n";
-        $output .= '            if (hide_tgl_ctrl_'.$uniqid.") {\n";
-        $output .= '			    hide_tgl_ctrl_'.$uniqid." = 0;\n";
-        $output .= "			    $('#tgl_div_".$uniqid."').css('height', 'auto');\n";
-        $output .= "			    $('#tgl_div_".$uniqid."').css('position', 'relative');\n";
+        $output .= '	    var switch_enable = ' . (int) $switch . ";\n";
+        $output .= "		$('#checkbox-" . $switch_name . "').click(function() {\n";
+        $output .= '            if (hide_tgl_ctrl_' . $uniqid . ") {\n";
+        $output .= '			    hide_tgl_ctrl_' . $uniqid . " = 0;\n";
+        $output .= "			    $('#tgl_div_" . $uniqid . "').css('height', 'auto');\n";
+        $output .= "			    $('#tgl_div_" . $uniqid . "').css('position', 'relative');\n";
         $output .= "			}\n";
         $output .= "			else {\n";
-        $output .= '			    hide_tgl_ctrl_'.$uniqid." = 1;\n";
-        $output .= "			    $('#tgl_div_".$uniqid."').css('height', 0);\n";
-        $output .= "			    $('#tgl_div_".$uniqid."').css('position', 'absolute');\n";
+        $output .= '			    hide_tgl_ctrl_' . $uniqid . " = 1;\n";
+        $output .= "			    $('#tgl_div_" . $uniqid . "').css('height', 0);\n";
+        $output .= "			    $('#tgl_div_" . $uniqid . "').css('position', 'absolute');\n";
         $output .= "			}\n";
         $output .= "		});\n";
         $output .= '        if (switch_enable === 0) {';
-        $output .= "		    $('#tgl_ctrl_".$uniqid."').click(function() {\n";
-        $output .= '			    if (hide_tgl_ctrl_'.$uniqid.") {\n";
-        $output .= '				    hide_tgl_ctrl_'.$uniqid." = 0;\n";
-        $output .= "				    $('#tgl_div_".$uniqid."').css('height', 'auto');\n";
-        $output .= "				    $('#tgl_div_".$uniqid."').css('position', 'relative');\n";
-        $output .= "				    $('#image_".$uniqid."').attr('style', 'rotate: ".$rotateA."');\n";
-        $output .= "				    $('#checkbox-".$switch_name."').prop('checked', true);\n";
+        $output .= "		    $('#tgl_ctrl_" . $uniqid . "').click(function() {\n";
+        $output .= '			    if (hide_tgl_ctrl_' . $uniqid . ") {\n";
+        $output .= '				    hide_tgl_ctrl_' . $uniqid . " = 0;\n";
+        $output .= "				    $('#tgl_div_" . $uniqid . "').css('height', 'auto');\n";
+        $output .= "				    $('#tgl_div_" . $uniqid . "').css('position', 'relative');\n";
+        $output .= "				    $('#image_" . $uniqid . "').attr('style', 'rotate: " . $rotateA . "');\n";
+        $output .= "				    $('#checkbox-" . $switch_name . "').prop('checked', true);\n";
         $output .= $class_table;
         $output .= "			    }\n";
         $output .= "			    else {\n";
-        $output .= '				    hide_tgl_ctrl_'.$uniqid." = 1;\n";
-        $output .= "				    $('#tgl_div_".$uniqid."').css('height', 0);\n";
-        $output .= "				    $('#tgl_div_".$uniqid."').css('position', 'absolute');\n";
-        $output .= "				    $('#image_".$uniqid."').attr('style', 'rotate: ".$rotateB."');\n";
-        $output .= "				    $('#checkbox-".$switch_name."').prop('checked', false);\n";
+        $output .= '				    hide_tgl_ctrl_' . $uniqid . " = 1;\n";
+        $output .= "				    $('#tgl_div_" . $uniqid . "').css('height', 0);\n";
+        $output .= "				    $('#tgl_div_" . $uniqid . "').css('position', 'absolute');\n";
+        $output .= "				    $('#image_" . $uniqid . "').attr('style', 'rotate: " . $rotateB . "');\n";
+        $output .= "				    $('#checkbox-" . $switch_name . "').prop('checked', false);\n";
         $output .= "			    }\n";
         $output .= "		    });\n";
         $output .= "	    }\n";
@@ -4717,7 +4736,7 @@ function ui_print_toggle($data)
  *
  * @return string Url.
  */
-function ui_get_url_refresh($params=false, $relative=true, $add_post=true)
+function ui_get_url_refresh($params = false, $relative = true, $add_post = true)
 {
     // Agent selection filters and refresh.
     global $config;
@@ -4734,7 +4753,7 @@ function ui_get_url_refresh($params=false, $relative=true, $add_post=true)
         $url .= '?';
     }
 
-    if (! is_array($params)) {
+    if (!is_array($params)) {
         $params = [];
     }
 
@@ -4767,10 +4786,10 @@ function ui_get_url_refresh($params=false, $relative=true, $add_post=true)
 
         if (is_array($value)) {
             foreach ($value as $k => $v) {
-                $url .= $key.'['.$k.']='.$v.'&';
+                $url .= $key . '[' . $k . ']=' . $v . '&';
             }
         } else {
-            $url .= $key.'='.io_safe_input(rawurlencode($value)).'&';
+            $url .= $key . '=' . io_safe_input(rawurlencode($value)) . '&';
         }
     }
 
@@ -4798,10 +4817,10 @@ function ui_get_url_refresh($params=false, $relative=true, $add_post=true)
 
             if (is_array($value)) {
                 foreach ($value as $k => $v) {
-                    $url .= $key.'['.$k.']='.$v.'&';
+                    $url .= $key . '[' . $k . ']=' . $v . '&';
                 }
             } else {
-                $url .= $key.'='.$value.'&';
+                $url .= $key . '=' . $value . '&';
             }
         }
     }
@@ -4813,10 +4832,10 @@ function ui_get_url_refresh($params=false, $relative=true, $add_post=true)
 
         if (is_array($value)) {
             foreach ($value as $k => $v) {
-                $url .= $key.'['.$k.']='.$v.'&';
+                $url .= $key . '[' . $k . ']=' . $v . '&';
             }
         } else {
-            $url .= $key.'='.$value.'&';
+            $url .= $key . '=' . $value . '&';
         }
     }
 
@@ -4828,7 +4847,7 @@ function ui_get_url_refresh($params=false, $relative=true, $add_post=true)
 
     $url = htmlspecialchars($url);
 
-    if (! $relative) {
+    if (!$relative) {
         return ui_get_full_url($url, false, false, false);
     }
 
@@ -4850,7 +4869,8 @@ function ui_forced_public_url()
         $exclusions = preg_split("/[\n\s,]+/", io_safe_output($config['public_url_exclusions']));
     }
 
-    if (isset($_SERVER['REMOTE_ADDR']) === true
+    if (
+        isset($_SERVER['REMOTE_ADDR']) === true
         && in_array($_SERVER['REMOTE_ADDR'], $exclusions)
     ) {
         return false;
@@ -4901,7 +4921,8 @@ function ui_get_meta_url($url)
         // Restore the default connection.
         \enterprise_hook('metaconsole_restore_db');
 
-        if (empty($public_url_meta) === false
+        if (
+            empty($public_url_meta) === false
             && $public_url_meta !== $config['metaconsole_base_url']
         ) {
             config_update_value(
@@ -4912,7 +4933,7 @@ function ui_get_meta_url($url)
     }
 
     if (isset($config['metaconsole_base_url']) === true) {
-        return $config['metaconsole_base_url'].'enterprise/meta/'.$url;
+        return $config['metaconsole_base_url'] . 'enterprise/meta/' . $url;
     }
 
     return $url;
@@ -4931,7 +4952,7 @@ function ui_get_meta_url($url)
  *
  * @return string A full URL in Pandora.
  */
-function ui_get_full_url($url='', $no_proxy=false, $add_name_php_file=false, $metaconsole_root=true)
+function ui_get_full_url($url = '', $no_proxy = false, $add_name_php_file = false, $metaconsole_root = true)
 {
     global $config;
 
@@ -4939,15 +4960,17 @@ function ui_get_full_url($url='', $no_proxy=false, $add_name_php_file=false, $me
     // Null means 'use the starndard port'.
     $proxy = false;
     // By default Pandora FMS doesn't run across proxy.
-    if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
+    if (
+        isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
         && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
     ) {
         $_SERVER['HTTPS'] = 'on';
     }
 
-    if (isset($_SERVER['HTTPS'])
+    if (
+        isset($_SERVER['HTTPS'])
         && ($_SERVER['HTTPS'] === true
-        || $_SERVER['HTTPS'] == 'on')
+            || $_SERVER['HTTPS'] == 'on')
     ) {
         $protocol = 'https';
         if ($_SERVER['SERVER_PORT'] != 443) {
@@ -4973,7 +4996,8 @@ function ui_get_full_url($url='', $no_proxy=false, $add_name_php_file=false, $me
             if (substr($fullurl, -1) != '/') {
                 $fullurl .= '/';
             }
-        } else if (!empty($config['public_url'])
+        } else if (
+            !empty($config['public_url'])
             && (!empty($_SERVER['HTTP_X_FORWARDED_HOST']))
         ) {
             // Forced to use public url when being forwarder by a reverse proxy.
@@ -4984,17 +5008,17 @@ function ui_get_full_url($url='', $no_proxy=false, $add_name_php_file=false, $me
 
             $proxy = true;
         } else {
-            $fullurl = $protocol.'://'.($_SERVER['SERVER_NAME'] ?? '');
+            $fullurl = $protocol . '://' . ($_SERVER['SERVER_NAME'] ?? '');
         }
     } else {
-        $fullurl = $protocol.'://'.($_SERVER['SERVER_NAME'] ?? '');
+        $fullurl = $protocol . '://' . ($_SERVER['SERVER_NAME'] ?? '');
     }
 
     // Using a different port than the standard.
     if (!$proxy) {
         // Using a different port than the standard.
         if ($port != null) {
-            $fullurl .= ':'.$port;
+            $fullurl .= ':' . $port;
         }
     }
 
@@ -5006,15 +5030,16 @@ function ui_get_full_url($url='', $no_proxy=false, $add_name_php_file=false, $me
             $skip_meta_tag = true;
         } else {
             // Redirect to main.
-            $url = '?'.$_SERVER['QUERY_STRING'];
+            $url = '?' . $_SERVER['QUERY_STRING'];
         }
     } else if (empty($url) === true) {
         if ($proxy === false) {
-            $url = $config['homeurl_static'].'/';
-            if ($metaconsole_root === true
+            $url = $config['homeurl_static'] . '/';
+            if (
+                $metaconsole_root === true
                 && is_metaconsole()
             ) {
-                $url = $config['homeurl_static'].'/'.ENTERPRISE_DIR.'/meta/';
+                $url = $config['homeurl_static'] . '/' . ENTERPRISE_DIR . '/meta/';
             }
 
             $skip_meta_tag = true;
@@ -5025,14 +5050,14 @@ function ui_get_full_url($url='', $no_proxy=false, $add_name_php_file=false, $me
         if ($proxy) {
             $fullurl .= '/';
         } else {
-            $fullurl .= $config['homeurl_static'].'/';
+            $fullurl .= $config['homeurl_static'] . '/';
         }
     } else {
         if ((bool) $proxy === false) {
             if ($add_name_php_file) {
                 $fullurl .= $_SERVER['SCRIPT_NAME'];
             } else {
-                $fullurl .= $config['homeurl_static'].'/';
+                $fullurl .= $config['homeurl_static'] . '/';
             }
         }
     }
@@ -5047,14 +5072,15 @@ function ui_get_full_url($url='', $no_proxy=false, $add_name_php_file=false, $me
         $url = substr($url, 1);
     }
 
-    if ($skip_meta_tag === false
+    if (
+        $skip_meta_tag === false
         && $metaconsole_root
         && is_metaconsole()
     ) {
-        $fullurl .= ENTERPRISE_DIR.'/meta/';
+        $fullurl .= ENTERPRISE_DIR . '/meta/';
     }
 
-    return $fullurl.$url;
+    return $fullurl . $url;
 }
 
 
@@ -5100,13 +5126,13 @@ function ui_get_full_url($url='', $no_proxy=false, $add_name_php_file=false, $me
  */
 function ui_print_standard_header(
     string $title,
-    string $icon='',
-    bool $return=false,
-    string $help='',
-    bool $godmode=false,
-    array $options=[],
-    array $breadcrumbs=[],
-    array $fav_menu_config=[]
+    string $icon = '',
+    bool $return = false,
+    string $help = '',
+    bool $godmode = false,
+    array $options = [],
+    array $breadcrumbs = [],
+    array $fav_menu_config = []
 ) {
     // For standard breadcrumbs.
     ui_require_css_file('discovery');
@@ -5175,18 +5201,18 @@ function ui_print_standard_header(
  */
 function ui_print_page_header(
     $title,
-    $icon='',
-    $return=false,
-    $help='',
-    $godmode=false,
-    $options='',
-    $modal=false,
-    $message='',
-    $numChars=GENERIC_SIZE_TEXT,
-    $alias='',
-    $breadcrumbs='',
-    $hide_left_small=false,
-    $fav_menu_config=[]
+    $icon = '',
+    $return = false,
+    $help = '',
+    $godmode = false,
+    $options = '',
+    $modal = false,
+    $message = '',
+    $numChars = GENERIC_SIZE_TEXT,
+    $alias = '',
+    $breadcrumbs = '',
+    $hide_left_small = false,
+    $fav_menu_config = []
 ) {
     global $config;
 
@@ -5214,15 +5240,15 @@ function ui_print_page_header(
         }
     }
 
-    $buffer = '<div id="'.$type2.'" style="'.$div_style.'" >';
+    $buffer = '<div id="' . $type2 . '" style="' . $div_style . '" >';
 
     if (!empty($breadcrumbs)) {
         $buffer .= '<div class="menu_tab_left_bc">';
-        $buffer .= '<div class="breadcrumbs_container">'.$breadcrumbs.'</div>';
+        $buffer .= '<div class="breadcrumbs_container">' . $breadcrumbs . '</div>';
     }
 
     $buffer .= '<div id="menu_tab_left">';
-    $buffer .= '<ul class="mn"><li class="'.$type.'">';
+    $buffer .= '<ul class="mn"><li class="' . $type . '">';
 
     if (strpos($title, 'Monitoring » Services »') != -1) {
         $title = str_replace('Monitoring » Services » Service Map » ', '', $title);
@@ -5240,13 +5266,13 @@ function ui_print_page_header(
 
     if ($modal && enterprise_installed() === false) {
         $buffer .= "
-		<div id='".$message."' class='publienterprise right mrgn_top-2px' title='Community version'><img data-title='".__('Enterprise version not installed')."' class='img_help forced_title' data-use_title_for_force_title='1' src='images/alert_enterprise.png'></div>
+		<div id='" . $message . "' class='publienterprise right mrgn_top-2px' title='Community version'><img data-title='" . __('Enterprise version not installed') . "' class='img_help forced_title' data-use_title_for_force_title='1' src='images/alert_enterprise.png'></div>
 		";
     }
 
     if (is_metaconsole() === false) {
         if ($help != '') {
-            $buffer .= "<div class='head_help head_tip'>".ui_print_help_icon($help, true, '', '', false, '', true).'</div>';
+            $buffer .= "<div class='head_help head_tip'>" . ui_print_help_icon($help, true, '', '', false, '', true) . '</div>';
         }
     }
 
@@ -5265,7 +5291,7 @@ function ui_print_page_header(
 
     if (is_metaconsole() === true) {
         if ($help != '') {
-            $buffer .= "<div class='head_help'>".ui_print_help_icon($help, true, '', 'images/help_30.png').'</div>';
+            $buffer .= "<div class='head_help'>" . ui_print_help_icon($help, true, '', 'images/help_30.png') . '</div>';
         }
     }
 
@@ -5302,7 +5328,7 @@ function ui_print_page_header(
                         $class .= ($godmode) ? ' tab_godmode' : ' tab_operation';
                     }
 
-                    $buffer .= '<li class="'.$class.' ">';
+                    $buffer .= '<li class="' . $class . ' ">';
                     $buffer .= $option['text'];
                     if (isset($option['sub_menu'])) {
                         $buffer .= $option['sub_menu'];
@@ -5598,7 +5624,7 @@ function ui_print_agent_autocomplete_input($parameters)
         $input_name = $parameters['input_name'];
     }
 
-    $input_id = 'text-'.$input_name;
+    $input_id = 'text-' . $input_name;
     // Default value.
     if (isset($parameters['input_id'])) {
         $input_id = $parameters['input_id'];
@@ -5662,7 +5688,7 @@ function ui_print_agent_autocomplete_input($parameters)
         $hidden_input_idagent_name = $parameters['hidden_input_idagent_name'];
     }
 
-    $hidden_input_idagent_id = 'hidden-'.$input_name;
+    $hidden_input_idagent_id = 'hidden-' . $input_name;
     // Default value.
     if (isset($parameters['hidden_input_idagent_id'])) {
         $hidden_input_idagent_id = $parameters['hidden_input_idagent_id'];
@@ -5746,13 +5772,13 @@ function ui_print_agent_autocomplete_input($parameters)
         $input_id_server_name = $parameters['input_id_server_name'];
     }
 
-    $input_server_id = 'hidden-'.$input_server_name;
+    $input_server_id = 'hidden-' . $input_server_name;
     // Default value.
     if (isset($parameters['input_server_id'])) {
         $input_server_id = $parameters['input_server_id'];
     }
 
-    $input_id_server_id = 'hidden-'.$input_id_server_name;
+    $input_id_server_id = 'hidden-' . $input_id_server_name;
     // Default value.
     if (isset($parameters['input_id_server_id'])) {
         $input_id_server_id = $parameters['input_id_server_id'];
@@ -5826,11 +5852,12 @@ function ui_print_agent_autocomplete_input($parameters)
     // Default value.
     if (isset($parameters['javascript_function_action_after_select'])) {
         $javascript_function_action_after_select = $parameters['javascript_function_action_after_select'];
-        $javascript_function_action_after_select_js_call = $javascript_function_action_after_select.'();';
+        $javascript_function_action_after_select_js_call = $javascript_function_action_after_select . '();';
     }
 
     if (isset($parameters['javascript_function_action_after_select_js_call'])) {
-        if ($javascript_function_action_after_select_js_call != $parameters['javascript_function_action_after_select_js_call']
+        if (
+            $javascript_function_action_after_select_js_call != $parameters['javascript_function_action_after_select_js_call']
         ) {
             $javascript_function_action_after_select_js_call = $parameters['javascript_function_action_after_select_js_call'];
         }
@@ -5842,11 +5869,12 @@ function ui_print_agent_autocomplete_input($parameters)
     // Default value.
     if (isset($parameters['javascript_function_action_into_source'])) {
         $javascript_function_action_into_source = $parameters['javascript_function_action_into_source'];
-        $javascript_function_action_into_source_js_call = $javascript_function_action_into_source.'();';
+        $javascript_function_action_into_source_js_call = $javascript_function_action_into_source . '();';
     }
 
     if (isset($parameters['javascript_function_action_into_source_js_call'])) {
-        if ($javascript_function_action_into_source_js_call != $parameters['javascript_function_action_into_source_js_call']
+        if (
+            $javascript_function_action_into_source_js_call != $parameters['javascript_function_action_into_source_js_call']
         ) {
             $javascript_function_action_into_source_js_call = $parameters['javascript_function_action_into_source_js_call'];
         }
@@ -5869,7 +5897,7 @@ function ui_print_agent_autocomplete_input($parameters)
         $javascript_is_function_select = $parameters['javascript_is_function_select'];
     }
 
-    $javascript_name_function_select = 'function_select_'.$input_name;
+    $javascript_name_function_select = 'function_select_' . $input_name;
     // Default value.
     if (isset($parameters['javascript_name_function_select'])) {
         $javascript_name_function_select = $parameters['javascript_name_function_select'];
@@ -5879,24 +5907,24 @@ function ui_print_agent_autocomplete_input($parameters)
 
     if ($from_ux_transaction != '') {
         $javascript_code_function_select = '
-		function function_select_'.$input_name.'(agent_name) {
-			$("#'.$selectbox_id.'").empty();
+		function function_select_' . $input_name . '(agent_name) {
+			$("#' . $selectbox_id . '").empty();
 			
 			var inputs = [];
-			inputs.push ("id_agent=" + $("#'.$hidden_input_idagent_id.'").val());
+			inputs.push ("id_agent=" + $("#' . $hidden_input_idagent_id . '").val());
 			inputs.push ("get_agent_transactions=1");
 			inputs.push ("page=enterprise/include/ajax/ux_transaction.ajax");
 			
 			jQuery.ajax ({
 				data: inputs.join ("&"),
 				type: "POST",
-				url: action="'.$javascript_ajax_page.'",
+				url: action="' . $javascript_ajax_page . '",
 				dataType: "json",
 				success: function (data) {
 					if (data) {
-						$("#'.$selectbox_id.'").append ($("<option value=0>None</option>"));
+						$("#' . $selectbox_id . '").append ($("<option value=0>None</option>"));
 						jQuery.each (data, function (id, value) {
-							$("#'.$selectbox_id.'").append ($("<option value=" + id + ">" + value + "</option>"));
+							$("#' . $selectbox_id . '").append ($("<option value=" + id + ">" + value + "</option>"));
 						});
 					}
 				}
@@ -5907,31 +5935,31 @@ function ui_print_agent_autocomplete_input($parameters)
 		';
     } else if ($from_wux_transaction != '') {
         if (is_metaconsole() === true) {
-            $inputNode = 'inputs.push ("server_id=" + $("#'.$input_id_server_id.'").val());';
+            $inputNode = 'inputs.push ("server_id=" + $("#' . $input_id_server_id . '").val());';
         } else {
             $inputNode = '';
         }
 
         $javascript_code_function_select = '
-		function function_select_'.$input_name.'(agent_name) {
-			$("#'.$selectbox_id.'").empty();
+		function function_select_' . $input_name . '(agent_name) {
+			$("#' . $selectbox_id . '").empty();
 			
 			var inputs = [];
-			inputs.push ("id_agent=" + $("#'.$hidden_input_idagent_id.'").val());
+			inputs.push ("id_agent=" + $("#' . $hidden_input_idagent_id . '").val());
             inputs.push ("get_agent_transactions=1");
 			inputs.push ("page=enterprise/include/ajax/wux_transaction.ajax");
-			'.$inputNode.'
+			' . $inputNode . '
 
 			jQuery.ajax ({
 				data: inputs.join ("&"),
 				type: "POST",
-				url: action="'.$javascript_ajax_page.'",
+				url: action="' . $javascript_ajax_page . '",
 				dataType: "json",
 				success: function (data) {
 					if (data) {
-						$("#'.$selectbox_id.'").append ($("<option value=0>None</option>"));
+						$("#' . $selectbox_id . '").append ($("<option value=0>None</option>"));
 						jQuery.each (data, function (id, value) {
-							$("#'.$selectbox_id.'").append ($("<option value=" + id + ">" + value + "</option>"));
+							$("#' . $selectbox_id . '").append ($("<option value=" + id + ">" + value + "</option>"));
 						});
 					}
 				}
@@ -5942,9 +5970,9 @@ function ui_print_agent_autocomplete_input($parameters)
 		';
     } else {
         $javascript_code_function_select = '
-		function function_select_'.$input_name.'(agent_name) {
+		function function_select_' . $input_name . '(agent_name) {
 			
-			$("#'.$selectbox_id.'").empty ();
+			$("#' . $selectbox_id . '").empty ();
 			
 			var inputs = [];
 			inputs.push ("agent_name=" + agent_name);
@@ -5952,43 +5980,43 @@ function ui_print_agent_autocomplete_input($parameters)
 			inputs.push ("get_agent_modules_json=1");
 			inputs.push ("page=operation/agentes/ver_agente");
 			
-			if ('.((int) !$metaconsole_enabled).') {
+			if (' . ((int) !$metaconsole_enabled) . ') {
 				inputs.push ("force_local_modules=1");
 			}
 
 			inputs.push ("get_order_json=1");
 
-			if ('.((int) $get_only_string_modules).') {
+			if (' . ((int) $get_only_string_modules) . ') {
 				inputs.push ("get_only_string_modules=1");
 			}
 
-            if ('.((int) $no_disabled_modules).') {
+            if (' . ((int) $no_disabled_modules) . ') {
                 inputs.push ("disabled=0");
             }
 
-			if ('.((int) $metaconsole_enabled).') {
-				if (('.((int) $use_input_server).')
-						|| ('.((int) $print_input_server).')) {
-					inputs.push ("server_name=" + $("#'.$input_server_id.'").val());
+			if (' . ((int) $metaconsole_enabled) . ') {
+				if ((' . ((int) $use_input_server) . ')
+						|| (' . ((int) $print_input_server) . ')) {
+					inputs.push ("server_name=" + $("#' . $input_server_id . '").val());
 				}
 				
-				if (('.((int) $use_input_id_server).')
-						|| ('.((int) $print_input_id_server).')) {
-					inputs.push ("server_id=" + $("#'.$input_id_server_id.'").val());
+				if ((' . ((int) $use_input_id_server) . ')
+						|| (' . ((int) $print_input_id_server) . ')) {
+					inputs.push ("server_id=" + $("#' . $input_id_server_id . '").val());
 				}
 				
 			}
 			
-			if (('.((int) $print_hidden_input_idagent).')
-				|| ('.((int) $use_hidden_input_idagent).')) {
+			if ((' . ((int) $print_hidden_input_idagent) . ')
+				|| (' . ((int) $use_hidden_input_idagent) . ')) {
 				
-				inputs.push ("id_agent=" + $("#'.$hidden_input_idagent_id.'").val());
+				inputs.push ("id_agent=" + $("#' . $hidden_input_idagent_id . '").val());
 			}
 			
 			jQuery.ajax ({
 				data: inputs.join ("&"),
 				type: "POST",
-				url: action="'.$javascript_ajax_page.'",
+				url: action="' . $javascript_ajax_page . '",
 				dataType: "json",
 				success: function (data) {
                     if (Array.isArray(data) === true) {
@@ -5999,22 +6027,22 @@ function ui_print_agent_autocomplete_input($parameters)
                         });
                     }
 
-					if ('.((int) $add_none_module).') {
-						$("#'.$selectbox_id.'")
+					if (' . ((int) $add_none_module) . ') {
+						$("#' . $selectbox_id . '")
 							.append($("<option></option>")
-							.attr("value", 0).text("'.$none_module_text.'"));
+							.attr("value", 0).text("' . $none_module_text . '"));
 					}
 					
 					jQuery.each (data, function(i, val) {
 						s = js_html_entity_decode(val["nombre"]);
-						$("#'.$selectbox_id.'")
+						$("#' . $selectbox_id . '")
 							.append ($("<option></option>")
 							.attr("value", val["id_agente_modulo"]).text (s));
 					});
-					if('.(int) $cascade_protection.' == 0){
-						$("#'.$selectbox_id.'").enable();
+					if(' . (int) $cascade_protection . ' == 0){
+						$("#' . $selectbox_id . '").enable();
 					}
-					$("#'.$selectbox_id.'").fadeIn ("normal");
+					$("#' . $selectbox_id . '").fadeIn ("normal");
 				}
 			});
 			
@@ -6035,13 +6063,13 @@ function ui_print_agent_autocomplete_input($parameters)
     }
 
     $javascript_change_ajax_params_original = [
-        'page'          => '"'.$javascript_page.'"',
+        'page'          => '"' . $javascript_page . '"',
         'search_agents' => 1,
         'id_group'      => 'function() {
 				var group_id = 0;
 				
-				if ('.((int) !empty($selectbox_group)).') {
-					group_id = $("#'.$selectbox_group.'").val();
+				if (' . ((int) !empty($selectbox_group)) . ') {
+					group_id = $("#' . $selectbox_group . '").val();
 				}
 				
 				return group_id;
@@ -6090,7 +6118,7 @@ function ui_print_agent_autocomplete_input($parameters)
             $first = false;
         }
 
-        $javascript_change_ajax_params_text .= '"'.$key.'":'.$param_ajax;
+        $javascript_change_ajax_params_text .= '"' . $key . '":' . $param_ajax;
     }
 
     $javascript_change_ajax_params_text .= '};';
@@ -6100,49 +6128,49 @@ function ui_print_agent_autocomplete_input($parameters)
     $javascript_function_change .= '
         function setInputBackground(inputId, image) {
             $("#"+inputId)
-            .attr("style", "background-image: url(\'"+image+"\'); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; '.$inputStyles.'");
+            .attr("style", "background-image: url(\'"+image+"\'); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; ' . $inputStyles . '");
         }
 
         $(document).ready(function () {
-            $("#'.$input_id.'").focusout(function (e) {
+            $("#' . $input_id . '").focusout(function (e) {
                 setTimeout(() => {
-                    let iconImage = "'.$icon_image.'";
-                    $("#'.$input_id.'").attr("style", "background-image: url(\'"+iconImage+"\'); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; '.$inputStyles.'");
+                    let iconImage = "' . $icon_image . '";
+                    $("#' . $input_id . '").attr("style", "background-image: url(\'"+iconImage+"\'); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; ' . $inputStyles . '");
                 }, 100);
             });
         });
 
-		function set_functions_change_autocomplete_'.$input_name.'() {
-			var cache_'.$input_name.' = {};
+		function set_functions_change_autocomplete_' . $input_name . '() {
+			var cache_' . $input_name . ' = {};
 
-			$("#'.$input_id.'").autocomplete({
+			$("#' . $input_id . '").autocomplete({
 				minLength: 2,
 				source: function( request, response ) {
 					var term = request.term; //Word to search
-					'.$javascript_change_ajax_params_text.'
+					' . $javascript_change_ajax_params_text . '
 					var groupId = data_params.id_group();
 
 					// Index cache by group Id
-					if (cache_'.$input_name.'[groupId] == null) {
-						cache_'.$input_name.'[groupId] = {};
+					if (cache_' . $input_name . '[groupId] == null) {
+						cache_' . $input_name . '[groupId] = {};
 					}
 
 					//Set loading
-                    setInputBackground("'.$input_id.'", "'.$spinner_image.'");
+                    setInputBackground("' . $input_id . '", "' . $spinner_image . '");
 					
 					//Function to call when the source
-					if ('.((int) !empty($javascript_function_action_into_source_js_call)).') {
-						'.$javascript_function_action_into_source_js_call.'
+					if (' . ((int) !empty($javascript_function_action_into_source_js_call)) . ') {
+						' . $javascript_function_action_into_source_js_call . '
 					}
 					
 					//==== CACHE CODE ==================================
 					//Check the cache
 					var found = false;
-					if (term in cache_'.$input_name.'[groupId]) {
-						response(cache_'.$input_name.'[groupId][term]);
+					if (term in cache_' . $input_name . '[groupId]) {
+						response(cache_' . $input_name . '[groupId][term]);
 						
 						//Set icon
-						setInputBackground("'.$input_id.'", "'.$icon_image.'");
+						setInputBackground("' . $input_id . '", "' . $icon_image . '");
 						return;
 					}
 					else {
@@ -6153,16 +6181,16 @@ function ui_print_agent_autocomplete_input($parameters)
 						for (i = 1; i < term.length; i++) {
 							var term_match = term.substr(0, term.length - i);
 							
-							$.each(cache_'.$input_name.'[groupId], function (oldterm, olddata) {
+							$.each(cache_' . $input_name . '[groupId], function (oldterm, olddata) {
 								var pattern = new RegExp("^" + term_match + ".*","gi");
 								
 								if (oldterm.match(pattern)) {
-									response(cache_'.$input_name.'[groupId][oldterm]);
+									response(cache_' . $input_name . '[groupId][oldterm]);
 									
 									found = true;
 
 									//Set icon
-                                    setInputBackground("'.$input_id.'", "'.$icon_image.'");
+                                    setInputBackground("' . $input_id . '", "' . $icon_image . '");
 									return;
 								}
 							});
@@ -6178,7 +6206,7 @@ function ui_print_agent_autocomplete_input($parameters)
 					
 					if (found) {
 						//Set icon
-                        setInputBackground("'.$input_id.'", "'.$icon_image.'");
+                        setInputBackground("' . $input_id . '", "' . $icon_image . '");
 						
 						select_item_click = 0;
       
@@ -6188,15 +6216,15 @@ function ui_print_agent_autocomplete_input($parameters)
 					jQuery.ajax ({
 						data: data_params,
 						type: "POST",
-						url: action="'.$javascript_ajax_page.'",
+						url: action="' . $javascript_ajax_page . '",
 						dataType: "json",
 						success: function (data) {
-								cache_'.$input_name.'[groupId][term] = data; //Save the cache
+								cache_' . $input_name . '[groupId][term] = data; //Save the cache
 								
 								response(data);
 								
 								//Set icon
-                                setInputBackground("'.$input_id.'", "'.$icon_image.'");
+                                setInputBackground("' . $input_id . '", "' . $icon_image . '");
                                 select_item_click = 0;
 								
 								return;
@@ -6215,46 +6243,46 @@ function ui_print_agent_autocomplete_input($parameters)
 					var server_id = "";
 					
 					
-					if ('.((int) $metaconsole_enabled).') {
+					if (' . ((int) $metaconsole_enabled) . ') {
 						server_name = ui.item.server;
 					}
 					else {
 						server_name = ui.item.ip;
 					}
 					
-					if (('.((int) $use_input_id_server).')
-						|| ('.((int) $print_input_id_server).')) {
+					if ((' . ((int) $use_input_id_server) . ')
+						|| (' . ((int) $print_input_id_server) . ')) {
 						server_id = ui.item.id_server;
 					}
 
 					//Put the name
 					$(this).val(agent_name);
 					
-					if (('.((int) $print_hidden_input_idagent).')
-						|| ('.((int) $use_hidden_input_idagent).')) {
-						$("#'.$hidden_input_idagent_id.'").val(agent_id);
+					if ((' . ((int) $print_hidden_input_idagent) . ')
+						|| (' . ((int) $use_hidden_input_idagent) . ')) {
+						$("#' . $hidden_input_idagent_id . '").val(agent_id);
 					}
 					
 					//Put the server id into the hidden input
-					if (('.((int) $use_input_server).')
-						|| ('.((int) $print_input_server).')) {
-						$("#'.$input_server_id.'").val(server_name);
+					if ((' . ((int) $use_input_server) . ')
+						|| (' . ((int) $print_input_server) . ')) {
+						$("#' . $input_server_id . '").val(server_name);
 					}
 					
 					//Put the server id into the hidden input
-					if (('.((int) $use_input_id_server).')
-						|| ('.((int) $print_input_id_server).')) {
-						$("#'.$input_id_server_id.'").val(server_id);
+					if ((' . ((int) $use_input_id_server) . ')
+						|| (' . ((int) $print_input_id_server) . ')) {
+						$("#' . $input_id_server_id . '").val(server_id);
 					}
 					
 					//Call the function to select (example fill the modules)
-					if ('.((int) $javascript_is_function_select).') {
-						'.$javascript_name_function_select.'(agent_name);
+					if (' . ((int) $javascript_is_function_select) . ') {
+						' . $javascript_name_function_select . '(agent_name);
 					}
 					
 					//Function to call after the select
-					if ('.((int) !empty($javascript_function_action_after_select_js_call)).') {
-						'.$javascript_function_action_after_select_js_call.'
+					if (' . ((int) !empty($javascript_function_action_after_select_js_call)) . ') {
+						' . $javascript_function_action_after_select_js_call . '
 					}
 					
 					select_item_click = 1;
@@ -6292,7 +6320,7 @@ function ui_print_agent_autocomplete_input($parameters)
 							.appendTo(ul);
 						break;
 					case \'alias\':
-						return $("<li style=\"'.$background_results.'\"></li>")
+						return $("<li style=\"' . $background_results . '\"></li>")
 							.data("item.autocomplete", item)
 							.append(text)
 							.appendTo(ul);
@@ -6336,7 +6364,7 @@ function ui_print_agent_autocomplete_input($parameters)
         $disabled_javascript_on_blur_function = $parameters['disabled_javascript_on_blur_function'];
     }
 
-    $javascript_on_blur_function_name = 'function_on_blur_'.$input_name;
+    $javascript_on_blur_function_name = 'function_on_blur_' . $input_name;
     // Default value.
     if (isset($parameters['javascript_on_blur_function_name'])) {
         $javascript_on_blur_function_name = $parameters['javascript_on_blur_function_name'];
@@ -6354,25 +6382,25 @@ function ui_print_agent_autocomplete_input($parameters)
 		This function is a callback when the autocomplete agent
 		input lost the focus.
 		*/
-		function '.$javascript_on_blur_function_name.'() {
-			input_value = $("#'.$input_id.'").val();
+		function ' . $javascript_on_blur_function_name . '() {
+			input_value = $("#' . $input_id . '").val();
 			
 			if (input_value.length < 2) {
-				if (('.((int) $print_hidden_input_idagent).')
-					|| ('.((int) $use_hidden_input_idagent).')) {
-					$("#'.$hidden_input_idagent_id.'").val(0);
+				if ((' . ((int) $print_hidden_input_idagent) . ')
+					|| (' . ((int) $use_hidden_input_idagent) . ')) {
+					$("#' . $hidden_input_idagent_id . '").val(0);
 				}
 				
 				//Put the server id into the hidden input
-				if (('.((int) $use_input_server).')
-					|| ('.((int) $print_input_server).')) {
-					$("#'.$input_server_id.'").val("");
+				if ((' . ((int) $use_input_server) . ')
+					|| (' . ((int) $print_input_server) . ')) {
+					$("#' . $input_server_id . '").val("");
 				}
 				
 				//Put the server id into the hidden input
-				if (('.((int) $use_input_id_server).')
-					|| ('.((int) $print_input_id_server).')) {
-					$("#'.$input_id_server_id.'").val("");
+				if ((' . ((int) $use_input_id_server) . ')
+					|| (' . ((int) $print_input_id_server) . ')) {
+					$("#' . $input_id_server_id . '").val("");
 				}
 				
 				return;
@@ -6380,40 +6408,40 @@ function ui_print_agent_autocomplete_input($parameters)
 			
 			if (select_item_click) {
                 select_item_click = 0;
-                $("#'.$input_id.'")
-                .attr("style", "background-image: url(\"'.$spinner_image.'\"); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; '.$inputStyles.'");
+                $("#' . $input_id . '")
+                .attr("style", "background-image: url(\"' . $spinner_image . '\"); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; ' . $inputStyles . '");
 				return;
 			} else {
                 // Clear selectbox if item is not selected.
-                $("#'.$selectbox_id.'").empty();
-                $("#'.$selectbox_id.'").append($("<option value=0>'.__('Select an Agent first').'</option>"));
-                $("#'.$selectbox_id.'").attr("disabled", "disabled");
+                $("#' . $selectbox_id . '").empty();
+                $("#' . $selectbox_id . '").append($("<option value=0>' . __('Select an Agent first') . '</option>"));
+                $("#' . $selectbox_id . '").attr("disabled", "disabled");
                 // Not allow continue on blur .
-                if ('.((int) $check_only_empty_javascript_on_blur_function).') {
+                if (' . ((int) $check_only_empty_javascript_on_blur_function) . ') {
                     return
                 }
             }
 
 			//Set loading
-			$("#'.$input_id.'")
-                .attr("style", "background-image: url(\"'.$spinner_image.'\"); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; '.$inputStyles.'");
+			$("#' . $input_id . '")
+                .attr("style", "background-image: url(\"' . $spinner_image . '\"); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; ' . $inputStyles . '");
 			var term = input_value; //Word to search
 			
-			'.$javascript_change_ajax_params_text.'
+			' . $javascript_change_ajax_params_text . '
 			
-			if ('.((int) !$metaconsole_enabled).') {
+			if (' . ((int) !$metaconsole_enabled) . ') {
 				data_params[\'force_local\'] = 1;
 			}
 			
 			jQuery.ajax ({
 				data: data_params,
 				type: "POST",
-				url: action="'.$javascript_ajax_page.'",
+				url: action="' . $javascript_ajax_page . '",
 				dataType: "json",
 				success: function (data) {
 						if (data.length < 2) {
 							//Set icon
-							$("#'.$input_id.'").attr("style", "background-image: url(\"'.$spinner_image.'\"); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; '.$inputStyles.'");
+							$("#' . $input_id . '").attr("style", "background-image: url(\"' . $spinner_image . '\"); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; ' . $inputStyles . '");
 							return;
 						}
 
@@ -6422,48 +6450,48 @@ function ui_print_agent_autocomplete_input($parameters)
 						var server_name = "";
 						var server_id = "";
 						
-						if ('.((int) $metaconsole_enabled).') {
+						if (' . ((int) $metaconsole_enabled) . ') {
 							server_name = data[0].server;
 						}
 						else {
 							server_name = data[0].ip;
 						}
 						
-						if (('.((int) $use_input_id_server).')
-						|| ('.((int) $print_input_id_server).')) {
+						if ((' . ((int) $use_input_id_server) . ')
+						|| (' . ((int) $print_input_id_server) . ')) {
 							server_id = data[0].id_server;
 						}
 						
-						if (('.((int) $print_hidden_input_idagent).')
-							|| ('.((int) $use_hidden_input_idagent).')) {
-							$("#'.$hidden_input_idagent_id.'").val(agent_id);
+						if ((' . ((int) $print_hidden_input_idagent) . ')
+							|| (' . ((int) $use_hidden_input_idagent) . ')) {
+							$("#' . $hidden_input_idagent_id . '").val(agent_id);
 						}
 						
 						//Put the server id into the hidden input
-						if (('.((int) $use_input_server).')
-							|| ('.((int) $print_input_server).')) {
-							$("#'.$input_server_id.'").val(server_name);
+						if ((' . ((int) $use_input_server) . ')
+							|| (' . ((int) $print_input_server) . ')) {
+							$("#' . $input_server_id . '").val(server_name);
 						}
 						
 						//Put the server id into the hidden input
-						if (('.((int) $use_input_id_server).')
-							|| ('.((int) $print_input_id_server).')) {
-							$("#'.$input_id_server_id.'").val(server_id);
+						if ((' . ((int) $use_input_id_server) . ')
+							|| (' . ((int) $print_input_id_server) . ')) {
+							$("#' . $input_id_server_id . '").val(server_id);
 						}
 						
 						//Call the function to select (example fill the modules)
-						if ('.((int) $javascript_is_function_select).') {
-							'.$javascript_name_function_select.'(agent_name);
+						if (' . ((int) $javascript_is_function_select) . ') {
+							' . $javascript_name_function_select . '(agent_name);
 						}
 						
 						//Function to call after the select
-						if ('.((int) !empty($javascript_function_action_after_select_js_call)).') {
-							'.$javascript_function_action_after_select_js_call.'
+						if (' . ((int) !empty($javascript_function_action_after_select_js_call)) . ') {
+							' . $javascript_function_action_after_select_js_call . '
 						}
 
 						//Set icon
-						$("#'.$input_id.'")
-                            .attr("style", "background: url(\"'.$icon_image.'\") 97% center no-repeat; background-size: 20px; width:100%; '.$inputStyles.'")
+						$("#' . $input_id . '")
+                            .attr("style", "background: url(\"' . $icon_image . '\") 97% center no-repeat; background-size: 20px; width:100%; ' . $inputStyles . '")
 						return;
 					}
 				});
@@ -6482,10 +6510,10 @@ function ui_print_agent_autocomplete_input($parameters)
     }
 
     $attrs = [];
-    $attrs['style'] = 'background-image: url('.$icon_image.'); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; '.$text_color.' '.$inputStyles.'';
+    $attrs['style'] = 'background-image: url(' . $icon_image . '); background-repeat: no-repeat; background-position: 97% center; background-size: 20px; width:100%; ' . $text_color . ' ' . $inputStyles . '';
 
     if (!$disabled_javascript_on_blur_function) {
-        $attrs['onblur'] = $javascript_on_blur_function_name.'()';
+        $attrs['onblur'] = $javascript_on_blur_function_name . '()';
     }
 
     $html = html_print_input_text_extended(
@@ -6538,7 +6566,7 @@ function ui_print_agent_autocomplete_input($parameters)
 				/* <![CDATA[ */';
         }
 
-        $html .= 'var select_item_click = 0;'."\n";
+        $html .= 'var select_item_click = 0;' . "\n";
 
         $html .= $javascript_function_change;
         if ($javascript_is_function_select) {
@@ -6549,7 +6577,7 @@ function ui_print_agent_autocomplete_input($parameters)
 
         if ($javascript_document_ready) {
             $html .= '$(document).ready (function () {
-				set_functions_change_autocomplete_'.$input_name.'();
+				set_functions_change_autocomplete_' . $input_name . '();
 				});';
         }
 
@@ -6574,7 +6602,7 @@ function ui_print_agent_autocomplete_input($parameters)
  *
  * @return array.
  */
-function ui_get_error($error_code='')
+function ui_get_error($error_code = '')
 {
     // XXX: Deprecated. Pandora shouldn't go inside this.
     return [
@@ -6591,16 +6619,16 @@ function ui_get_error($error_code='')
  *
  * @return void
  */
-function ui_include_time_picker($echo_tags=false)
+function ui_include_time_picker($echo_tags = false)
 {
     if (is_ajax() || $echo_tags) {
-        echo '<script type="text/javascript" src="'.ui_get_full_url(false, false, false, false).'include/javascript/jquery.ui-timepicker-addon.js"></script>';
+        echo '<script type="text/javascript" src="' . ui_get_full_url(false, false, false, false) . 'include/javascript/jquery.ui-timepicker-addon.js"></script>';
     } else {
         ui_require_jquery_file('ui-timepicker-addon');
     }
 
-    if (file_exists('include/javascript/i18n/jquery-ui-timepicker-'.substr(get_user_language(), 0, 2).'.js')) {
-        echo '<script type="text/javascript" src="'.ui_get_full_url('include/javascript/i18n/jquery-ui-timepicker-'.substr(get_user_language(), 0, 2).'.js', false, false, false).'"></script>';
+    if (file_exists('include/javascript/i18n/jquery-ui-timepicker-' . substr(get_user_language(), 0, 2) . '.js')) {
+        echo '<script type="text/javascript" src="' . ui_get_full_url('include/javascript/i18n/jquery-ui-timepicker-' . substr(get_user_language(), 0, 2) . '.js', false, false, false) . '"></script>';
     }
 }
 
@@ -6619,8 +6647,8 @@ function ui_print_module_string_value(
     $value,
     $id_agente_module,
     $current_interval,
-    $module_name=null,
-    $server_id=0
+    $module_name = null,
+    $server_id = 0
 ) {
     global $config;
 
@@ -6653,7 +6681,7 @@ function ui_print_module_string_value(
     $is_snapshot = is_snapshot_data($module['datos']);
     $is_large_image = is_text_to_black_string($module['datos']);
     if (($config['command_snapshot']) && ($is_snapshot || $is_large_image)) {
-        $row[7] = ui_get_snapshot_image($link, $is_snapshot).'&nbsp;&nbsp;';
+        $row[7] = ui_get_snapshot_image($link, $is_snapshot) . '&nbsp;&nbsp;';
     }
 
     $is_snapshot = is_snapshot_data($value);
@@ -6668,7 +6696,7 @@ function ui_print_module_string_value(
                 'id_node'     => $server_id ? $server_id : 0,
             ]
         );
-        $salida = ui_get_snapshot_image($link, $is_snapshot).'&nbsp;&nbsp;';
+        $salida = ui_get_snapshot_image($link, $is_snapshot) . '&nbsp;&nbsp;';
     } else {
         $sub_string = substr(io_safe_output($value), 0, 12);
         if ($value == $sub_string) {
@@ -6700,10 +6728,10 @@ function ui_print_module_string_value(
                 $value = preg_replace('/\n/i', '<br>', $value);
                 $value = preg_replace('/\s/i', '&nbsp;', $value);
 
-                $title_dialog = modules_get_agentmodule_agent_alias($id_agente_module).' / '.$module_name;
-                $salida = '<div '."id='hidden_value_module_".$id_agente_module."'
-					class='title_dialog' title='".$title_dialog."'>".$value.'</div><span '."id='value_module_".$id_agente_module."'
-					class='nowrap'>".'<span id="value_module_text_'.$id_agente_module.'">'.$sub_string.'</span> '."<a href='javascript: toggle_full_value(".$id_agente_module.")'>".html_print_image('images/zoom.png', true, ['style' => 'max-height: 20px; vertical-align: middle;', 'class' => 'invert_filter']).'</a></span>';
+                $title_dialog = modules_get_agentmodule_agent_alias($id_agente_module) . ' / ' . $module_name;
+                $salida = '<div ' . "id='hidden_value_module_" . $id_agente_module . "'
+					class='title_dialog' title='" . $title_dialog . "'>" . $value . '</div><span ' . "id='value_module_" . $id_agente_module . "'
+					class='nowrap'>" . '<span id="value_module_text_' . $id_agente_module . '">' . $sub_string . '</span> ' . "<a href='javascript: toggle_full_value(" . $id_agente_module . ")'>" . html_print_image('images/zoom.png', true, ['style' => 'max-height: 20px; vertical-align: middle;', 'class' => 'invert_filter']) . '</a></span>';
             }
         }
     }
@@ -6720,25 +6748,25 @@ function ui_print_module_string_value(
  *
  * @return void
  */
-function ui_print_tags_view($title='', $tags=[])
+function ui_print_tags_view($title = '', $tags = [])
 {
     $tv = '';
     if (!empty($title)) {
         $tv .= '<div class="tag-wrapper">';
-        $tv .= '<h3>'.$title.'</h3>';
+        $tv .= '<h3>' . $title . '</h3>';
     } else {
         $tv .= '<div class="tag-wrapper pdd_t_10px">';
     }
 
     foreach ($tags as $tag) {
         $tv .= '<div class=pandora-tag>';
-            $tv .= '<span class=pandora-tag-title>';
-                $tv .= $tag['title'];
-            $tv .= '</span>';
+        $tv .= '<span class=pandora-tag-title>';
+        $tv .= $tag['title'];
+        $tv .= '</span>';
 
-            $tv .= '<span class=pandora-tag-value>';
-                $tv .= $tag['value'];
-            $tv .= '</span>';
+        $tv .= '<span class=pandora-tag-value>';
+        $tv .= $tag['value'];
+        $tv .= '</span>';
         $tv .= '</div>';
     }
 
@@ -6757,7 +6785,7 @@ function ui_print_tags_view($title='', $tags=[])
  *
  * @return string Link.
  */
-function ui_get_snapshot_link($params, $only_params=false)
+function ui_get_snapshot_link($params, $only_params = false)
 {
     global $config;
 
@@ -6776,18 +6804,18 @@ function ui_get_snapshot_link($params, $only_params=false)
     // First parameter of js winopeng_var.
     $page = ui_get_full_url('operation/agentes/snapshot_view.php', false, false, false);
 
-    $url = $page.'?id='.$params['id_module'].'&label='.rawurlencode(urlencode(io_safe_output($params['module_name']))).'&id_node='.$params['id_node'];
+    $url = $page . '?id=' . $params['id_module'] . '&label=' . rawurlencode(urlencode(io_safe_output($params['module_name']))) . '&id_node=' . $params['id_node'];
 
     if ($params['timestamp'] != 0) {
-        $url .= '&timestamp='.$params['timestamp'];
+        $url .= '&timestamp=' . $params['timestamp'];
     }
 
     if ($params['interval'] != 0) {
-        $url .= '&refr='.$params['interval'];
+        $url .= '&refr=' . $params['interval'];
     }
 
     // Second parameter of js winopeng_var.
-    $win_handle = dechex(crc32('snapshot_'.$params['id_module']));
+    $win_handle = dechex(crc32('snapshot_' . $params['id_module']));
 
     $link_parts = [
         $url,
@@ -6802,7 +6830,7 @@ function ui_get_snapshot_link($params, $only_params=false)
     }
 
     // Return the function call to inline js execution.
-    return "winopeng_var('".implode("', '", $link_parts)."')";
+    return "winopeng_var('" . implode("', '", $link_parts) . "')";
 }
 
 
@@ -6818,8 +6846,8 @@ function ui_get_snapshot_image($link, $is_image)
 {
     $image_name = ($is_image) ? 'photo.png' : 'default_list.png';
 
-    $link = '<a href="javascript:'.$link.'">'.html_print_image(
-        'images/'.$image_name,
+    $link = '<a href="javascript:' . $link . '">' . html_print_image(
+        'images/' . $image_name,
         true,
         [
             'border' => '0',
@@ -6828,7 +6856,7 @@ function ui_get_snapshot_image($link, $is_image)
             'style'  => 'max-height: 20px; vertical-align: middle;',
             'class'  => 'invert_filter',
         ]
-    ).'</a>';
+    ) . '</a>';
 
     return $link;
 }
@@ -6842,7 +6870,7 @@ function ui_get_snapshot_image($link, $is_image)
  *
  * @return string HTML.
  */
-function ui_get_using_system_timezone_warning($tag='h3', $return=true)
+function ui_get_using_system_timezone_warning($tag = 'h3', $return = true)
 {
     global $config;
 
@@ -6853,13 +6881,12 @@ function ui_get_using_system_timezone_warning($tag='h3', $return=true)
             __('These controls are using the timezone of the system (%s) instead of yours (%s). The difference with your time zone in hours is %s.'),
             $config['timezone'],
             date_default_timezone_get(),
-            ($user_offset > 0) ? '+'.$user_offset : $user_offset
+            ($user_offset > 0) ? '+' . $user_offset : $user_offset
         );
         return ui_print_info_message($message, '', $return, $tag);
     } else {
         return '';
     }
-
 }
 
 
@@ -6873,7 +6900,7 @@ function ui_get_docs_logo()
     global $config;
 
     // Default logo to open version (enterprise_installed function only works in login status).
-    if (!file_exists(ENTERPRISE_DIR.'/load_enterprise.php') || !isset($config['custom_docs_logo'])) {
+    if (!file_exists(ENTERPRISE_DIR . '/load_enterprise.php') || !isset($config['custom_docs_logo'])) {
         if (is_metaconsole() === true) {
             return '../../images/icono_docs.png';
         }
@@ -6885,7 +6912,7 @@ function ui_get_docs_logo()
         return false;
     }
 
-    return 'enterprise/images/custom_general_logos/'.$config['custom_docs_logo'];
+    return 'enterprise/images/custom_general_logos/' . $config['custom_docs_logo'];
 }
 
 
@@ -6899,7 +6926,7 @@ function ui_get_support_logo()
     global $config;
 
     // Default logo to open version (enterprise_installed function only works in login status).
-    if (!file_exists(ENTERPRISE_DIR.'/load_enterprise.php') || !isset($config['custom_support_logo'])) {
+    if (!file_exists(ENTERPRISE_DIR . '/load_enterprise.php') || !isset($config['custom_support_logo'])) {
         if (is_metaconsole() === true) {
             return '../../images/icono_support.png';
         }
@@ -6911,7 +6938,7 @@ function ui_get_support_logo()
         return false;
     }
 
-    return 'enterprise/images/custom_general_logos/'.$config['custom_support_logo'];
+    return 'enterprise/images/custom_general_logos/' . $config['custom_support_logo'];
 }
 
 
@@ -6922,7 +6949,7 @@ function ui_get_support_logo()
  *
  * @return string with the path to logo. If it is not set, return the default value.
  */
-function ui_get_custom_header_logo($white_bg=false)
+function ui_get_custom_header_logo($white_bg = false)
 {
     global $config;
 
@@ -6935,7 +6962,7 @@ function ui_get_custom_header_logo($white_bg=false)
         return 'images/pandora_tinylogo.png';
     }
 
-    return 'enterprise/images/custom_logo/'.$stored_logo;
+    return 'enterprise/images/custom_logo/' . $stored_logo;
 }
 
 
@@ -6952,7 +6979,7 @@ function ui_get_logo_to_center_networkmap()
         return 'images/networkmap/bola_pandora_network_maps.png';
     }
 
-    return 'enterprise/images/custom_general_logos/'.$config['custom_support_logo'];
+    return 'enterprise/images/custom_general_logos/' . $config['custom_support_logo'];
 }
 
 
@@ -6969,7 +6996,7 @@ function ui_get_mobile_login_icon()
         return is_metaconsole() ? 'mobile/images/metaconsole_mobile.png' : 'mobile/images/pandora_mobile_console.png';
     }
 
-    return 'enterprise/images/custom_general_logos/'.$config['custom_mobile_console_logo'];
+    return 'enterprise/images/custom_general_logos/' . $config['custom_mobile_console_logo'];
 }
 
 
@@ -6978,17 +7005,21 @@ function ui_get_mobile_login_icon()
  *
  * @return string with the path to logo. If it is not set, return the default.
  */
+// function ui_get_favicon()
+// {
+//     global $config;
+
+//     if (empty($config['custom_favicon'])) {
+//         return (!is_metaconsole()) ? 'images/pandora.png' : '/images/custom_favicon/favicon_meta.png';
+//     }
+
+//     return 'images/custom_favicon/'.$config['custom_favicon'];
+// }
+
 function ui_get_favicon()
 {
-    global $config;
-
-    if (empty($config['custom_favicon'])) {
-        return (!is_metaconsole()) ? 'images/pandora.png' : '/images/custom_favicon/favicon_meta.png';
-    }
-
-    return 'images/custom_favicon/'.$config['custom_favicon'];
+    return 'images/custom_favicon/pandora.png';
 }
-
 
 /**
  * Show sorting arrows for tables
@@ -7020,8 +7051,8 @@ function ui_get_sorting_arrows($url_up, $url_down, $selectUp, $selectDown)
     }
 
     return '<span class="sort_arrow">
-                <a href="'.$url_up.'">'.html_print_image($arrow_up, true, ['alt' => 'up']).'</a>
-                <a href="'.$url_down.'">'.html_print_image($arrow_down, true, ['alt' => 'down']).'</a>
+                <a href="' . $url_up . '">' . html_print_image($arrow_up, true, ['alt' => 'up']) . '</a>
+                <a href="' . $url_down . '">' . html_print_image($arrow_down, true, ['alt' => 'down']) . '</a>
             </span>';
 }
 
@@ -7040,7 +7071,7 @@ function ui_print_breadcrums($tab_name)
     } else if ($tab_name != '') {
         $section = str_replace('_', ' ', $tab_name);
         $section = ucwords($section);
-        $section = ' / '.___($section);
+        $section = ' / ' . ___($section);
     }
 
     return $section;
@@ -7098,24 +7129,23 @@ function ui_print_comments($comments)
 
     $short_comment = substr($last_comment['comment'], 0, 20);
     if ($config['prominent_time'] == 'timestamp') {
-        $comentario = '<i>'.date($config['date_format'], $last_comment['utimestamp']).'&nbsp;('.$last_comment['id_user'].'):&nbsp;'.$last_comment['comment'].'';
+        $comentario = '<i>' . date($config['date_format'], $last_comment['utimestamp']) . '&nbsp;(' . $last_comment['id_user'] . '):&nbsp;' . $last_comment['comment'] . '';
 
         if (strlen($comentario) > '200px') {
-            $comentario = '<i>'.date($config['date_format'], $last_comment['utimestamp']).'&nbsp;('.$last_comment['id_user'].'):&nbsp;'.$short_comment.'...';
+            $comentario = '<i>' . date($config['date_format'], $last_comment['utimestamp']) . '&nbsp;(' . $last_comment['id_user'] . '):&nbsp;' . $short_comment . '...';
         }
     } else {
         $rest_time = (time() - $last_comment['utimestamp']);
         $time_last = (($rest_time / 60) / 60);
 
-        $comentario = '<i>'.number_format($time_last, 0, $config['decimal_separator'], ($config['thousand_separator'] ?? ',')).'&nbsp; Hours &nbsp;('.$last_comment['id_user'].'):&nbsp;'.$last_comment['comment'].'';
+        $comentario = '<i>' . number_format($time_last, 0, $config['decimal_separator'], ($config['thousand_separator'] ?? ',')) . '&nbsp; Hours &nbsp;(' . $last_comment['id_user'] . '):&nbsp;' . $last_comment['comment'] . '';
 
         if (strlen($comentario) > '200px') {
-            $comentario = '<i>'.number_format($time_last, 0, $config['decimal_separator'], ($config['thousand_separator'] ?? ',')).'&nbsp; Hours &nbsp;('.$last_comment['id_user'].'):&nbsp;'.$short_comment.'...';
+            $comentario = '<i>' . number_format($time_last, 0, $config['decimal_separator'], ($config['thousand_separator'] ?? ',')) . '&nbsp; Hours &nbsp;(' . $last_comment['id_user'] . '):&nbsp;' . $short_comment . '...';
         }
     }
 
     return io_safe_output($comentario);
-
 }
 
 
@@ -7131,33 +7161,33 @@ function ui_get_full_external_url(string $url)
     $url_parsed = parse_url($url);
     if ($url_parsed) {
         if (!isset($url_parsed['scheme'])) {
-            $url = 'http://'.$url;
+            $url = 'http://' . $url;
         }
     }
 
-        return $url;
+    return $url;
 }
 
 
-function ui_print_message_dialog($title, $text, $id='', $img='', $text_button='', $hidden=true)
+function ui_print_message_dialog($title, $text, $id = '', $img = '', $text_button = '', $hidden = true)
 {
     if ($hidden == true) {
         $style = 'display:none';
     }
 
-    echo '<div id="message_dialog_'.$id.'" title="'.$title.'" style="'.$style.'">';
-        echo '<div class="content_dialog">';
-            echo '<div class="icon_message_dialog">';
-                echo html_print_image($img, true, ['alt' => $title, 'border' => 0, 'class' => 'icon_connection_check']);
-            echo '</div>';
-            echo '<div class="content_message_dialog">';
-                echo '<div class="text_message_dialog">';
-                    echo '<h1>'.$title.'</h1>';
-                    echo '<p>'.$text.'</p>';
-                    echo '<div id="err_msg"></div>';
-                echo '</div>';
-            echo '</div>';
-        echo '</div>';
+    echo '<div id="message_dialog_' . $id . '" title="' . $title . '" style="' . $style . '">';
+    echo '<div class="content_dialog">';
+    echo '<div class="icon_message_dialog">';
+    echo html_print_image($img, true, ['alt' => $title, 'border' => 0, 'class' => 'icon_connection_check']);
+    echo '</div>';
+    echo '<div class="content_message_dialog">';
+    echo '<div class="text_message_dialog">';
+    echo '<h1>' . $title . '</h1>';
+    echo '<p>' . $text . '</p>';
+    echo '<div id="err_msg"></div>';
+    echo '</div>';
+    echo '</div>';
+    echo '</div>';
     echo '</div>';
 }
 
@@ -7169,19 +7199,19 @@ function ui_print_message_dialog($title, $text, $id='', $img='', $text_button=''
  *
  * @return null
  */
-function ui_query_result_editor($name='default')
+function ui_query_result_editor($name = 'default')
 {
     $editorSubContainer = html_print_div(
         [
-            'id'      => $name.'_editor_title',
-            'content' => '<p>'.__('Query').'</p>',
+            'id'      => $name . '_editor_title',
+            'content' => '<p>' . __('Query') . '</p>',
         ],
         true
     );
 
     $editorSubContainer .= html_print_div(
         [
-            'id'    => $name.'_editor',
+            'id'    => $name . '_editor',
             'class' => 'query_result_editor',
         ],
         true
@@ -7189,7 +7219,7 @@ function ui_query_result_editor($name='default')
 
     $editorContainer = html_print_div(
         [
-            'id'      => $name.'_editor_container',
+            'id'      => $name . '_editor_container',
             'class'   => 'query_result_editor_container',
             'content' => $editorSubContainer,
         ],
@@ -7198,15 +7228,15 @@ function ui_query_result_editor($name='default')
 
     $viewSubContainer = html_print_div(
         [
-            'id'      => $name.'_view_title',
-            'content' => '<p>'.__('Results').'</p>',
+            'id'      => $name . '_view_title',
+            'content' => '<p>' . __('Results') . '</p>',
         ],
         true
     );
 
     $viewSubContainer .= html_print_div(
         [
-            'id'    => $name.'_view',
+            'id'    => $name . '_view',
             'class' => 'query_result_view',
         ],
         true
@@ -7222,7 +7252,7 @@ function ui_query_result_editor($name='default')
 
     $viewContainer = html_print_div(
         [
-            'id'      => $name.'_view_container',
+            'id'      => $name . '_view_container',
             'class'   => 'query_result_view_container',
             'content' => $viewSubContainer,
         ],
@@ -7233,7 +7263,7 @@ function ui_query_result_editor($name='default')
         [
             'id'      => 'query_result_container',
             'class'   => 'databox',
-            'content' => $editorContainer.$viewContainer,
+            'content' => $editorContainer . $viewContainer,
         ]
     );
     // This is needed for Javascript
@@ -7246,7 +7276,6 @@ function ui_query_result_editor($name='default')
     );
 
     html_print_submit_button(__('Execute query'), 'execute_query', false, ['icon' => 'update']);
-
 }
 
 
@@ -7258,7 +7287,7 @@ function ui_query_result_editor($name='default')
  *
  * @return string
  */
-function ui_print_reveal_password(string $name, bool $return=false)
+function ui_print_reveal_password(string $name, bool $return = false)
 {
     if (is_metaconsole()) {
         $imagePath = '../../images/';
@@ -7266,7 +7295,7 @@ function ui_print_reveal_password(string $name, bool $return=false)
         $imagePath = 'images/';
     }
 
-    $output = '&nbsp;<img class="clickable forced_title invert_filter" id="reveal_password_'.$name.'" src="'.$imagePath.'eye_show.png" onclick="reveal_password(\''.$name.'\')" data-use_title_for_force_title="1" data-title="'.__('Show password').'">';
+    $output = '&nbsp;<img class="clickable forced_title invert_filter" id="reveal_password_' . $name . '" src="' . $imagePath . 'eye_show.png" onclick="reveal_password(\'' . $name . '\')" data-use_title_for_force_title="1" data-title="' . __('Show password') . '">';
 
     if ($return === true) {
         return $output;
@@ -7285,7 +7314,7 @@ function ui_print_reveal_password(string $name, bool $return=false)
  *
  * @return string
  */
-function ui_print_spinner(string $text='Loading', bool $return=false)
+function ui_print_spinner(string $text = 'Loading', bool $return = false)
 {
     $output = '';
 
@@ -7295,7 +7324,7 @@ function ui_print_spinner(string $text='Loading', bool $return=false)
         [
             'id'      => 'loading_spinner',
             'class'   => 'white_box invisible',
-            'content' => '<span style="font-size:25px;">'.$text.'...</span>'.html_print_image(
+            'content' => '<span style="font-size:25px;">' . $text . '...</span>' . html_print_image(
                 'images/spinner.gif',
                 true,
                 [
@@ -7343,47 +7372,47 @@ function ui_print_servertype_icon(int $id)
         case MODULE_DATA:
             $title = __('Data server');
             $image = 'images/data-server@svg.svg';
-        break;
+            break;
 
         case MODULE_NETWORK:
             $title = __('Network server');
             $image = 'images/network-server@os.svg';
-        break;
+            break;
 
         case MODULE_PLUGIN:
             $title = __('Plugin server');
             $image = 'images/plugins@svg.svg';
-        break;
+            break;
 
         case MODULE_PREDICTION:
             $title = __('Prediction server');
             $image = 'images/prediction@svg.svg';
-        break;
+            break;
 
         case MODULE_WMI:
             $title = __('WMI server');
             $image = 'images/WMI@svg.svg';
-        break;
+            break;
 
         case MODULE_WEB:
             $title = __('WEB server');
             $image = 'images/server-web@svg.svg';
-        break;
+            break;
 
         case MODULE_WUX:
             $title = __('WUX server');
             $image = 'images/wux@svg.svg';
-        break;
+            break;
 
         case MODULE_WIZARD:
             $title = __('Wizard Module');
             $image = 'images/wizard@svg.svg';
-        break;
+            break;
 
         default:
             $title = '';
             $image = '';
-        break;
+            break;
     }
 
     if (empty($title) === true && empty($image) === true) {
@@ -7405,15 +7434,15 @@ function ui_print_servertype_icon(int $id)
 
 function ui_get_inventory_module_add_form(
     $form_action,
-    $form_buttons='',
-    $inventory_module_id=0,
-    $os_id=false,
-    $target=false,
-    $interval=3600,
-    $username='',
-    $password='',
-    $custom_fields_enabled=false,
-    $custom_fields=[]
+    $form_buttons = '',
+    $inventory_module_id = 0,
+    $os_id = false,
+    $target = false,
+    $interval = 3600,
+    $username = '',
+    $password = '',
+    $custom_fields_enabled = false,
+    $custom_fields = []
 ) {
     $table = new stdClass();
     $table->id = 'inventory-module-form';
@@ -7489,7 +7518,7 @@ function ui_get_inventory_module_add_form(
     } else {
         $row['module'] = html_print_label_input_block(
             __('Module'),
-            db_get_sql('SELECT name FROM tmodule_inventory WHERE id_module_inventory = '.$inventory_module_id)
+            db_get_sql('SELECT name FROM tmodule_inventory WHERE id_module_inventory = ' . $inventory_module_id)
         );
     }
 
@@ -7581,15 +7610,15 @@ function ui_get_inventory_module_add_form(
 
     $table->data['hidden-custom-field-row'] = html_print_label_input_block(
         '',
-        '<div class="agent_details_agent_data">'.html_print_input_hidden(
+        '<div class="agent_details_agent_data">' . html_print_input_hidden(
             'hidden-custom-field-name',
             '',
             true
-        ).html_print_input_hidden(
+        ) . html_print_input_hidden(
             'hidden-custom-field-is-secure',
             0,
             true
-        ).html_print_input_text(
+        ) . html_print_input_text(
             'hidden-custom-field-input',
             '',
             '',
@@ -7600,7 +7629,7 @@ function ui_get_inventory_module_add_form(
             false,
             '',
             'w100p'
-        ).html_print_image(
+        ) . html_print_image(
             'images/delete.svg',
             true,
             [
@@ -7609,7 +7638,7 @@ function ui_get_inventory_module_add_form(
                 'style'  => 'cursor: pointer;',
                 'class'  => 'remove-custom-field invert_filter main_menu_icon',
             ]
-        ).'</div>'
+        ) . '</div>'
     );
     $table->colspan['hidden-custom-field-row'][0] = 2;
 
@@ -7617,7 +7646,7 @@ function ui_get_inventory_module_add_form(
         foreach ($custom_fields as $i => $field) {
             if ($field['secure']) {
                 $secure = html_print_input_password(
-                    'custom_fields['.$i.'][value]',
+                    'custom_fields[' . $i . '][value]',
                     io_safe_input($field['value']),
                     '',
                     false,
@@ -7632,7 +7661,7 @@ function ui_get_inventory_module_add_form(
                 );
             } else {
                 $secure = html_print_input_text(
-                    'custom_fields['.$i.'][value]',
+                    'custom_fields[' . $i . '][value]',
                     io_safe_input($field['value']),
                     '',
                     false,
@@ -7645,18 +7674,18 @@ function ui_get_inventory_module_add_form(
                 );
             }
 
-            $table->colspan['custom-field-row-'.$i][0] = 2;
-            $table->data['custom-field-row-'.$i] = html_print_label_input_block(
+            $table->colspan['custom-field-row-' . $i][0] = 2;
+            $table->data['custom-field-row-' . $i] = html_print_label_input_block(
                 $field['name'],
-                '<div class="agent_details_agent_data">'.html_print_input_hidden(
-                    'custom_fields['.$i.'][name]',
+                '<div class="agent_details_agent_data">' . html_print_input_hidden(
+                    'custom_fields[' . $i . '][name]',
                     $field['name'],
                     true
-                ).html_print_input_hidden(
-                    'custom_fields['.$i.'][secure]',
+                ) . html_print_input_hidden(
+                    'custom_fields[' . $i . '][secure]',
                     $field['secure'],
                     true
-                ).$secure.html_print_image(
+                ) . $secure . html_print_image(
                     'images/delete.svg',
                     true,
                     [
@@ -7665,7 +7694,7 @@ function ui_get_inventory_module_add_form(
                         'style'  => 'cursor: pointer;',
                         'class'  => 'remove-custom-field invert_filter main_menu_icon',
                     ]
-                ).'</div>'
+                ) . '</div>'
             );
         }
     }
@@ -7673,7 +7702,7 @@ function ui_get_inventory_module_add_form(
     $row = [];
     $row['custom-fields-column'] = html_print_label_input_block(
         __('Field name'),
-        '<div class="flex">'.html_print_input_text(
+        '<div class="flex">' . html_print_input_text(
             'field-name',
             '',
             '',
@@ -7684,12 +7713,12 @@ function ui_get_inventory_module_add_form(
             false,
             '',
             'w60p mrgn_right_10px'
-        ).html_print_checkbox(
+        ) . html_print_checkbox(
             'field-is-password',
             1,
             false,
             true
-        ).'&nbsp;'.__("It's a password").'</div>'
+        ) . '&nbsp;' . __("It's a password") . '</div>'
     );
 
     $table->data['custom-fields-row'] = $row;
@@ -7712,89 +7741,89 @@ function ui_get_inventory_module_add_form(
 
     ob_start();
 
-    echo '<form id="policy_inventory_module_edit_form" name="modulo" method="post" action="'.$form_action.'" class="max_floating_element_size">';
+    echo '<form id="policy_inventory_module_edit_form" name="modulo" method="post" action="' . $form_action . '" class="max_floating_element_size">';
     echo html_print_table($table);
     echo $form_buttons;
     echo '</form>';
-    ?>
+?>
 
-<script type="text/javascript">
-(function () {
-    function toggle_custom_fields () {
-        if ($("#checkbox-custom_fields_enabled").prop("checked")) {
-            $("#inventory-module-form-userpass-row").hide();
-            $("#inventory-module-form-custom-fields-row").show();
-            $("tr[id^=inventory-module-form-custom-field-row-]").show();
-            $('#inventory-module-form-custom-fields-button').show();
-        } else {
-            $("#inventory-module-form-userpass-row").show();
-            $("#inventory-module-form-custom-fields-row").hide();
-            $("tr[id^=inventory-module-form-custom-field-row-]").hide();
-            $('#inventory-module-form-custom-fields-button').hide();
-        }
-    }
+    <script type="text/javascript">
+        (function() {
+            function toggle_custom_fields() {
+                if ($("#checkbox-custom_fields_enabled").prop("checked")) {
+                    $("#inventory-module-form-userpass-row").hide();
+                    $("#inventory-module-form-custom-fields-row").show();
+                    $("tr[id^=inventory-module-form-custom-field-row-]").show();
+                    $('#inventory-module-form-custom-fields-button').show();
+                } else {
+                    $("#inventory-module-form-userpass-row").show();
+                    $("#inventory-module-form-custom-fields-row").hide();
+                    $("tr[id^=inventory-module-form-custom-field-row-]").hide();
+                    $('#inventory-module-form-custom-fields-button').hide();
+                }
+            }
 
-    function add_row_for_custom_field (fieldName, isSecure) {
-        var custom_fields_num = $("tr[id^=inventory-module-form-custom-field-row-]").length;
-        $("#inventory-module-form-hidden-custom-field-row")
-        .clone()
-        .prop("id", "inventory-module-form-custom-field-row-" + custom_fields_num)
-        .children("[id^='inventory-module-form-hidden-custom-field-row']") // go to TD
-            .prop("id", "inventory-module-form-hidden-custom-field-row-"+ custom_fields_num)
-                .children() // go to DIV
+            function add_row_for_custom_field(fieldName, isSecure) {
+                var custom_fields_num = $("tr[id^=inventory-module-form-custom-field-row-]").length;
+                $("#inventory-module-form-hidden-custom-field-row")
+                    .clone()
+                    .prop("id", "inventory-module-form-custom-field-row-" + custom_fields_num)
+                    .children("[id^='inventory-module-form-hidden-custom-field-row']") // go to TD
+                    .prop("id", "inventory-module-form-hidden-custom-field-row-" + custom_fields_num)
+                    .children() // go to DIV
                     .find('label')
-                        .html(fieldName)
-                .parent() // up to DIV padre
-                .find('div') //go to DIV no label
+                    .html(fieldName)
+                    .parent() // up to DIV padre
+                    .find('div') //go to DIV no label
                     .children("[id^=hidden-hidden-custom-field-name]")
                     .prop("id", "custom-field-name-" + custom_fields_num)
                     .prop("name", "custom_fields[" + custom_fields_num + "][name]")
                     .prop("value", fieldName)
                     .parent()
                     .children("input[name=hidden-custom-field-is-secure]")
-                        .prop("id", "custom-field-is-secure-" + custom_fields_num)
-                        .prop("name", "custom_fields[" + custom_fields_num + "][secure]")
-                        .val(isSecure ? 1 : 0)
-                        .parent()
+                    .prop("id", "custom-field-is-secure-" + custom_fields_num)
+                    .prop("name", "custom_fields[" + custom_fields_num + "][secure]")
+                    .val(isSecure ? 1 : 0)
+                    .parent()
                     .children("input[name=hidden-custom-field-input]")
-                        .prop("id", "custom-field-input-" + custom_fields_num)
-                        .prop("type", isSecure ? "password" : "text")
-                        .prop("name", "custom_fields[" + custom_fields_num + "][value]")
-                        .parent()
+                    .prop("id", "custom-field-input-" + custom_fields_num)
+                    .prop("type", isSecure ? "password" : "text")
+                    .prop("name", "custom_fields[" + custom_fields_num + "][value]")
+                    .parent()
                     .children("img.remove-custom-field")
-                        .click(remove_custom_field)
-                        .parent()
-                        .parent()
-                .parent() // up to TD
-            .parent() // up to TR
-        .insertBefore($("#inventory-module-form-custom-fields-row"))
-        .show();
-    }
+                    .click(remove_custom_field)
+                    .parent()
+                    .parent()
+                    .parent() // up to TD
+                    .parent() // up to TR
+                    .insertBefore($("#inventory-module-form-custom-fields-row"))
+                    .show();
+            }
 
-    function add_custom_field () {
-        var fieldName = $("#text-field-name").val();
-        var isSecure = $("#checkbox-field-is-password").prop("checked");
-        
-        if (fieldName.length === 0) return;
+            function add_custom_field() {
+                var fieldName = $("#text-field-name").val();
+                var isSecure = $("#checkbox-field-is-password").prop("checked");
 
-        add_row_for_custom_field(fieldName, isSecure);
-        // Clean the fields
-        $("#text-field-name").val("");
-        $("#checkbox-field-is-password").prop("checked", false);
-    }
-    
-    function remove_custom_field (event) {
-        $(event.target).parents("tr[id^=inventory-module-form-custom-field-row-]").remove();
-    }
-    
-    $("#checkbox-custom_fields_enabled").click(toggle_custom_fields);
-    $("#button-add-field").click(add_custom_field);
-    $("img.remove-custom-field").click(remove_custom_field);
+                if (fieldName.length === 0) return;
 
-    toggle_custom_fields();
-})();
-</script>
-    <?php
+                add_row_for_custom_field(fieldName, isSecure);
+                // Clean the fields
+                $("#text-field-name").val("");
+                $("#checkbox-field-is-password").prop("checked", false);
+            }
+
+            function remove_custom_field(event) {
+                $(event.target).parents("tr[id^=inventory-module-form-custom-field-row-]").remove();
+            }
+
+            $("#checkbox-custom_fields_enabled").click(toggle_custom_fields);
+            $("#button-add-field").click(add_custom_field);
+            $("img.remove-custom-field").click(remove_custom_field);
+
+            toggle_custom_fields();
+        })();
+    </script>
+<?php
     return ob_get_clean();
 }
 
@@ -7807,7 +7836,7 @@ function ui_get_inventory_module_add_form(
  *
  * @return void|string
  */
-function ui_print_fullscreen_bar(array $options, bool $return=false)
+function ui_print_fullscreen_bar(array $options, bool $return = false)
 {
     // Always requery file.
     ui_require_jquery_file('countdown');
@@ -7815,7 +7844,7 @@ function ui_print_fullscreen_bar(array $options, bool $return=false)
     $url = ($options['url'] ?? '');
     $normalScreenTitle = ($options['normal_screen_title'] ?? 'Back to normal mode');
     $mainTitle = ($options['title'] ?? 'Full screen mode');
-    $title = '<span class="">'.__('Refresh').'</span>';
+    $title = '<span class="">' . __('Refresh') . '</span>';
     $select = html_print_select(
         get_refresh_time_array(),
         'refresh',
@@ -7836,7 +7865,7 @@ function ui_print_fullscreen_bar(array $options, bool $return=false)
     $vcRefrDivContent[] = html_print_div(
         [
             'id'      => 'vc-refr-form',
-            'content' => $title.$select,
+            'content' => $title . $select,
         ],
         true
     );
@@ -7898,15 +7927,15 @@ function ui_print_status_div($status)
     switch ((int) $status) {
         case 0:
             $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #0B579B;" title="OK" data-title="OK" data-use_title_for_force_title="1">&nbsp;</div>';
-        break;
+            break;
 
         case 1:
             $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #e63c52;" title="FAILED" data-title="FAILED" data-use_title_for_force_title="1">&nbsp;</div>';
-        break;
+            break;
 
         default:
             $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #fff;" title="UNDEFINED" data-title="UNDEFINED" data-use_title_for_force_title="1">&nbsp;</div>';
-        break;
+            break;
     }
 
     return $return;
@@ -7918,7 +7947,7 @@ function ui_print_fav_menu($id_element, $url, $label, $section)
     global $config;
     $label = io_safe_output($label);
     if (strlen($label) > 18) {
-        $label = io_safe_input(substr($label, 0, 18).'...');
+        $label = io_safe_input(substr($label, 0, 18) . '...');
     }
 
     $fav = db_get_row_filter(
@@ -7950,7 +7979,7 @@ function ui_print_fav_menu($id_element, $url, $label, $section)
     );
     $output .= '</span>';
     $output .= '<div id="dialog-fav-menu">';
-    $output .= '<p><b>'.__('Title').'</b></p>';
+    $output .= '<p><b>' . __('Title') . '</b></p>';
     $output .= html_print_input_text('label_fav_menu', '', '', 25, 255, true, false, true);
     $output .= '</div>';
     return $output;
@@ -7961,7 +7990,7 @@ function ui_update_name_fav_element($id_element, $section, $label)
 {
     $label = io_safe_output($label);
     if (strlen($label) > 18) {
-        $label = io_safe_input(substr($label, 0, 18).'...');
+        $label = io_safe_input(substr($label, 0, 18) . '...');
     }
 
     db_process_sql_update(
