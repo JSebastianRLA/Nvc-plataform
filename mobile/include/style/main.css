@@ -1596,7 +1596,7 @@ input[name="auth_code_btn"] {
   border: 0px;
   border-radius: 15px !important;
   font-weight: bold;
-  background: linear-gradient(90deg, #81b82f 0%, #1d7873 100%);
+  background: linear-gradient(90deg, #38C5FF 0%, #022243 100%);
 }
 
 body.login-background {

@@ -382,8 +382,8 @@ a.pandora_pagination.current:hover {
 }
 
 .dt-button.buttons-csv.buttons-html5:hover {
-  color: #1d7873 !important;
-  border: 2px solid #1d7873 !important;
+  color: #4472FF !important;
+  border: 2px solid #4472FF !important;
 }
 
 .dt-button.buttons-csv.buttons-html5:before {
@@ -514,7 +514,7 @@ a.pandora_pagination.current:hover {
   height: 3px;
   background-color: var(--primary-color);
   margin-top: -4px;
-  /*box-shadow: inset 1px 1px 1px 1px #1d7873;*/
+  /*box-shadow: inset 1px 1px 1px 1px #4472FF;*/
 }
 
 .cron_section {
