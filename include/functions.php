@@ -23,6 +23,7 @@ use HeadlessChromium\Page;
 /*
  * Include the html and ui functions.
  */
+
 require_once 'functions_html.php';
 require_once 'functions_ui.php';
 require_once 'functions_io.php';
@@ -71,15 +72,17 @@ require_once 'functions_io.php';
 // }
 function https_is_running()
 {
-    if (isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
+    if (
+        isset($_SERVER['HTTP_X_FORWARDED_PROTO'])
         && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
     ) {
         return true;
     }
 
-    if (isset($_SERVER['HTTPS'])
+    if (
+        isset($_SERVER['HTTPS'])
         && ($_SERVER['HTTPS'] === true
-        || $_SERVER['HTTPS'] == 'on')
+            || $_SERVER['HTTPS'] == 'on')
     ) {
         return true;
     }
@@ -98,7 +101,7 @@ function https_is_running()
  * @return mixed The cleaned string. If an array was passed, the invalid values
  * will be removed
  */
-function safe_int($value, $min=false, $max=false)
+function safe_int($value, $min = false, $max = false)
 {
     if (is_array($value)) {
         foreach ($value as $key => $check) {
@@ -148,7 +151,7 @@ function output_clean_strict($string)
  *
  * @return string Cleaned string
  */
-function safe_url_extraclean($string, $default_string='')
+function safe_url_extraclean($string, $default_string = '')
 {
     // Strip the string to 125 characters
     $string = substr($string, 0, 125);
@@ -172,11 +175,11 @@ function safe_url_extraclean($string, $default_string='')
  *
  * @return array the list of files if $return parameter is true.
  */
-function list_files($directory, $stringSearch, $searchHandler, $return=false)
+function list_files($directory, $stringSearch, $searchHandler, $return = false)
 {
     $errorHandler = false;
     $result = [];
-    if (! $directoryHandler = @opendir($directory)) {
+    if (!$directoryHandler = @opendir($directory)) {
         echo "<pre>\nerror: directory \"$directory\" doesn't exist!\n</pre>\n";
         return $errorHandler = true;
     }
@@ -221,7 +224,7 @@ function list_files($directory, $stringSearch, $searchHandler, $return=false)
  *
  * @return string A formatted number for use in output
  */
-function format_numeric($number, $decimals=1)
+function format_numeric($number, $decimals = 1)
 {
     global $config;
 
@@ -266,11 +269,11 @@ function format_numeric($number, $decimals=1)
  */
 function format_for_graph(
     $number,
-    $decimals=1,
-    $dec_point='.',
-    $thousands_sep=',',
-    $divider=1000,
-    $sufix=''
+    $decimals = 1,
+    $dec_point = '.',
+    $thousands_sep = ',',
+    $divider = 1000,
+    $sufix = ''
 ) {
     // Exception to exclude modules whose unit is already formatted as KB (satellite modules)
     if (!empty($sufix) && $sufix == 'KB') {
@@ -297,7 +300,7 @@ function format_for_graph(
     }
 
     // This will actually do the rounding and the decimals.
-    return remove_right_zeros(format_numeric($number, $decimals)).$shorts[$pos].$sufix;
+    return remove_right_zeros(format_numeric($number, $decimals)) . $shorts[$pos] . $sufix;
 }
 
 
@@ -353,7 +356,7 @@ function human_milliseconds_to_string($seconds)
  *
  * @param Number rounded to a multiple of rounder
  */
-function format_integer_round($number, $rounder=5)
+function format_integer_round($number, $rounder = 5)
 {
     return ((int) ($number / $rounder + 0.5) * $rounder);
 }
@@ -371,7 +374,7 @@ function format_integer_round($number, $rounder=5)
  * @return string A human readable string of the diference between current
  * time and a given timestamp.
  */
-function human_time_comparation($timestamp, $units='large')
+function human_time_comparation($timestamp, $units = 'large')
 {
     global $config;
 
@@ -403,15 +406,15 @@ function get_system_time()
 
     switch ($config['dbtype']) {
         case 'mysql':
-        return mysql_get_system_time();
+            return mysql_get_system_time();
 
             break;
         case 'postgresql':
-        return postgresql_get_system_time();
+            return postgresql_get_system_time();
 
             break;
         case 'oracle':
-        return oracle_get_system_time();
+            return oracle_get_system_time();
 
             break;
     }
@@ -425,7 +428,7 @@ function get_system_time()
  *
  * @return string user active language code
  */
-function get_user_language($id_user=null)
+function get_user_language($id_user = null)
 {
     global $config;
 
@@ -469,8 +472,8 @@ function set_user_language()
     $l10n = null;
     $user_language = get_user_language();
 
-    if (file_exists('./include/languages/'.$user_language.'.mo')) {
-        $l10n = new gettext_reader(new CachedFileReader('./include/languages/'.$user_language.'.mo'));
+    if (file_exists('./include/languages/' . $user_language . '.mo')) {
+        $l10n = new gettext_reader(new CachedFileReader('./include/languages/' . $user_language . '.mo'));
         $l10n->load_tables();
     }
 }
@@ -487,7 +490,7 @@ function set_user_language()
  *
  * @return string A human readable translation of minutes.
  */
-function human_time_description_raw($seconds, $exactly=false, $units='large')
+function human_time_description_raw($seconds, $exactly = false, $units = 'large')
 {
     if (isset($units) === false || empty($units) === true) {
         $units = 'large';
@@ -502,7 +505,7 @@ function human_time_description_raw($seconds, $exactly=false, $units='large')
             $minutesString = __('m');
             $hoursString = __('h');
             $nowString = __('N');
-        break;
+            break;
 
         default:
         case 'large':
@@ -513,7 +516,7 @@ function human_time_description_raw($seconds, $exactly=false, $units='large')
             $minutesString = __('minutes');
             $hoursString = __('hours');
             $nowString = __('Now');
-        break;
+            break;
     }
 
     if (empty($seconds)) {
@@ -593,33 +596,33 @@ function human_time_description_raw($seconds, $exactly=false, $units='large')
     }
 
     if ($seconds < SECONDS_1MINUTE) {
-        return format_numeric($seconds, 0).' '.$secondsString;
+        return format_numeric($seconds, 0) . ' ' . $secondsString;
     }
 
     if ($seconds < SECONDS_1HOUR) {
         $minutes = floor($seconds / 60);
         $seconds = ($seconds % SECONDS_1MINUTE);
         if ($seconds == 0) {
-            return $minutes.' '.$minutesString;
+            return $minutes . ' ' . $minutesString;
         }
 
         $seconds = sprintf('%02d', $seconds);
-        return $minutes.' '.$minutesString.' '.$seconds.' '.$secondsString;
+        return $minutes . ' ' . $minutesString . ' ' . $seconds . ' ' . $secondsString;
     }
 
     if ($seconds < SECONDS_1DAY) {
-        return format_numeric(($seconds / SECONDS_1HOUR), 0).' '.$hoursString;
+        return format_numeric(($seconds / SECONDS_1HOUR), 0) . ' ' . $hoursString;
     }
 
     if ($seconds < SECONDS_1MONTH) {
-        return format_numeric(($seconds / SECONDS_1DAY), 0).' '.$daysString;
+        return format_numeric(($seconds / SECONDS_1DAY), 0) . ' ' . $daysString;
     }
 
     if ($seconds < SECONDS_6MONTHS) {
-        return format_numeric(($seconds / SECONDS_1MONTH), 0).' '.$monthsString;
+        return format_numeric(($seconds / SECONDS_1MONTH), 0) . ' ' . $monthsString;
     }
 
-    return '+6 '.$monthsString;
+    return '+6 ' . $monthsString;
 }
 
 
@@ -633,7 +636,7 @@ function human_time_description_raw($seconds, $exactly=false, $units='large')
  *
  * @return string A human readable translation of minutes.
  */
-function human_time_description_alerts($seconds, $exactly=false, $units='tiny')
+function human_time_description_alerts($seconds, $exactly = false, $units = 'tiny')
 {
     switch ($units) {
         case 'large':
@@ -644,7 +647,7 @@ function human_time_description_alerts($seconds, $exactly=false, $units='tiny')
             $minutesString = __('minutes');
             $hoursString = __('hours');
             $nowString = __('Now');
-        break;
+            break;
 
         case 'tiny':
             $secondsString = __('s');
@@ -654,7 +657,7 @@ function human_time_description_alerts($seconds, $exactly=false, $units='tiny')
             $minutesString = __('m');
             $hoursString = __('h');
             $nowString = __('N');
-        break;
+            break;
     }
 
     if (empty($seconds)) {
@@ -709,7 +712,7 @@ function human_time_description_alerts($seconds, $exactly=false, $units='tiny')
             if ($hours == 0) {
                 $returnTime .= "$mins $minutesString ";
             } else {
-                $returnTime = sprintf('%02d', $hours)."$hoursString".sprintf('%02d', $mins)."$minutesString";
+                $returnTime = sprintf('%02d', $hours) . "$hoursString" . sprintf('%02d', $mins) . "$minutesString";
             }
         }
 
@@ -717,7 +720,7 @@ function human_time_description_alerts($seconds, $exactly=false, $units='tiny')
             if ($hours == 0) {
                 $returnTime .= "$seconds $secondsString ";
             } else {
-                $returnTime = sprintf('%02d', $hours)."$hoursString".sprintf('%02d', $mins)."$minutesString".sprintf('%02d', $seconds)."$secondsString";
+                $returnTime = sprintf('%02d', $hours) . "$hoursString" . sprintf('%02d', $mins) . "$minutesString" . sprintf('%02d', $seconds) . "$secondsString";
             }
         }
 
@@ -739,33 +742,33 @@ function human_time_description_alerts($seconds, $exactly=false, $units='tiny')
     }
 
     if ($seconds < 60) {
-        return format_numeric($seconds, 0).' '.$secondsString;
+        return format_numeric($seconds, 0) . ' ' . $secondsString;
     }
 
     if ($seconds < SECONDS_1HOUR) {
         $minutes = floor($seconds / SECONDS_1MINUTE);
         $seconds = ($seconds % SECONDS_1MINUTE);
         if ($seconds == 0) {
-            return $minutes.' '.$minutesString;
+            return $minutes . ' ' . $minutesString;
         }
 
         $seconds = sprintf('%02d', $seconds);
-        return $minutes.' '.$minutesString.' '.$seconds.' '.$secondsString;
+        return $minutes . ' ' . $minutesString . ' ' . $seconds . ' ' . $secondsString;
     }
 
     if ($seconds < SECONDS_1DAY) {
-        return format_numeric(($seconds / SECONDS_1HOUR), 0).' '.$hoursString;
+        return format_numeric(($seconds / SECONDS_1HOUR), 0) . ' ' . $hoursString;
     }
 
     if ($seconds < SECONDS_1MONTH) {
-        return format_numeric(($seconds / SECONDS_1DAY), 0).' '.$daysString;
+        return format_numeric(($seconds / SECONDS_1DAY), 0) . ' ' . $daysString;
     }
 
     if ($seconds < SECONDS_6MONTHS) {
-        return format_numeric(($seconds / SECONDS_1MONTH), 0).' '.$monthsString;
+        return format_numeric(($seconds / SECONDS_1MONTH), 0) . ' ' . $monthsString;
     }
 
-    return '+6 '.$monthsString;
+    return '+6 ' . $monthsString;
 }
 
 
@@ -856,9 +859,9 @@ function get_parameterBetweenListValues($name, $values, $default)
  */
 
 
-function get_parameter_checkbox($name, $default='')
+function get_parameter_checkbox($name, $default = '')
 {
-    $sent = get_parameter($name.'_sent', 0);
+    $sent = get_parameter($name . '_sent', 0);
 
     // If is not sent, return the default
     if (!$sent) {
@@ -878,7 +881,7 @@ function get_parameter_checkbox($name, $default='')
  *
  * @return integer Value, 1 on, 0 off.
  */
-function get_parameter_switch($name, $default='')
+function get_parameter_switch($name, $default = '')
 {
     $data = get_parameter($name, null);
 
@@ -893,7 +896,7 @@ function get_parameter_switch($name, $default='')
 }
 
 
-function get_cookie($name, $default='')
+function get_cookie($name, $default = '')
 {
     if (isset($_COOKIE[$name])) {
         return $_COOKIE[$name];
@@ -921,7 +924,7 @@ function set_cookie($name, $value)
  *
  * @return string Order or empty.
  */
-function get_datatable_order($as_array=false)
+function get_datatable_order($as_array = false)
 {
     $order = get_parameter('order');
 
@@ -951,7 +954,7 @@ function get_datatable_order($as_array=false)
         ];
     }
 
-    return $column_name.' '.$direction;
+    return $column_name . ' ' . $direction;
 }
 
 
@@ -966,7 +969,7 @@ function get_datatable_order($as_array=false)
  *
  * @return mixed Whatever was in that parameter, cleaned however
  */
-function get_parameter($name, $default='')
+function get_parameter($name, $default = '')
 {
     // POST has precedence
     if (isset($_POST[$name])) {
@@ -993,7 +996,7 @@ function get_parameter($name, $default='')
  *
  * @return mixed Whatever was in that parameter, cleaned however
  */
-function get_parameter_get($name, $default='')
+function get_parameter_get($name, $default = '')
 {
     if ((isset($_GET[$name])) && ($_GET[$name] != '')) {
         return io_safe_input($_GET[$name]);
@@ -1011,7 +1014,7 @@ function get_parameter_get($name, $default='')
  *
  * @return mixed Whatever was in that parameter, cleaned however
  */
-function get_parameter_post($name, $default='')
+function get_parameter_post($name, $default = '')
 {
     if ((isset($_POST[$name])) && ($_POST[$name] != '')) {
         return io_safe_input($_POST[$name]);
@@ -1029,7 +1032,7 @@ function get_parameter_post($name, $default='')
  *
  * @return mixed Whatever was in that parameter, cleaned however
  */
-function get_parameter_file($name, $default='')
+function get_parameter_file($name, $default = '')
 {
     if ((isset($_FILES[$name])) && !empty($_FILES[$name])) {
         return io_safe_input($_FILES[$name]);
@@ -1047,7 +1050,7 @@ function get_parameter_file($name, $default='')
  *
  * @return string|null
  */
-function get_header(string $key, ?string $default=null): ?string
+function get_header(string $key, ?string $default = null): ?string
 {
     static $headers;
     if (!isset($headers)) {
@@ -1070,37 +1073,37 @@ function get_header(string $key, ?string $default=null): ?string
  *
  * @return string Name of given priority
  */
-function get_alert_priority($priority=0)
+function get_alert_priority($priority = 0)
 {
     global $config;
 
     switch ($priority) {
         case 0:
-        return __('Maintenance');
+            return __('Maintenance');
 
             break;
         case 1:
-        return __('Informational');
+            return __('Informational');
 
             break;
         case 2:
-        return __('Normal');
+            return __('Normal');
 
             break;
         case 3:
-        return __('Warning');
+            return __('Warning');
 
             break;
         case 4:
-        return __('Critical');
+            return __('Critical');
 
             break;
         case 5:
-        return __('Minor');
+            return __('Minor');
 
             break;
         case 6:
-        return __('Major');
+            return __('Major');
 
             break;
     }
@@ -1130,27 +1133,27 @@ function get_alert_days($row)
     }
 
     if ($row['monday'] != 0) {
-        $days_output .= __('Mon').' ';
+        $days_output .= __('Mon') . ' ';
     }
 
     if ($row['tuesday'] != 0) {
-        $days_output .= __('Tue').' ';
+        $days_output .= __('Tue') . ' ';
     }
 
     if ($row['wednesday'] != 0) {
-        $days_output .= __('Wed').' ';
+        $days_output .= __('Wed') . ' ';
     }
 
     if ($row['thursday'] != 0) {
-        $days_output .= __('Thu').' ';
+        $days_output .= __('Thu') . ' ';
     }
 
     if ($row['friday'] != 0) {
-        $days_output .= __('Fri').' ';
+        $days_output .= __('Fri') . ' ';
     }
 
     if ($row['saturday'] != 0) {
-        $days_output .= __('Sat').' ';
+        $days_output .= __('Sat') . ' ';
     }
 
     if ($row['sunday'] != 0) {
@@ -1190,7 +1193,7 @@ function get_alert_times($row2)
         return __('N/A');
     }
 
-    return substr($time_from_table, 0, 5).' - '.substr($time_to_table, 0, 5);
+    return substr($time_from_table, 0, 5) . ' - ' . substr($time_to_table, 0, 5);
 }
 
 
@@ -1269,7 +1272,7 @@ function is_module_uncompressed($module_type)
  *
  * @return array module_name Module name to check.
  */
-function get_event_types($id_type=false)
+function get_event_types($id_type = false)
 {
     global $config;
 
@@ -1317,7 +1320,7 @@ function get_event_types($id_type=false)
  *
  * @return array An array with all the priorities.
  */
-function get_priorities($priority_param=false)
+function get_priorities($priority_param = false)
 {
     global $config;
 
@@ -1329,9 +1332,9 @@ function get_priorities($priority_param=false)
     $priorities[EVENT_CRIT_WARNING] = __('Warning');
     $priorities[EVENT_CRIT_MAJOR] = __('Major');
     $priorities[EVENT_CRIT_CRITICAL] = __('Critical');
-    $priorities[EVENT_CRIT_WARNING_OR_CRITICAL] = __('Warning').'/'.__('Critical');
+    $priorities[EVENT_CRIT_WARNING_OR_CRITICAL] = __('Warning') . '/' . __('Critical');
     $priorities[EVENT_CRIT_NOT_NORMAL] = __('Not normal');
-    $priorities[EVENT_CRIT_OR_NORMAL] = __('Critical').'/'.__('Normal');
+    $priorities[EVENT_CRIT_OR_NORMAL] = __('Critical') . '/' . __('Normal');
 
     foreach ($priorities as $key => $priority) {
         $priorities[$key] = ui_print_truncate_text($priority, GENERIC_SIZE_TEXT, false, true, false);
@@ -1356,35 +1359,35 @@ function get_priority_name($priority)
 {
     switch ($priority) {
         case 0:
-        return __('Maintenance');
+            return __('Maintenance');
 
             break;
         case 1:
-        return __('Informational');
+            return __('Informational');
 
             break;
         case 2:
-        return __('Normal');
+            return __('Normal');
 
             break;
         case 3:
-        return __('Warning');
+            return __('Warning');
 
             break;
         case 4:
-        return __('Critical');
+            return __('Critical');
 
             break;
         case 5:
-        return __('Minor');
+            return __('Minor');
 
             break;
         case 6:
-        return __('Major');
+            return __('Major');
 
             break;
         default:
-        return __('All');
+            return __('All');
             break;
     }
 }
@@ -1401,23 +1404,23 @@ function get_agent_status_string($status)
 {
     switch ($status) {
         case AGENT_STATUS_CRITICAL:
-        return __('CRITICAL');
+            return __('CRITICAL');
 
         case AGENT_STATUS_WARNING:
-        return __('WARNING');
+            return __('WARNING');
 
         case AGENT_STATUS_ALERT_FIRED:
-        return __('ALERT FIRED');
+            return __('ALERT FIRED');
 
         case AGENT_STATUS_NOT_INIT:
-        return __('NO DATA');
+            return __('NO DATA');
 
         case AGENT_STATUS_NORMAL:
-        return __('NORMAL');
+            return __('NORMAL');
 
         case AGENT_STATUS_UNKNOWN:
         default:
-        return __('UNKNOWN');
+            return __('UNKNOWN');
     }
 }
 
@@ -1433,26 +1436,26 @@ function get_module_status_string($status)
 {
     switch ($status) {
         case AGENT_MODULE_STATUS_CRITICAL_BAD:
-        return __('CRITICAL');
+            return __('CRITICAL');
 
         case AGENT_MODULE_STATUS_WARNING_ALERT:
         case AGENT_MODULE_STATUS_CRITICAL_ALERT:
-        return __('ALERT FIRED');
+            return __('ALERT FIRED');
 
         case AGENT_MODULE_STATUS_WARNING:
-        return __('WARNING');
+            return __('WARNING');
 
         case AGENT_MODULE_STATUS_UNKNOWN:
-        return __('UNKNOWN');
+            return __('UNKNOWN');
 
         case AGENT_MODULE_STATUS_NO_DATA:
         case AGENT_MODULE_STATUS_NOT_INIT:
-        return __('NO DATA');
+            return __('NO DATA');
 
         case AGENT_MODULE_STATUS_NORMAL_ALERT:
         case AGENT_MODULE_STATUS_NORMAL:
         default:
-        return __('NORMAL');
+            return __('NORMAL');
     }
 }
 
@@ -1468,35 +1471,35 @@ function get_priority_class($priority)
 {
     switch ($priority) {
         case 0:
-        return 'datos_blue';
+            return 'datos_blue';
 
             break;
         case 1:
-        return 'datos_grey';
+            return 'datos_grey';
 
             break;
         case 2:
-        return 'datos_green';
+            return 'datos_green';
 
             break;
         case 3:
-        return 'datos_yellow';
+            return 'datos_yellow';
 
             break;
         case 4:
-        return 'datos_red';
+            return 'datos_red';
 
             break;
         case 5:
-        return 'datos_pink';
+            return 'datos_pink';
 
             break;
         case 6:
-        return 'datos_brown';
+            return 'datos_brown';
 
             break;
         default:
-        return 'datos_grey';
+            return 'datos_grey';
             break;
     }
 }
@@ -1513,37 +1516,37 @@ function get_priority_style($priority_class)
 {
     switch ($priority_class) {
         case 'datos_blue':
-            $style_css_criticity = 'background-color: '.COL_MAINTENANCE.'; color: #FFFFFF;';
-        break;
+            $style_css_criticity = 'background-color: ' . COL_MAINTENANCE . '; color: #FFFFFF;';
+            break;
 
         case 'datos_grey':
-            $style_css_criticity = 'background-color: '.COL_UNKNOWN.'; color: #FFFFFF;';
-        break;
+            $style_css_criticity = 'background-color: ' . COL_UNKNOWN . '; color: #FFFFFF;';
+            break;
 
         case 'datos_green':
-            $style_css_criticity = 'background-color: '.COL_NORMAL.'; color: #FFFFFF;';
-        break;
+            $style_css_criticity = 'background-color: ' . COL_NORMAL . '; color: #FFFFFF;';
+            break;
 
         case 'datos_yellow':
-            $style_css_criticity = 'background-color: '.COL_WARNING.';';
-        break;
+            $style_css_criticity = 'background-color: ' . COL_WARNING . ';';
+            break;
 
         case 'datos_red':
-            $style_css_criticity = 'background-color: '.COL_CRITICAL.'; color: #FFFFFF;';
-        break;
+            $style_css_criticity = 'background-color: ' . COL_CRITICAL . '; color: #FFFFFF;';
+            break;
 
         case 'datos_pink':
-            $style_css_criticity = 'background-color: '.COL_MINOR.';';
-        break;
+            $style_css_criticity = 'background-color: ' . COL_MINOR . ';';
+            break;
 
         case 'datos_brown':
-            $style_css_criticity = 'background-color: '.COL_MAJOR.'; color: #FFFFFF;';
-        break;
+            $style_css_criticity = 'background-color: ' . COL_MAJOR . '; color: #FFFFFF;';
+            break;
 
         case 'datos_grey':
         default:
-            $style_css_criticity = 'background-color: '.COL_UNKNOWN.'; color: #FFFFFF;';
-        break;
+            $style_css_criticity = 'background-color: ' . COL_UNKNOWN . '; color: #FFFFFF;';
+            break;
     }
 
     return $style_css_criticity;
@@ -1595,7 +1598,7 @@ function license_free()
 /**
  * TODO: Document enterprise functions
  */
-function enterprise_hook($function_name, $parameters=false)
+function enterprise_hook($function_name, $parameters = false)
 {
     if (function_exists($function_name)) {
         if (!is_array($parameters)) {
@@ -1620,7 +1623,7 @@ function enterprise_hook($function_name, $parameters=false)
  *
  * @return mixed
  */
-function enterprise_include($filename, $variables=[])
+function enterprise_include($filename, $variables = [])
 {
     global $config;
 
@@ -1631,7 +1634,7 @@ function enterprise_include($filename, $variables=[])
         $destdir = '';
     }
 
-    $filepath = realpath($destdir.$config['homedir'].'/'.ENTERPRISE_DIR.'/'.$filename);
+    $filepath = realpath($destdir . $config['homedir'] . '/' . ENTERPRISE_DIR . '/' . $filename);
 
     if ($filepath === false) {
         return ENTERPRISE_NOT_HOOK;
@@ -1662,7 +1665,7 @@ function enterprise_include($filename, $variables=[])
  *
  * @return mixed Result code.
  */
-function enterprise_include_once($filename, $variables=[])
+function enterprise_include_once($filename, $variables = [])
 {
     global $config;
 
@@ -1673,7 +1676,7 @@ function enterprise_include_once($filename, $variables=[])
         $destdir = '';
     }
 
-    $filepath = realpath($config['homedir'].'/'.ENTERPRISE_DIR.'/'.$filename);
+    $filepath = realpath($config['homedir'] . '/' . ENTERPRISE_DIR . '/' . $filename);
 
     if ($filepath === false) {
         return ENTERPRISE_NOT_HOOK;
@@ -1705,16 +1708,7 @@ if (!function_exists('mb_strtoupper')) {
     /**
      * @ignore
      */
-    function mb_strtoupper($string, $encoding=false)
-    {
-            return strtoupper($string);
-    }
-
-
-    /**
-     * @ignore
-     */
-    function mb_strtolower($string, $encoding=false)
+    function mb_strtoupper($string, $encoding = false)
     {
         return strtoupper($string);
     }
@@ -1723,7 +1717,16 @@ if (!function_exists('mb_strtoupper')) {
     /**
      * @ignore
      */
-    function mb_substr($string, $start, $length, $encoding=false)
+    function mb_strtolower($string, $encoding = false)
+    {
+        return strtoupper($string);
+    }
+
+
+    /**
+     * @ignore
+     */
+    function mb_substr($string, $start, $length, $encoding = false)
     {
         return substr($string, $start, $length);
     }
@@ -1732,7 +1735,7 @@ if (!function_exists('mb_strtoupper')) {
     /**
      * @ignore
      */
-    function mb_strlen($string, $encoding=false)
+    function mb_strlen($string, $encoding = false)
     {
         return strlen($string);
     }
@@ -1741,12 +1744,10 @@ if (!function_exists('mb_strtoupper')) {
     /**
      * @ignore
      */
-    function mb_strimwidth($string, $start, $length, $trimmarker=false, $encoding=false)
+    function mb_strimwidth($string, $start, $length, $trimmarker = false, $encoding = false)
     {
         return substr($string, $start, $length);
     }
-
-
 }
 
 
@@ -1786,14 +1787,14 @@ function has_metaconsole()
  *
  * @return boolean
  */
-function is_management_allowed($hkey='')
+function is_management_allowed($hkey = '')
 {
     $nodes = db_get_value('count(*) as n', 'tmetaconsole_setup');
     if ($nodes !== false) {
         $nodes = (int) $nodes;
     }
 
-    return ( (is_metaconsole() && (is_centralized() || $nodes === 0))
+    return ((is_metaconsole() && (is_centralized() || $nodes === 0))
         || (!is_metaconsole() && !is_centralized())
         || (!is_metaconsole() && is_centralized()) && $hkey == generate_hash_to_api());
 }
@@ -1872,17 +1873,17 @@ function is_error($code)
  * @return array An array having the given index as fields and the given values
  * as value.
  */
-function index_array($array, $index='id', $value='name')
+function index_array($array, $index = 'id', $value = 'name')
 {
     $retval = [];
 
-    if (! is_array($array)) {
+    if (!is_array($array)) {
         return $retval;
     }
 
     foreach ($array as $index_array => $element) {
         if (!is_null($index)) {
-            if (! isset($element[$index])) {
+            if (!isset($element[$index])) {
                 continue;
             }
         }
@@ -1892,7 +1893,7 @@ function index_array($array, $index='id', $value='name')
             continue;
         }
 
-        if (! isset($element[$value])) {
+        if (!isset($element[$value])) {
             continue;
         }
 
@@ -1926,7 +1927,7 @@ function return_graphtype($id_module_type)
         case 10:
         case 17:
         case 23:
-        return 'string';
+            return 'string';
 
             break;
         case 2:
@@ -1936,15 +1937,15 @@ function return_graphtype($id_module_type)
         case 9:
         case 31:
         case 100:
-        return 'boolean';
+            return 'boolean';
 
             break;
         case 24:
-        return 'log4x';
+            return 'log4x';
 
             break;
         default:
-        return 'sparse';
+            return 'sparse';
             break;
     }
 }
@@ -2037,20 +2038,20 @@ function get_h_snmpwalk(array $arguments)
 function get_snmpwalk(
     $ip_target,
     $snmp_version,
-    $snmp_community='',
-    $snmp3_auth_user='',
-    $snmp3_security_level='',
-    $snmp3_auth_method='',
-    $snmp3_auth_pass='',
-    $snmp3_privacy_method='',
-    $snmp3_privacy_pass='',
-    $quick_print=0,
-    $base_oid='',
-    $snmp_port='',
-    $server_to_exec=0,
-    $extra_arguments='',
-    $format='-Oa',
-    $load_mibs='-m ALL'
+    $snmp_community = '',
+    $snmp3_auth_user = '',
+    $snmp3_security_level = '',
+    $snmp3_auth_method = '',
+    $snmp3_auth_pass = '',
+    $snmp3_privacy_method = '',
+    $snmp3_privacy_pass = '',
+    $quick_print = 0,
+    $base_oid = '',
+    $snmp_port = '',
+    $server_to_exec = 0,
+    $extra_arguments = '',
+    $format = '-Oa',
+    $load_mibs = '-m ALL'
 ) {
     global $config;
 
@@ -2061,7 +2062,7 @@ function get_snmpwalk(
     // Note: quick_print is ignored
     // Fix for snmp port
     if (!empty($snmp_port)) {
-        $ip_target = $ip_target.':'.$snmp_port;
+        $ip_target = $ip_target . ':' . $snmp_port;
     }
 
     // Escape the base OID
@@ -2072,11 +2073,11 @@ function get_snmpwalk(
     switch (PHP_OS) {
         case 'FreeBSD':
             $snmpwalk_bin = '/usr/local/bin/snmpwalk';
-        break;
+            break;
 
         case 'NetBSD':
             $snmpwalk_bin = '/usr/pkg/bin/snmpwalk';
-        break;
+            break;
 
         default:
             if ($snmp_version == '1') {
@@ -2084,7 +2085,7 @@ function get_snmpwalk(
             } else {
                 $snmpwalk_bin = 'snmpbulkwalk';
             }
-        break;
+            break;
     }
 
     switch (PHP_OS) {
@@ -2093,11 +2094,11 @@ function get_snmpwalk(
         case 'Windows':
             $error_redir_dir = 'NUL';
             $snmpwalk_bin = 'snmpwalk';
-        break;
+            break;
 
         default:
             $error_redir_dir = '/dev/null';
-        break;
+            break;
     }
 
     if (empty($config['snmpwalk']) === false) {
@@ -2114,25 +2115,25 @@ function get_snmpwalk(
         case '3':
             switch ($snmp3_security_level) {
                 case 'authNoPriv':
-                    $command_str = $snmpwalk_bin.' '.$load_mibs.' '.$format.' '.$extra_arguments.' -v 3'.' -u '.escapeshellarg($snmp3_auth_user).' -A '.escapeshellarg($snmp3_auth_pass).' -l '.escapeshellarg($snmp3_security_level).' -a '.escapeshellarg($snmp3_auth_method).' '.escapeshellarg($ip_target).' '.$base_oid.' 2> '.$error_redir_dir;
-                break;
+                    $command_str = $snmpwalk_bin . ' ' . $load_mibs . ' ' . $format . ' ' . $extra_arguments . ' -v 3' . ' -u ' . escapeshellarg($snmp3_auth_user) . ' -A ' . escapeshellarg($snmp3_auth_pass) . ' -l ' . escapeshellarg($snmp3_security_level) . ' -a ' . escapeshellarg($snmp3_auth_method) . ' ' . escapeshellarg($ip_target) . ' ' . $base_oid . ' 2> ' . $error_redir_dir;
+                    break;
 
                 case 'noAuthNoPriv':
-                    $command_str = $snmpwalk_bin.' '.$load_mibs.' '.$format.' '.$extra_arguments.' -v 3'.' -u '.escapeshellarg($snmp3_auth_user).' -l '.escapeshellarg($snmp3_security_level).' '.escapeshellarg($ip_target).' '.$base_oid.' 2> '.$error_redir_dir;
-                break;
+                    $command_str = $snmpwalk_bin . ' ' . $load_mibs . ' ' . $format . ' ' . $extra_arguments . ' -v 3' . ' -u ' . escapeshellarg($snmp3_auth_user) . ' -l ' . escapeshellarg($snmp3_security_level) . ' ' . escapeshellarg($ip_target) . ' ' . $base_oid . ' 2> ' . $error_redir_dir;
+                    break;
 
                 default:
-                    $command_str = $snmpwalk_bin.' '.$load_mibs.' '.$format.' '.$extra_arguments.' -v 3'.' -u '.escapeshellarg($snmp3_auth_user).' -A '.escapeshellarg($snmp3_auth_pass).' -l '.escapeshellarg($snmp3_security_level).' -a '.escapeshellarg($snmp3_auth_method).' -x '.escapeshellarg($snmp3_privacy_method).' -X '.escapeshellarg($snmp3_privacy_pass).' '.escapeshellarg($ip_target).' '.$base_oid.' 2> '.$error_redir_dir;
-                break;
+                    $command_str = $snmpwalk_bin . ' ' . $load_mibs . ' ' . $format . ' ' . $extra_arguments . ' -v 3' . ' -u ' . escapeshellarg($snmp3_auth_user) . ' -A ' . escapeshellarg($snmp3_auth_pass) . ' -l ' . escapeshellarg($snmp3_security_level) . ' -a ' . escapeshellarg($snmp3_auth_method) . ' -x ' . escapeshellarg($snmp3_privacy_method) . ' -X ' . escapeshellarg($snmp3_privacy_pass) . ' ' . escapeshellarg($ip_target) . ' ' . $base_oid . ' 2> ' . $error_redir_dir;
+                    break;
             }
-        break;
+            break;
 
         case '2':
         case '2c':
         case '1':
         default:
-            $command_str = $snmpwalk_bin.' '.$load_mibs.' '.$extra_arguments.' '.$format.' -v '.escapeshellarg($snmp_version).' -c '.escapeshellarg(io_safe_output($snmp_community)).' '.escapeshellarg($ip_target).' '.$base_oid.' 2> '.$error_redir_dir;
-        break;
+            $command_str = $snmpwalk_bin . ' ' . $load_mibs . ' ' . $extra_arguments . ' ' . $format . ' -v ' . escapeshellarg($snmp_version) . ' -c ' . escapeshellarg(io_safe_output($snmp_community)) . ' ' . escapeshellarg($ip_target) . ' ' . $base_oid . ' 2> ' . $error_redir_dir;
+            break;
     }
 
     if (enterprise_installed()) {
@@ -2140,9 +2141,9 @@ function get_snmpwalk(
             $server_data = db_get_row('tserver', 'id_server', $server_to_exec);
 
             if (empty($server_data['port'])) {
-                exec('ssh pandora_exec_proxy@'.$server_data['ip_address'].' "'.$command_str.'"', $output, $rc);
+                exec('ssh pandora_exec_proxy@' . $server_data['ip_address'] . ' "' . $command_str . '"', $output, $rc);
             } else {
-                exec('ssh -p '.$server_data['port'].' pandora_exec_proxy@'.$server_data['ip_address'].' "'.$command_str.'"', $output, $rc);
+                exec('ssh -p ' . $server_data['port'] . ' pandora_exec_proxy@' . $server_data['ip_address'] . ' "' . $command_str . '"', $output, $rc);
             }
         } else {
             exec($command_str, $output, $rc);
@@ -2210,13 +2211,13 @@ function string2image(
     $string,
     $width,
     $height,
-    $fontsize=3,
-    $degrees='0',
-    $bgcolor='#FFFFFF',
-    $textcolor='#000000',
-    $padding_left=4,
-    $padding_top=1,
-    $home_url=''
+    $fontsize = 3,
+    $degrees = '0',
+    $bgcolor = '#FFFFFF',
+    $textcolor = '#000000',
+    $padding_left = 4,
+    $padding_top = 1,
+    $home_url = ''
 ) {
     global $config;
 
@@ -2257,13 +2258,13 @@ function string2image(
     $stringFile = str_replace('/', '___', $string);
 
     // Generate the image
-    $file_url = $config['attachment_store'].'/string2image-'.$stringFile.'.gif';
+    $file_url = $config['attachment_store'] . '/string2image-' . $stringFile . '.gif';
     imagegif($rotated, $file_url);
     imagedestroy($rotated);
 
     $file_url = str_replace('#', '%23', $file_url);
     $file_url = str_replace('%', '%25', $file_url);
-    $file_url = str_replace($config['attachment_store'], $home_url.'attachment', $file_url);
+    $file_url = str_replace($config['attachment_store'], $home_url . 'attachment', $file_url);
 
     return $file_url;
 }
@@ -2300,7 +2301,7 @@ function check_sql($sql)
  */
 
 
-function check_login($output=true)
+function check_login($output = true)
 {
     global $config;
 
@@ -2315,9 +2316,10 @@ function check_login($output=true)
     }
 
     if ((isset($_SESSION['id_usuario'])) && ($_SESSION['id_usuario'] != '')) {
-        if (is_user($_SESSION['id_usuario'])
+        if (
+            is_user($_SESSION['id_usuario'])
             || (isset($_SESSION['merge-request-user-trick']) === true
-            && $_SESSION['merge-request-user-trick'] === $_SESSION['id_usuario'])
+                && $_SESSION['merge-request-user-trick'] === $_SESSION['id_usuario'])
         ) {
             if (isset($config['auth']) === true && $config['auth'] === 'ad' && is_user($_SESSION['id_usuario'])) {
                 // User name in active directory is case insensitive.
@@ -2331,9 +2333,9 @@ function check_login($output=true)
             return true;
         }
     } else {
-        include_once $config['homedir'].'/mobile/include/db.class.php';
-        include_once $config['homedir'].'/mobile/include/system.class.php';
-        include_once $config['homedir'].'/mobile/include/user.class.php';
+        include_once $config['homedir'] . '/mobile/include/db.class.php';
+        include_once $config['homedir'] . '/mobile/include/system.class.php';
+        include_once $config['homedir'] . '/mobile/include/user.class.php';
 
         if (isset($_SESSION['user'])) {
             $user = User::getInstance();
@@ -2355,7 +2357,7 @@ function check_login($output=true)
         'Trying to access without a valid session',
         'N/A'
     );
-    include $config['homedir'].'/general/noaccess.php';
+    include $config['homedir'] . '/general/noaccess.php';
     exit;
 }
 
@@ -2384,8 +2386,8 @@ function check_acl(
     $id_user,
     $id_group,
     $access,
-    $onlyOneGroup=false,
-    $cache=true
+    $onlyOneGroup = false,
+    $cache = true
 ) {
     if (empty($id_user)) {
         // User ID needs to be specified.
@@ -2414,7 +2416,8 @@ function check_acl(
     if (is_array($groups_list_acl)) {
         if (isset($groups_list_acl[$id_group])) {
             $access = get_acl_column($access);
-            if (isset($groups_list_acl[$id_group][$access])
+            if (
+                isset($groups_list_acl[$id_group][$access])
                 && $groups_list_acl[$id_group][$access] > 0
             ) {
                 return 1;
@@ -2438,7 +2441,7 @@ function check_acl(
  *
  * @return boolean True if at least one of this groups check the ACL
  */
-function check_acl_one_of_groups($id_user, $groups, $access, $cache=true)
+function check_acl_one_of_groups($id_user, $groups, $access, $cache = true)
 {
     foreach ($groups as $group) {
         if (check_acl($id_user, $group, $access, false, $cache)) {
@@ -2469,7 +2472,7 @@ function check_acl_one_of_groups($id_user, $groups, $access, $cache=true)
  *
  * @return boolean 1 if the user has privileges, 0 if not.
  */
-function check_acl_restricted_all($id_user, $id_group, $access, $onlyOneGroup=false)
+function check_acl_restricted_all($id_user, $id_group, $access, $onlyOneGroup = false)
 {
     if (empty($id_user)) {
         // User ID needs to be specified.
@@ -2498,7 +2501,8 @@ function check_acl_restricted_all($id_user, $id_group, $access, $onlyOneGroup=fa
 
     if (is_array($groups_list_acl)) {
         if (isset($groups_list_acl[$id_group])) {
-            if (isset($groups_list_acl[$id_group][$access_string])
+            if (
+                isset($groups_list_acl[$id_group][$access_string])
                 && $groups_list_acl[$id_group][$access_string] > 0
             ) {
                 return 1;
@@ -2523,76 +2527,76 @@ function get_acl_column($access)
 {
     switch ($access) {
         case 'AR':
-        return 'agent_view';
+            return 'agent_view';
 
         case 'AW':
-        return 'agent_edit';
+            return 'agent_edit';
 
         case 'AD':
-        return 'agent_disable';
+            return 'agent_disable';
 
         case 'LW':
-        return 'alert_edit';
+            return 'alert_edit';
 
         case 'LM':
-        return 'alert_management';
+            return 'alert_management';
 
         case 'PM':
-        return 'pandora_management';
+            return 'pandora_management';
 
         case 'DM':
-        return 'db_management';
+            return 'db_management';
 
         case 'UM':
-        return 'user_management';
+            return 'user_management';
 
         case 'RR':
-        return 'report_view';
+            return 'report_view';
 
         case 'RW':
-        return 'report_edit';
+            return 'report_edit';
 
         case 'RM':
-        return 'report_management';
+            return 'report_management';
 
         case 'ER':
-        return 'event_view';
+            return 'event_view';
 
         case 'EW':
-        return 'event_edit';
+            return 'event_edit';
 
         case 'EM':
-        return 'event_management';
+            return 'event_management';
 
         case 'MR':
-        return 'map_view';
+            return 'map_view';
 
         case 'MW':
-        return 'map_edit';
+            return 'map_edit';
 
         case 'MM':
-        return 'map_management';
+            return 'map_management';
 
         case 'VR':
-        return 'vconsole_view';
+            return 'vconsole_view';
 
         case 'VW':
-        return 'vconsole_edit';
+            return 'vconsole_edit';
 
         case 'VM':
-        return 'vconsole_management';
+            return 'vconsole_management';
 
         case 'NR':
-        return 'network_config_view';
+            return 'network_config_view';
 
         case 'NW':
-        return 'network_config_edit';
+            return 'network_config_edit';
 
         case 'NM':
-        return 'network_config_management';
+            return 'network_config_management';
 
         default:
-        return '';
+            return '';
     }
 }
 
@@ -2601,7 +2605,8 @@ function get_users_acl($id_user)
 {
     static $users_acl_cache = [];
 
-    if (isset($users_acl_cache[$id_user]) === true
+    if (
+        isset($users_acl_cache[$id_user]) === true
         && is_array($users_acl_cache[$id_user]) === true
     ) {
         $rowdup = $users_acl_cache[$id_user];
@@ -2698,12 +2703,12 @@ function get_user_dashboards($id_user)
 {
     if (users_is_admin($id_user)) {
         $sql = "SELECT id, name
-			FROM tdashboard WHERE id_user = '".$id_user."' OR id_user = ''";
+			FROM tdashboard WHERE id_user = '" . $id_user . "' OR id_user = ''";
     } else {
         $user_can_manage_all = users_can_manage_group_all('RR');
         if ($user_can_manage_all) {
             $sql = "SELECT id, name
-				FROM tdashboard WHERE id_user = '".$id_user."' OR id_user = ''";
+				FROM tdashboard WHERE id_user = '" . $id_user . "' OR id_user = ''";
         } else {
             $user_groups = users_get_groups($id_user, 'RR', false);
             if (empty($user_groups)) {
@@ -2717,7 +2722,7 @@ function get_user_dashboards($id_user)
 
             $sql = 'SELECT id, name
 				FROM tdashboard
-				WHERE id_group IN ('.implode(',', $u_groups).") AND (id_user = '".$id_user."' OR id_user = '')";
+				WHERE id_group IN (' . implode(',', $u_groups) . ") AND (id_user = '" . $id_user . "' OR id_user = '')";
         }
     }
 
@@ -2734,7 +2739,7 @@ function get_user_dashboards($id_user)
  *
  * @return array The possible periods in an associative array.
  */
-function get_periods($custom=true, $show_default=true, $allow_zero=false)
+function get_periods($custom = true, $show_default = true, $allow_zero = false)
 {
     global $config;
 
@@ -2765,7 +2770,7 @@ function get_periods($custom=true, $show_default=true, $allow_zero=false)
             $periods[SECONDS_2YEARS] = sprintf(__('%s years'), '2 ');
             $periods[SECONDS_3YEARS] = sprintf(__('%s years'), '3 ');
         } else {
-            $periods[-1] = __('Empty').': '.__('Default values will be used');
+            $periods[-1] = __('Empty') . ': ' . __('Default values will be used');
         }
     } else {
         $values = explode(',', $config['interval_values']);
@@ -2791,16 +2796,16 @@ function copy_dir($src, $dst)
     }
 
     @mkdir($dst);
-    while (false !== ( $file = readdir($dir))) {
-        if (( $file != '.' ) && ( $file != '..' )) {
-            if (is_dir($src.'/'.$file)) {
-                $return = copy_dir($src.'/'.$file, $dst.'/'.$file);
+    while (false !== ($file = readdir($dir))) {
+        if (($file != '.') && ($file != '..')) {
+            if (is_dir($src . '/' . $file)) {
+                $return = copy_dir($src . '/' . $file, $dst . '/' . $file);
 
                 if (!$return) {
                     break;
                 }
             } else {
-                $r = copy($src.'/'.$file, $dst.'/'.$file);
+                $r = copy($src . '/' . $file, $dst . '/' . $file);
             }
         }
     }
@@ -2826,7 +2831,7 @@ function delete_dir($dir)
             continue;
         }
 
-        if (!delete_dir($dir.'/'.$item)) {
+        if (!delete_dir($dir . '/' . $item)) {
             return false;
         }
     }
@@ -2879,7 +2884,7 @@ function set_js_value($name, $value)
 {
     html_print_div(
         [
-            'id'      => 'php_to_js_value_'.$name,
+            'id'      => 'php_to_js_value_' . $name,
             'content' => json_encode($value),
             'hidden'  => true,
         ]
@@ -2947,40 +2952,40 @@ function translate_file_upload_status($status_code)
     switch ($status_code) {
         case UPLOAD_ERR_OK:
             $message = true;
-        break;
+            break;
 
         case UPLOAD_ERR_INI_SIZE:
             $message = __('The file exceeds the maximum size');
-            $message .= __('Please check this PHP runtime variable values: <pre>  upload_max_filesize (currently '.ini_get('upload_max_filesize').')</pre>');
-        break;
+            $message .= __('Please check this PHP runtime variable values: <pre>  upload_max_filesize (currently ' . ini_get('upload_max_filesize') . ')</pre>');
+            break;
 
         case UPLOAD_ERR_FORM_SIZE:
             $message = __('The file exceeds the maximum size');
-        break;
+            break;
 
         case UPLOAD_ERR_PARTIAL:
             $message = __('The uploaded file was only partially uploaded');
-        break;
+            break;
 
         case UPLOAD_ERR_NO_FILE:
             $message = __('No file was uploaded');
-        break;
+            break;
 
         case UPLOAD_ERR_NO_TMP_DIR:
             $message = __('Missing a temporary folder');
-        break;
+            break;
 
         case UPLOAD_ERR_CANT_WRITE:
             $message = __('Failed to write file to disk');
-        break;
+            break;
 
         case UPLOAD_ERR_EXTENSION:
             $message = __('File upload stopped by extension');
-        break;
+            break;
 
         default:
             $message = __('Unknown upload error');
-        break;
+            break;
     }
 
     return $message;
@@ -3049,7 +3054,7 @@ function get_news($arguments)
                 $current_datetime,
                 $limit
             );
-        break;
+            break;
 
         case 'oracle':
             $sql = sprintf(
@@ -3064,7 +3069,7 @@ function get_news($arguments)
                 $modal,
                 $current_datetime
             );
-        break;
+            break;
     }
 
     $news = db_get_all_rows_sql($sql);
@@ -3099,16 +3104,16 @@ function print_audit_csv($data)
     }
 
     header('Content-type: application/octet-stream');
-    header('Content-Disposition: attachment; filename=audit_log'.date('Y-m-d_His').'.csv');
+    header('Content-Disposition: attachment; filename=audit_log' . date('Y-m-d_His') . '.csv');
     header('Pragma: no-cache');
     header('Expires: 0');
 
     // BOM
     print pack('C*', 0xEF, 0xBB, 0xBF);
 
-    echo __('User').$divider.__('Action').$divider.__('Date').$divider.__('Source IP').$divider.__('Comments')."\n";
+    echo __('User') . $divider . __('Action') . $divider . __('Date') . $divider . __('Source IP') . $divider . __('Comments') . "\n";
     foreach ($data as $line) {
-        echo io_safe_output($line['id_usuario']).$divider.io_safe_output($line['accion']).$divider.io_safe_output(date($config['date_format'], $line['utimestamp'])).$divider.$line['ip_origen'].$divider.io_safe_output($line['descripcion'])."\n";
+        echo io_safe_output($line['id_usuario']) . $divider . io_safe_output($line['accion']) . $divider . io_safe_output(date($config['date_format'], $line['utimestamp'])) . $divider . $line['ip_origen'] . $divider . io_safe_output($line['descripcion']) . "\n";
     }
 
     exit;
@@ -3130,7 +3135,7 @@ function print_audit_csv($data)
 function validate_double_auth_code($user, $code)
 {
     global $config;
-    include_once $config['homedir'].'/include/auth/GAuth/Auth.php';
+    include_once $config['homedir'] . '/include/auth/GAuth/Auth.php';
     $result = false;
 
     if (empty($user) || empty($code)) {
@@ -3178,7 +3183,7 @@ function clear_pandora_error_for_header()
 }
 
 
-function set_pandora_error_for_header($message, $title=null)
+function set_pandora_error_for_header($message, $title = null)
 {
     global $config;
 
@@ -3186,7 +3191,7 @@ function set_pandora_error_for_header($message, $title=null)
         $config['alert_cnt'] = 0;
     }
 
-    if (( !isset($_SESSION['alert_msg']) && (!is_array($_SESSION['alert_msg'])) )) {
+    if ((!isset($_SESSION['alert_msg']) && (!is_array($_SESSION['alert_msg'])))) {
         $_SESSION['alert_msg'] = [];
     }
 
@@ -3219,14 +3224,14 @@ function get_pandora_error_for_header()
             switch ($value['type']) {
                 case 'error':
                     $result .= ui_print_error_message($value['message'], '', true);
-                break;
+                    break;
 
                 case 'info':
                     $result .= ui_print_info_message($value['message'], '', true);
-                break;
+                    break;
 
                 default:
-                break;
+                    break;
             }
         }
     }
@@ -3249,7 +3254,7 @@ function set_if_defined(&$var, $test)
 
 function set_unless_defined(&$var, $default)
 {
-    if (! isset($var)) {
+    if (!isset($var)) {
         $var = $default;
 
         return true;
@@ -3284,17 +3289,17 @@ function sort_by_column(&$array_ref, $column)
 }
 
 
-function array2XML($data, $root=null, $xml=null)
+function array2XML($data, $root = null, $xml = null)
 {
     if ($xml == null) {
         $xml = simplexml_load_string(
-            "<?xml version='1.0' encoding='UTF-8'?>\n<".$root.' />'
+            "<?xml version='1.0' encoding='UTF-8'?>\n<" . $root . ' />'
         );
     }
 
     foreach ($data as $key => $value) {
         if (is_numeric($key)) {
-            $key = 'item_'.$key;
+            $key = 'item_' . $key;
         }
 
         if (is_array($value)) {
@@ -3384,26 +3389,24 @@ if (!function_exists('hex2bin')) {
                 $data = (string) $data;
             }
         } else {
-            trigger_error(__FUNCTION__.'() expects parameter 1 to be string, '.gettype($data).' given', E_USER_WARNING);
+            trigger_error(__FUNCTION__ . '() expects parameter 1 to be string, ' . gettype($data) . ' given', E_USER_WARNING);
             return;
             // null in this case
         }
 
         $len = strlen($data);
         if (($len % 2)) {
-            trigger_error(__FUNCTION__.'(): Hexadecimal input string must have an even length', E_USER_WARNING);
+            trigger_error(__FUNCTION__ . '(): Hexadecimal input string must have an even length', E_USER_WARNING);
             return false;
         }
 
         if (strspn($data, '0123456789abcdefABCDEF') != $len) {
-            trigger_error(__FUNCTION__.'(): Input string must be hexadecimal string', E_USER_WARNING);
+            trigger_error(__FUNCTION__ . '(): Input string must be hexadecimal string', E_USER_WARNING);
             return false;
         }
 
         return pack('H*', $data);
     }
-
-
 }
 
 
@@ -3425,7 +3428,7 @@ function get_refresh_time_array()
 }
 
 
-function date2strftime_format($date_format, $timestamp=null)
+function date2strftime_format($date_format, $timestamp = null)
 {
     $replaces_list = [
         'D' => '%a',
@@ -3470,8 +3473,9 @@ function date2strftime_format($date_format, $timestamp=null)
         } else {
             // Check extra formats.
             switch ($date_format) {
-                default: $return .= date($date_format, $timestamp);
-                break;
+                default:
+                    $return .= date($date_format, $timestamp);
+                    break;
 
                 case 'n':
                     if (stristr(PHP_OS, 'win')) {
@@ -3488,9 +3492,9 @@ function date2strftime_format($date_format, $timestamp=null)
                     }
 
                     $return .= $decimal;
-                break;
+                    break;
 
-                break;
+                    break;
             }
         }
     }
@@ -3584,12 +3588,12 @@ function get_number_of_mr($package, $ent, $offline)
     global $config;
 
     if (!$ent) {
-        $dir = $config['attachment_store'].'/downloads/pandora_console/extras/mr';
+        $dir = $config['attachment_store'] . '/downloads/pandora_console/extras/mr';
     } else {
         if ($offline) {
-            $dir = $package.'/extras/mr';
+            $dir = $package . '/extras/mr';
         } else {
-            $dir = sys_get_temp_dir().'/pandora_oum/'.$package.'/extras/mr';
+            $dir = sys_get_temp_dir() . '/pandora_oum/' . $package . '/extras/mr';
         }
     }
 
@@ -3722,7 +3726,7 @@ function get_fixed_offset()
  * @param string Date without timezone information.
  * @param number Offset between the date timezone and the user's default timezone.
  */
-function time_w_fixed_tz($date, $timezone_offset=null)
+function time_w_fixed_tz($date, $timezone_offset = null)
 {
     if ($timezone_offset === null) {
         $timezone_offset = get_fixed_offset();
@@ -3740,7 +3744,7 @@ function time_w_fixed_tz($date, $timezone_offset=null)
  * @param string Date format.
  * @param number Offset between the date timezone and the user's default timezone.
  */
-function date_w_fixed_tz($date, $format=null, $timezone_offset=null)
+function date_w_fixed_tz($date, $format = null, $timezone_offset = null)
 {
     global $config;
 
@@ -3917,17 +3921,18 @@ function series_type_graph_array($data, $show_elements_graph)
             case 2:
             case 4:
                 $type_graph = 'line';
-            break;
+                break;
 
             default:
                 $type_graph = 'area';
-            break;
+                break;
         }
     } else {
         $type_graph = $show_elements_graph['type_graph'];
     }
 
-    if (isset($show_elements_graph['array_colors']) === true
+    if (
+        isset($show_elements_graph['array_colors']) === true
         && empty($show_elements_graph['array_colors']) === false
         && is_array($show_elements_graph['array_colors']) === true
     ) {
@@ -3966,19 +3971,20 @@ function series_type_graph_array($data, $show_elements_graph)
         foreach ($data as $key => $value) {
             if ($show_elements_graph['compare'] == 'overlapped') {
                 if ($key == 'sum2') {
-                    $str = ' ('.__('Previous').')';
+                    $str = ' (' . __('Previous') . ')';
                 }
             }
 
             if (strpos($key, 'summatory') !== false) {
                 $data_return['series_type'][$key] = $type_graph;
-                $data_return['legend'][$key] = __('Summatory series').' '.$str;
+                $data_return['legend'][$key] = __('Summatory series') . ' ' . $str;
                 $data_return['color'][$key] = $color_series['summatory'];
             } else if (strpos($key, 'average') !== false) {
                 $data_return['series_type'][$key] = $type_graph;
-                $data_return['legend'][$key] = __('Average series').' '.$str;
+                $data_return['legend'][$key] = __('Average series') . ' ' . $str;
                 $data_return['color'][$key] = $color_series['average'];
-            } else if (strpos($key, 'sum') !== false
+            } else if (
+                strpos($key, 'sum') !== false
                 || strpos($key, 'baseline') !== false
             ) {
                 switch ($value['id_module_type']) {
@@ -3990,32 +3996,35 @@ function series_type_graph_array($data, $show_elements_graph)
                     case 31:
                     case 100:
                         $data_return['series_type'][$key] = 'boolean';
-                    break;
+                        break;
 
                     default:
                         $data_return['series_type'][$key] = $type_graph;
-                    break;
+                        break;
                 }
 
-                if (isset($show_elements_graph['labels'][$value['agent_module_id']])
+                if (
+                    isset($show_elements_graph['labels'][$value['agent_module_id']])
                     && is_array($show_elements_graph['labels'])
                     && (count($show_elements_graph['labels']) > 0)
                 ) {
                     if ($show_elements_graph['unit']) {
                         $name_legend = $show_elements_graph['labels'][$value['agent_module_id']];
                         $name_legend .= ' / ';
-                        $name_legend .= __('Unit ').' ';
-                        $name_legend .= $show_elements_graph['unit'].': ';
+                        $name_legend .= __('Unit ') . ' ';
+                        $name_legend .= $show_elements_graph['unit'] . ': ';
                     } else {
-                        if (isset($show_elements_graph['from_interface']) === true
+                        if (
+                            isset($show_elements_graph['from_interface']) === true
                             && (bool) $show_elements_graph['from_interface'] === true
                         ) {
                             $label_interfaces = array_flip($show_elements_graph['modules_series']);
-                            $name_legend = $show_elements_graph['labels'][$value['agent_module_id']][$label_interfaces[$value['agent_module_id']]].': ';
+                            $name_legend = $show_elements_graph['labels'][$value['agent_module_id']][$label_interfaces[$value['agent_module_id']]] . ': ';
                         } else if (is_array($show_elements_graph['labels'][$value['agent_module_id']]) === true) {
                             $name_legend = 'Avg: ';
 
-                            if (array_key_exists('agent_alias', $value)
+                            if (
+                                array_key_exists('agent_alias', $value)
                                 && array_key_exists('module_name', $value)
                                 && array_key_exists('unit', $value)
                             ) {
@@ -4023,11 +4032,11 @@ function series_type_graph_array($data, $show_elements_graph)
                                 $name_legend .= ' / ';
                                 $name_legend .= $value['module_name'];
                                 $name_legend .= ' / ';
-                                $name_legend .= __('Unit ').' ';
-                                $name_legend .= $value['unit'].': ';
+                                $name_legend .= __('Unit ') . ' ';
+                                $name_legend .= $value['unit'] . ': ';
                             }
                         } else {
-                            $name_legend = $show_elements_graph['labels'][$value['agent_module_id']].': ';
+                            $name_legend = $show_elements_graph['labels'][$value['agent_module_id']] . ': ';
                         }
                     }
                 } else {
@@ -4037,16 +4046,17 @@ function series_type_graph_array($data, $show_elements_graph)
                             $name_legend .= ' / ';
                             $name_legend .= $value['module_name'];
                             $name_legend .= ' / ';
-                            $name_legend .= __('Unit ').' ';
-                            $name_legend .= $value['unit'].'Baseline ';
+                            $name_legend .= __('Unit ') . ' ';
+                            $name_legend .= $value['unit'] . 'Baseline ';
                         } else {
                             $name_legend = $value['agent_alias'];
                             $name_legend .= ' / ';
-                            $name_legend .= $value['module_name'].'Baseline ';
+                            $name_legend .= $value['module_name'] . 'Baseline ';
                         }
                     } else {
                         $name_legend = '';
-                        if (isset($show_elements_graph['fullscale']) === true
+                        if (
+                            isset($show_elements_graph['fullscale']) === true
                             && (int) $show_elements_graph['fullscale'] === 1
                         ) {
                             $name_legend .= 'Tip: ';
@@ -4059,24 +4069,25 @@ function series_type_graph_array($data, $show_elements_graph)
                             $name_legend .= ' / ';
                             $name_legend .= $value['module_name'];
                             $name_legend .= ' / ';
-                            $name_legend .= __('Unit ').' ';
-                            $name_legend .= $value['unit'].': ';
+                            $name_legend .= __('Unit ') . ' ';
+                            $name_legend .= $value['unit'] . ': ';
                         } else {
                             $name_legend .= $value['agent_alias'];
                             $name_legend .= ' / ';
-                            $name_legend .= $value['module_name'].': ';
+                            $name_legend .= $value['module_name'] . ': ';
                         }
                     }
                 }
 
-                if (isset($value['weight']) === true
+                if (
+                    isset($value['weight']) === true
                     && empty($value['weight']) === false
                 ) {
-                    $name_legend .= ' ('.__('Weight');
-                    $name_legend .= ' * '.$value['weight'].') ';
+                    $name_legend .= ' (' . __('Weight');
+                    $name_legend .= ' * ' . $value['weight'] . ') ';
                 }
 
-                $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">'.$name_legend.'</span>';
+                $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">' . $name_legend . '</span>';
                 if ((int) $value['min'] === PHP_INT_MAX) {
                     $value['min'] = 0;
                 }
@@ -4085,30 +4096,31 @@ function series_type_graph_array($data, $show_elements_graph)
                     $value['max'] = 0;
                 }
 
-                $data_return['legend'][$key] .= '<span class="legend-font-small">'.__('Min').' </span><span class="bolder">'.remove_right_zeros(
+                $data_return['legend'][$key] .= '<span class="legend-font-small">' . __('Min') . ' </span><span class="bolder">' . remove_right_zeros(
                     number_format(
                         $value['min'],
                         $config['graph_precision'],
                         $config['csv_decimal_separator'],
                         $config['csv_decimal_separator'] == ',' ? '.' : ','
                     )
-                ).' '.$value['unit'].'</span>&nbsp;<span class="legend-font-small">'.__('Max').' </span><span class="bolder">'.remove_right_zeros(
+                ) . ' ' . $value['unit'] . '</span>&nbsp;<span class="legend-font-small">' . __('Max') . ' </span><span class="bolder">' . remove_right_zeros(
                     number_format(
                         $value['max'],
                         $config['graph_precision'],
                         $config['csv_decimal_separator'],
                         $config['csv_decimal_separator'] == ',' ? '.' : ','
                     )
-                ).' '.$value['unit'].'</span>&nbsp;<span class="legend-font-small">'._('Avg.').' </span><span class="bolder">'.remove_right_zeros(
+                ) . ' ' . $value['unit'] . '</span>&nbsp;<span class="legend-font-small">' . _('Avg.') . ' </span><span class="bolder">' . remove_right_zeros(
                     number_format(
                         $value['avg'],
                         $config['graph_precision'],
                         $config['csv_decimal_separator'],
                         $config['csv_decimal_separator'] == ',' ? '.' : ','
                     )
-                ).' '.$value['unit'].'</span>&nbsp;'.$str;
+                ) . ' ' . $value['unit'] . '</span>&nbsp;' . $str;
 
-                if ($show_elements_graph['compare'] == 'overlapped'
+                if (
+                    $show_elements_graph['compare'] == 'overlapped'
                     && $key == 'sum2'
                 ) {
                     $data_return['color'][$key] = $color_series['overlapped'];
@@ -4116,7 +4128,8 @@ function series_type_graph_array($data, $show_elements_graph)
                     $data_return['color'][$key] = $color_series[$i];
                     $i++;
                 }
-            } else if (!$show_elements_graph['fullscale']
+            } else if (
+                !$show_elements_graph['fullscale']
                 && strpos($key, 'min') !== false
                 || !$show_elements_graph['fullscale']
                 && strpos($key, 'max') !== false
@@ -4140,17 +4153,17 @@ function series_type_graph_array($data, $show_elements_graph)
                     $name_legend .= ' / ';
                     $name_legend .= $value['module_name'];
                     $name_legend .= ' / ';
-                    $name_legend .= __('Unit ').' ';
-                    $name_legend .= $show_elements_graph['unit'].': ';
+                    $name_legend .= __('Unit ') . ' ';
+                    $name_legend .= $show_elements_graph['unit'] . ': ';
                 } else {
                     $name_legend .= $value['agent_alias'];
                     $name_legend .= ' / ';
-                    $name_legend .= $value['module_name'].': ';
+                    $name_legend .= $value['module_name'] . ': ';
                 }
 
-                $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">'.$name_legend.'</span>';
+                $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">' . $name_legend . '</span>';
                 if ($show_elements_graph['type_mode_graph']) {
-                    $data_return['legend'][$key] .= '<span class="legend-font-small">'.__('Min:').' </span><span class="bolder">';
+                    $data_return['legend'][$key] .= '<span class="legend-font-small">' . __('Min:') . ' </span><span class="bolder">';
                     $data_return['legend'][$key] .= remove_right_zeros(
                         number_format(
                             $value['min'],
@@ -4158,8 +4171,8 @@ function series_type_graph_array($data, $show_elements_graph)
                             $config['decimal_separator'],
                             $config['thousand_separator']
                         )
-                    ).' '.$value['unit'];
-                    $data_return['legend'][$key] .= '</span>&nbsp;<span class="legend-font-small">'.__('Max:').' </span><span class="bolder">';
+                    ) . ' ' . $value['unit'];
+                    $data_return['legend'][$key] .= '</span>&nbsp;<span class="legend-font-small">' . __('Max:') . ' </span><span class="bolder">';
                     $data_return['legend'][$key] .= remove_right_zeros(
                         number_format(
                             $value['max'],
@@ -4167,8 +4180,8 @@ function series_type_graph_array($data, $show_elements_graph)
                             $config['decimal_separator'],
                             $config['thousand_separator']
                         )
-                    ).' '.$value['unit'];
-                    $data_return['legend'][$key] .= '</span>&nbsp;<span class="legend-font-small">'._('Avg:').' </span><span class="bolder">';
+                    ) . ' ' . $value['unit'];
+                    $data_return['legend'][$key] .= '</span>&nbsp;<span class="legend-font-small">' . _('Avg:') . ' </span><span class="bolder">';
                     $data_return['legend'][$key] .= remove_right_zeros(
                         number_format(
                             $value['avg'],
@@ -4176,10 +4189,11 @@ function series_type_graph_array($data, $show_elements_graph)
                             $config['decimal_separator'],
                             $config['thousand_separator']
                         )
-                    ).' '.$value['unit'].' </span>&nbsp;'.$str;
+                    ) . ' ' . $value['unit'] . ' </span>&nbsp;' . $str;
                 }
 
-                if ($show_elements_graph['compare'] == 'overlapped'
+                if (
+                    $show_elements_graph['compare'] == 'overlapped'
                     && $key == 'sum2'
                 ) {
                     $data_return['color'][$key] = $color_series['overlapped'];
@@ -4190,21 +4204,21 @@ function series_type_graph_array($data, $show_elements_graph)
             } else if (strpos($key, 'event') !== false) {
                 $data_return['series_type'][$key] = 'points';
                 if ($show_elements_graph['show_events']) {
-                    $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">'.__('Events').'</span>'.$str;
+                    $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">' . __('Events') . '</span>' . $str;
                 }
 
                 $data_return['color'][$key] = $color_series['event'];
             } else if (strpos($key, 'alert') !== false) {
                 $data_return['series_type'][$key] = 'points';
                 if ($show_elements_graph['show_alerts']) {
-                    $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">'.__('Alert').'</span>'.$str;
+                    $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">' . __('Alert') . '</span>' . $str;
                 }
 
                 $data_return['color'][$key] = $color_series['alert'];
             } else if (strpos($key, 'unknown') !== false) {
                 $data_return['series_type'][$key] = 'unknown';
                 if ($show_elements_graph['show_unknown']) {
-                    $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">'.__('Unknown').'</span>'.$str;
+                    $data_return['legend'][$key] = '<span style="font-size: 9pt; font-weight: bolder;">' . __('Unknown') . '</span>' . $str;
                 }
 
                 $data_return['color'][$key] = $color_series['unknown'];
@@ -4212,19 +4226,19 @@ function series_type_graph_array($data, $show_elements_graph)
                 $data_return['series_type'][$key] = 'percentil';
                 if ($show_elements_graph['percentil']) {
                     if ($show_elements_graph['unit']) {
-                        $name_legend = '<span style="font-size: 9pt; font-weight: bolder;">'.__('Percentil').'</span>';
-                        $name_legend .= $config['percentil'].'º ';
-                        $name_legend .= __('of module').' ';
-                        $name_legend .= $value['agent_alias'].' / ';
-                        $name_legend .= $value['module_name'].' / ';
-                        $name_legend .= __('Unit ').' ';
-                        $name_legend .= $show_elements_graph['unit'].': ';
+                        $name_legend = '<span style="font-size: 9pt; font-weight: bolder;">' . __('Percentil') . '</span>';
+                        $name_legend .= $config['percentil'] . 'º ';
+                        $name_legend .= __('of module') . ' ';
+                        $name_legend .= $value['agent_alias'] . ' / ';
+                        $name_legend .= $value['module_name'] . ' / ';
+                        $name_legend .= __('Unit ') . ' ';
+                        $name_legend .= $show_elements_graph['unit'] . ': ';
                     } else {
-                        $name_legend = __('Percentil').' ';
-                        $name_legend .= $config['percentil'].'º ';
-                        $name_legend .= __('of module').' ';
-                        $name_legend .= $value['agent_alias'].' / ';
-                        $name_legend .= $value['module_name'].': ';
+                        $name_legend = __('Percentil') . ' ';
+                        $name_legend .= $config['percentil'] . 'º ';
+                        $name_legend .= __('of module') . ' ';
+                        $name_legend .= $value['agent_alias'] . ' / ';
+                        $name_legend .= $value['module_name'] . ': ';
                     }
 
                     $data_return['legend'][$key] .= $name_legend;
@@ -4235,13 +4249,13 @@ function series_type_graph_array($data, $show_elements_graph)
                             $config['decimal_separator'],
                             $config['thousand_separator']
                         )
-                    ).' '.$str;
+                    ) . ' ' . $str;
                 }
 
                 $data_return['color'][$key] = $color_series['percentil'];
             } else if (strpos($key, 'projection') !== false) {
                 $data_return['series_type'][$key] = $type_graph;
-                $data_return['legend'][$key]      = __('Projection').' '.$str;
+                $data_return['legend'][$key]      = __('Projection') . ' ' . $str;
                 $data_return['color'][$key]       = $color_series['projection'];
             } else {
                 $data_return['series_type'][$key] = $type_graph;
@@ -4275,8 +4289,8 @@ function series_type_graph_array($data, $show_elements_graph)
 function generator_chart_to_pdf(
     $type_graph_pdf,
     $params,
-    $params_combined=false,
-    $module_list=false
+    $params_combined = false,
+    $module_list = false
 ) {
     global $config;
 
@@ -4286,12 +4300,12 @@ function generator_chart_to_pdf(
         $hack_metaconsole = '';
     }
 
-    $url = ui_get_full_url(false).$hack_metaconsole.'/include/chart_generator.php';
+    $url = ui_get_full_url(false) . $hack_metaconsole . '/include/chart_generator.php';
 
     if (!$params['return_img_base_64']) {
-        $img_file = 'img_'.uniqid().'.png';
-        $img_path = $config['homedir'].'/attachment/'.$img_file;
-        $img_url  = ui_get_full_url(false).$hack_metaconsole.'/attachment/'.$img_file;
+        $img_file = 'img_' . uniqid() . '.png';
+        $img_path = $config['homedir'] . '/attachment/' . $img_file;
+        $img_url  = ui_get_full_url(false) . $hack_metaconsole . '/attachment/' . $img_file;
     }
 
     $session_id = session_id();
@@ -4320,7 +4334,7 @@ function generator_chart_to_pdf(
     unset($data['data']['graph_data']);
     // If not install chromium avoid 500 convert tu images no data to show.
     $chromium_dir = io_safe_output($config['chromium_path']);
-    $result_ejecution = exec($chromium_dir.' --version');
+    $result_ejecution = exec($chromium_dir . ' --version');
     if (empty($result_ejecution) === true) {
         if ($params['return_img_base_64']) {
             $params['base64'] = true;
@@ -4339,7 +4353,7 @@ function generator_chart_to_pdf(
         $page = $browser->createPage();
 
         // Navigate to an URL.
-        $navigation = $page->navigate($url.'?data='.urlencode(json_encode($data)));
+        $navigation = $page->navigate($url . '?data=' . urlencode(json_encode($data)));
         $navigation->waitForNavigation(Page::LOAD);
 
         // Dynamic.
@@ -4348,7 +4362,8 @@ function generator_chart_to_pdf(
             $dynamic_height = 200;
         }
 
-        if (isset($params['options']['viewport']) === true
+        if (
+            isset($params['options']['viewport']) === true
             && isset($params['options']['viewport']['height']) === true
             && empty($params['options']['viewport']['height']) === false
         ) {
@@ -4360,7 +4375,8 @@ function generator_chart_to_pdf(
             $dynamic_width = 794;
         }
 
-        if (isset($params['options']['viewport']) === true
+        if (
+            isset($params['options']['viewport']) === true
             && isset($params['options']['viewport']['width']) === true
             && empty($params['options']['viewport']['width']) === false
         ) {
@@ -4377,7 +4393,7 @@ function generator_chart_to_pdf(
             // To be used in PDF files.
             $b64 = $page->screenshot(['clip' => $clip])->saveToFile($img_path);
             $config['temp_images'][] = $img_path;
-            return '<img src="'.$img_url.'" />';
+            return '<img src="' . $img_url . '" />';
         }
     } catch (\Throwable $th) {
         error_log($th);
@@ -4391,25 +4407,31 @@ function generator_chart_to_pdf(
  * Get the product name.
  *
  * @return string If the installation is open, it will be 'Pandora FMS'.
- *         If the product name stored is empty, it returns 'Pandora FMS' too.
+ *         If the product name stored is empty, it returns 'Ngeek visibility center NVC' too.
  */
+// function get_product_name()
+// {
+//     global $config;
+
+//     $stored_name = enterprise_hook('enterprise_get_product_name');
+//     if (empty($stored_name) || $stored_name == ENTERPRISE_NOT_HOOK) {
+//         if (isset($config['rb_product_name_alt']) === true
+//             && empty($config['rb_product_name_alt']) === false
+//         ) {
+//             return $config['rb_product_name_alt'];
+//         }
+
+//         return 'Ngeek visibility center NVC';
+//     }
+
+//     return $stored_name;
+// }
+
 function get_product_name()
 {
-    global $config;
-
-    $stored_name = enterprise_hook('enterprise_get_product_name');
-    if (empty($stored_name) || $stored_name == ENTERPRISE_NOT_HOOK) {
-        if (isset($config['rb_product_name_alt']) === true
-            && empty($config['rb_product_name_alt']) === false
-        ) {
-            return $config['rb_product_name_alt'];
-        }
-
-        return 'Pandora FMS';
-    }
-
-    return $stored_name;
+    return 'Ngeek visibility center NVC';
 }
+
 
 
 /**
@@ -4418,16 +4440,20 @@ function get_product_name()
  * @return string If the installation is open, it will be 'Artica ST'.
  *         If the product name stored is empty, it returns 'Artica ST' too.
  */
+// function get_copyright_notice()
+// {
+//     $stored_name = enterprise_hook('enterprise_get_copyright_notice');
+//     if (empty($stored_name) || $stored_name == ENTERPRISE_NOT_HOOK) {
+//         return 'PandoraFMS.com';
+//     }
+
+//     return $stored_name;
+// }
+
 function get_copyright_notice()
 {
-    $stored_name = enterprise_hook('enterprise_get_copyright_notice');
-    if (empty($stored_name) || $stored_name == ENTERPRISE_NOT_HOOK) {
-        return 'PandoraFMS.com';
-    }
-
-    return $stored_name;
+    return 'NvcNgeekVisibilityCenter.com';
 }
-
 
 /**
  * Generate a random code to prevent cross site request fogery attacks
@@ -4474,7 +4500,7 @@ function generate_hash_to_api()
  *         "link" (default): Click into word "Performance" to display the profilling info.
  *         "console": Display with a message in console.log.
  */
-function pandora_xhprof_display_result($key='', $method='link')
+function pandora_xhprof_display_result($key = '', $method = 'link')
 {
     // Check if function exists
     if (!function_exists('tideways_xhprof_disable')) {
@@ -4486,19 +4512,19 @@ function pandora_xhprof_display_result($key='', $method='link')
     $data = tideways_xhprof_disable();
     $source = "pandora_$key";
     file_put_contents(
-        sys_get_temp_dir().'/'.$run_id.".$source.xhprof",
+        sys_get_temp_dir() . '/' . $run_id . ".$source.xhprof",
         serialize($data)
     );
     $new_url = "http://{$_SERVER['HTTP_HOST']}/profiler/index.php?run={$run_id}&source={$source}";
     switch ($method) {
         case 'console':
             error_log("'{$new_url}'");
-        break;
+            break;
 
         case 'link':
         default:
             echo "<a href='{$new_url}' target='_new'>Performance</a>\n";
-        break;
+            break;
     }
 }
 
@@ -4629,7 +4655,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#pandora_fms_snmp_browser';
             }
-        break;
+            break;
 
         case 'snmp_trap_generator_view':
             if ($es) {
@@ -4637,7 +4663,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/08_snmp_traps_monitoring#trap_generator';
             }
-        break;
+            break;
 
         case 'real_time_view':
             if ($es) {
@@ -4645,7 +4671,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/07_data_presentation_visualization#real-time_graphs';
             }
-        break;
+            break;
 
         case 'agent_main_tab':
             if ($es) {
@@ -4653,7 +4679,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/01_intro_monitoring#agent_display';
             }
-        break;
+            break;
 
         case 'alert_config':
             if ($es) {
@@ -4661,7 +4687,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#creating_an_action';
             }
-        break;
+            break;
 
         case 'alert_macros':
             if ($es) {
@@ -4669,7 +4695,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#replaceable_macros_within_field1_field10';
             }
-        break;
+            break;
 
         case 'alerts_config':
             if ($es) {
@@ -4677,7 +4703,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts';
             }
-        break;
+            break;
 
         case 'alert_special_days':
             if ($es) {
@@ -4685,7 +4711,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#list_of_special_days';
             }
-        break;
+            break;
 
         case 'alerts':
             if ($es) {
@@ -4693,7 +4719,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/02_policy#Alerts';
             }
-        break;
+            break;
 
         case 'collections':
             if ($es) {
@@ -4701,7 +4727,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/02_policy#File_Collections';
             }
-        break;
+            break;
 
         case 'component_groups':
             if ($es) {
@@ -4709,7 +4735,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/03_templates_and_components#component_groups';
             }
-        break;
+            break;
 
         case 'configure_gis_map_edit':
             if ($es) {
@@ -4717,7 +4743,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/10_gis#gis_maps';
             }
-        break;
+            break;
 
         case 'event_alert':
             if ($es) {
@@ -4725,7 +4751,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/02_events#event_alerts_event_correlation';
             }
-        break;
+            break;
 
         case 'eventview':
             if ($es) {
@@ -4733,7 +4759,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/02_events#introduction';
             }
-        break;
+            break;
 
         case 'export_server':
             if ($es) {
@@ -4741,7 +4767,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/03_export_server=yes#adding_a_target_server';
             }
-        break;
+            break;
 
         case 'external_alert':
             if ($es) {
@@ -4749,7 +4775,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/02_policy#external_alerts';
             }
-        break;
+            break;
 
         case 'gis_tab':
             if ($es) {
@@ -4757,7 +4783,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/10_gis#the_agent_s_gis_setup';
             }
-        break;
+            break;
 
         case 'graph_builder':
             if ($es) {
@@ -4765,7 +4791,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/07_data_presentation_visualization#creating_combined_graphs';
             }
-        break;
+            break;
 
         case 'graph_editor':
             if ($es) {
@@ -4773,7 +4799,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/07_data_presentation_visualization#adding_elements_to_combined_graphs';
             }
-        break;
+            break;
 
         case 'dashboards_tab':
             if ($es) {
@@ -4781,7 +4807,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/09_dashboard#introduction';
             }
-        break;
+            break;
 
         case 'history_database':
             if ($es) {
@@ -4789,7 +4815,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#the_history_database';
             }
-        break;
+            break;
 
         case 'inventory_tab':
             if ($es) {
@@ -4797,7 +4823,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/04_inventory#inventory_modules';
             }
-        break;
+            break;
 
         case 'ipam_list_tab':
             if ($es) {
@@ -4805,7 +4831,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#introduction';
             }
-        break;
+            break;
 
         case 'ipam_calculator_tab':
             if ($es) {
@@ -4813,7 +4839,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#subnetwork_calculator';
             }
-        break;
+            break;
 
         case 'ipam_vlan_config_tab':
             if ($es) {
@@ -4821,7 +4847,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#vlan_ipam';
             }
-        break;
+            break;
 
         case 'ipam_vlan_statistics_tab':
             if ($es) {
@@ -4829,7 +4855,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#ipam_vlan_stats';
             }
-        break;
+            break;
 
         case 'ipam_vlan_wizard_tab':
             if ($es) {
@@ -4837,7 +4863,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#ipam_vlan_wizard:';
             }
-        break;
+            break;
 
         case 'ipam_supernet_config_tab':
             if ($es) {
@@ -4845,7 +4871,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#ipam_supernet';
             }
-        break;
+            break;
 
         case 'ipam_supernet_map_tab':
             if ($es) {
@@ -4853,7 +4879,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#ipam_supernet_map';
             }
-        break;
+            break;
 
         case 'ipam_supernet_statistics_tab':
             if ($es) {
@@ -4861,7 +4887,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#ipam_supernet_stats';
             }
-        break;
+            break;
 
         case 'ipam_new_tab':
         case 'ipam_edit_tab':
@@ -4870,7 +4896,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#edit_view';
             }
-        break;
+            break;
 
         case 'ipam_massive_tab':
             if ($es) {
@@ -4878,7 +4904,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#mass_operations_view';
             }
-        break;
+            break;
 
         case 'ipam_network_tab':
             if ($es) {
@@ -4886,7 +4912,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#edit_view';
             }
-        break;
+            break;
 
         case 'ipam_force_tab':
             if ($es) {
@@ -4894,7 +4920,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/11_ipam#icon_view';
             }
-        break;
+            break;
 
         case 'macros_visual_maps':
             if ($es) {
@@ -4902,7 +4928,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#Macros_in_Visual_Consoles';
             }
-        break;
+            break;
 
         case 'linked_map_status_calc':
             if ($es) {
@@ -4910,7 +4936,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#advanced_options_of_each_element';
             }
-        break;
+            break;
 
         case 'main_tab':
             if ($es) {
@@ -4918,7 +4944,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/01_intro_monitoring#agent_setup_in_the_console';
             }
-        break;
+            break;
 
         case 'manage_alert_list':
             if ($es) {
@@ -4926,7 +4952,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#managing_alerts_from_within_the_agent';
             }
-        break;
+            break;
 
         case 'alert_scalate':
             if ($es) {
@@ -4934,7 +4960,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#scaling_alerts';
             }
-        break;
+            break;
 
         case 'network_map_enterprise_edit':
             if ($es) {
@@ -4942,7 +4968,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/06_data_presentation_network_maps#non_empty_network_map';
             }
-        break;
+            break;
 
         case 'network_map_enterprise_list':
             if ($es) {
@@ -4950,7 +4976,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/06_data_presentation_network_maps#introduction';
             }
-        break;
+            break;
 
         case 'network_map_enterprise_empty':
             if ($es) {
@@ -4958,7 +4984,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/06_data_presentation_network_maps#empty_network_map';
             }
-        break;
+            break;
 
         case 'network_map_enterprise_view':
             if ($es) {
@@ -4966,7 +4992,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/06_data_presentation_network_maps#empty_network_map';
             }
-        break;
+            break;
 
         case 'transactional_view':
             if ($es) {
@@ -4974,7 +5000,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/12_transactional_monitoring#introduction';
             }
-        break;
+            break;
 
         case 'pcap_filter':
             if ($es) {
@@ -4982,7 +5008,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/04_netflow#filter_creation';
             }
-        break;
+            break;
 
         case 'planned_downtime':
             if ($es) {
@@ -4990,7 +5016,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#introduction';
             }
-        break;
+            break;
 
         case 'planned_downtime_editor':
             if ($es) {
@@ -4998,7 +5024,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#create_a_scheduled_downtime';
             }
-        break;
+            break;
 
         case 'plugin_definition':
             if ($es) {
@@ -5006,7 +5032,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '08_technical_reference/05_anexo_server_plugins_development#plugin_manual_registration';
             }
-        break;
+            break;
 
         case 'plugin_macros':
             if ($es) {
@@ -5014,7 +5040,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#internal_mcros';
             }
-        break;
+            break;
 
         case 'prediction_source_module':
             if ($es) {
@@ -5022,7 +5048,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/10_other_monitoring#types_of_predictive_monitoring';
             }
-        break;
+            break;
 
         case 'wmi_module_tab':
             if ($es) {
@@ -5030,7 +5056,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#windows_remote_monitoring_with_wmi';
             }
-        break;
+            break;
 
         case 'template_reporting_tab':
             if ($es) {
@@ -5038,7 +5064,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/08_data_presentation_reports#introduction';
             }
-        break;
+            break;
 
         case 'reporting_template_list_item_tab':
             if ($es) {
@@ -5046,7 +5072,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/08_data_presentation_reports#the_list_items_tab';
             }
-        break;
+            break;
 
         case 'reporting_template_item_editor_tab':
             if ($es) {
@@ -5054,7 +5080,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/08_data_presentation_reports#item_editor_tab';
             }
-        break;
+            break;
 
         case 'reporting_template_advanced_tab':
             if ($es) {
@@ -5062,7 +5088,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/08_data_presentation_reports#report_advanced_options';
             }
-        break;
+            break;
 
         case 'reporting_item_editor_tab':
             if ($es) {
@@ -5070,7 +5096,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/08_data_presentation_reports#item_editor_tab';
             }
-        break;
+            break;
 
         case 'response_macros':
             if ($es) {
@@ -5078,7 +5104,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/02_events#event_responses_macros';
             }
-        break;
+            break;
 
         case 'servers':
             if ($es) {
@@ -5086,7 +5112,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '02_installation/03_interface#server_management';
             }
-        break;
+            break;
 
         case 'snmpwalk':
             if ($es) {
@@ -5094,7 +5120,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#pandora_fms_snmp_browser';
             }
-        break;
+            break;
 
         case 'transactional_map_phases':
             if ($es) {
@@ -5102,7 +5128,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/12_transactional_monitoring#creating_the_stage_tree';
             }
-        break;
+            break;
 
         case 'transactional_map_phases_data':
             if ($es) {
@@ -5110,7 +5136,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/12_transactional_monitoring#control_scripts_configuration';
             }
-        break;
+            break;
 
         case 'wizard_reporting_tab':
             if ($es) {
@@ -5118,7 +5144,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/08_data_presentation_reports#Template_Wizard';
             }
-        break;
+            break;
 
         case 'user_edit_notifications':
             if ($es) {
@@ -5126,7 +5152,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#Notification_setup';
             }
-        break;
+            break;
 
         case 'view_services':
             if ($es) {
@@ -5134,7 +5160,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/07_services#introduction';
             }
-        break;
+            break;
 
         case 'visual_console_editor_data_tab':
             if ($es) {
@@ -5142,7 +5168,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#creation_-_general_data';
             }
-        break;
+            break;
 
         case 'visual_console_editor_editor_tab':
             if ($es) {
@@ -5150,7 +5176,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#creation_and_edition_of_visual_consoles';
             }
-        break;
+            break;
 
         case 'visual_console_editor_list_elements_tab':
             if ($es) {
@@ -5158,7 +5184,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#creation_-_list_of_elements';
             }
-        break;
+            break;
 
         case 'visual_console_editor_wizard_tab':
             if ($es) {
@@ -5166,7 +5192,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#creation_-_wizard';
             }
-        break;
+            break;
 
         case 'visual_console_editor_wizard_services_tab':
             if ($es) {
@@ -5174,7 +5200,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#creation_-_service_wizard';
             }
-        break;
+            break;
 
         case 'visual_console_tab':
             if ($es) {
@@ -5182,7 +5208,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#advanced_options_of_each_element';
             }
-        break;
+            break;
 
         case 'config_service_element_tab':
             if ($es) {
@@ -5190,7 +5216,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/07_services#element_configuration';
             }
-        break;
+            break;
 
         case 'config_service_tab':
             if ($es) {
@@ -5198,7 +5224,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/07_services#initial_configuration';
             }
-        break;
+            break;
 
         case 'other_conf_tab':
             if ($es) {
@@ -5206,7 +5232,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#other_configuration';
             }
-        break;
+            break;
 
         case 'services_conf_tab':
             if ($es) {
@@ -5214,7 +5240,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#service_setup';
             }
-        break;
+            break;
 
         case 'visual_consoles_conf_tab':
             if ($es) {
@@ -5222,7 +5248,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#visual_console_setup';
             }
-        break;
+            break;
 
         case 'charts_conf_tab':
             if ($es) {
@@ -5230,7 +5256,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#chart_settings';
             }
-        break;
+            break;
 
         case 'front_and_text_conf_tab':
             if ($es) {
@@ -5238,7 +5264,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#font_and_text_settings';
             }
-        break;
+            break;
 
         case 'gis_conf_tab':
             if ($es) {
@@ -5246,7 +5272,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#gis_configuration';
             }
-        break;
+            break;
 
         case 'style_conf_tab':
             if ($es) {
@@ -5254,7 +5280,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#style_configuration';
             }
-        break;
+            break;
 
         case 'behavoir_conf_tab':
             if ($es) {
@@ -5262,7 +5288,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#performance_configuration';
             }
-        break;
+            break;
 
         case 'setup_ehorus_tab':
             if ($es) {
@@ -5270,7 +5296,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#ehorus';
             }
-        break;
+            break;
 
         case 'setup_module_library_tab':
             if ($es) {
@@ -5278,7 +5304,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#module_library';
             }
-        break;
+            break;
 
         case 'db_status_tab':
             if ($es) {
@@ -5286,7 +5312,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#DB_Schema_Check';
             }
-        break;
+            break;
 
         case 'database_backup_utility_tab':
             if ($es) {
@@ -5294,7 +5320,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#Backup';
             }
-        break;
+            break;
 
         case 'others_database_maintenance_options_tab':
             if ($es) {
@@ -5302,7 +5328,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#others';
             }
-        break;
+            break;
 
         case 'database_maintenance_options_tab':
             if ($es) {
@@ -5310,7 +5336,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#database_maintenance_options';
             }
-        break;
+            break;
 
         case 'database_maintenance_status_tab':
             if ($es) {
@@ -5318,7 +5344,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#database_maintenance_status';
             }
-        break;
+            break;
 
         case 'historical_database_maintenance_options_tab':
             if ($es) {
@@ -5326,7 +5352,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#historical_database_maintenance_options';
             }
-        break;
+            break;
 
         case 'setup_enterprise_tab':
             if ($es) {
@@ -5334,7 +5360,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#features_of_the_enterprise_version';
             }
-        break;
+            break;
 
         case 'setup_general_tab':
             if ($es) {
@@ -5342,7 +5368,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#general_setup';
             }
-        break;
+            break;
 
         case 'servers_ha_clusters_tab':
             if ($es) {
@@ -5350,7 +5376,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/06_ha#ha_of_data_server';
             }
-        break;
+            break;
 
         case 'plugins_tab':
             if ($es) {
@@ -5358,7 +5384,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '08_technical_reference/06_anexo_agent_plugins#basic_features_of_the_agent_plugin';
             }
-        break;
+            break;
 
         case 'create_agent':
             if ($es) {
@@ -5366,7 +5392,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/01_intro_monitoring#agent_setup_in_the_console';
             }
-        break;
+            break;
 
         case 'module_library':
             if ($es) {
@@ -5374,7 +5400,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/01_intro_monitoring#module_library';
             }
-        break;
+            break;
 
         case 'agent_snmp_explorer_tab':
             if ($es) {
@@ -5382,7 +5408,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#pandora_fms_snmp_wizard';
             }
-        break;
+            break;
 
         case 'agent_snmp_interfaces_explorer_tab':
             if ($es) {
@@ -5390,7 +5416,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#pandora_fms_snmp_wizard';
             }
-        break;
+            break;
 
         case 'agent_snmp_wmi_explorer_tab':
             if ($es) {
@@ -5398,7 +5424,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#wmi_wizard';
             }
-        break;
+            break;
 
         case 'acl_setup_tab':
             if ($es) {
@@ -5406,7 +5432,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#introduction';
             }
-        break;
+            break;
 
         case 'profile_tab':
             if ($es) {
@@ -5414,7 +5440,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#profiles_in_pandora_FMS';
             }
-        break;
+            break;
 
         case 'configure_profiles_tab':
             if ($es) {
@@ -5422,7 +5448,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#profiles_in_pandora_fms';
             }
-        break;
+            break;
 
         case 'network_component_tab':
             if ($es) {
@@ -5430,7 +5456,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/01_intro_monitoring#common_parameters';
             }
-        break;
+            break;
 
         case 'local_component_tab':
             if ($es) {
@@ -5438,7 +5464,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/03_templates_and_components#local_components';
             }
-        break;
+            break;
 
         case 'agent_autoconf_tab':
             if ($es) {
@@ -5446,7 +5472,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '02_installation/05_configuration_agents#creation_of_an_automatic_agent_configuration';
             }
-        break;
+            break;
 
         case 'policies_management_tab':
             if ($es) {
@@ -5454,7 +5480,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/02_policy#introduction';
             }
-        break;
+            break;
 
         case 'massive_agents_tab':
             if ($es) {
@@ -5462,7 +5488,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/01_massive_operations#massive_operations_-_agents';
             }
-        break;
+            break;
 
         case 'massive_modules_tab':
             if ($es) {
@@ -5470,7 +5496,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/01_massive_operations#massive_operationsmodules';
             }
-        break;
+            break;
 
         case 'massive_policies_tab':
             if ($es) {
@@ -5478,7 +5504,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '05_big_environments/01_massive_operations#edit_policy_modules_massively';
             }
-        break;
+            break;
 
         case 'alert_templates_tab':
             if ($es) {
@@ -5486,7 +5512,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#introduction3';
             }
-        break;
+            break;
 
         case 'configure_alert_template_step_1':
             if ($es) {
@@ -5494,7 +5520,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#step_1general';
             }
-        break;
+            break;
 
         case 'configure_alert_template_step_2':
             if ($es) {
@@ -5502,7 +5528,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#step_2conditions';
             }
-        break;
+            break;
 
         case 'configure_alert_template_step_3':
             if ($es) {
@@ -5510,7 +5536,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#step_3advanced_fields';
             }
-        break;
+            break;
 
         case 'alerts_action':
             if ($es) {
@@ -5518,7 +5544,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#introduction2';
             }
-        break;
+            break;
 
         case 'configure_alert_event_step_1':
             if ($es) {
@@ -5526,7 +5552,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/02_events#event_alerts_event_correlation';
             }
-        break;
+            break;
 
         case 'configure_event_rule_tab':
             if ($es) {
@@ -5534,7 +5560,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/02_events#event_alerts_event_correlation';
             }
-        break;
+            break;
 
         case 'snmp_alert_overview_tab':
             if ($es) {
@@ -5542,7 +5568,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/08_snmp_traps_monitoring#introduction';
             }
-        break;
+            break;
 
         case 'snmp_alert_update_tab':
             if ($es) {
@@ -5550,7 +5576,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/08_snmp_traps_monitoring#adding_an_alert';
             }
-        break;
+            break;
 
         case 'local_module_tab':
             if ($es) {
@@ -5558,7 +5584,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/01_intro_monitoring#common_parameters';
             }
-        break;
+            break;
 
         case 'local_module':
             if ($es) {
@@ -5566,7 +5592,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/02_operations#types_of_modules';
             }
-        break;
+            break;
 
         case 'data_server_module_tab':
             if ($es) {
@@ -5574,7 +5600,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/02_operations#types_of_modules';
             }
-        break;
+            break;
 
         case 'network_module_tab':
             if ($es) {
@@ -5582,7 +5608,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#icmp_monitoring';
             }
-        break;
+            break;
 
         case 'wux_console':
             if ($es) {
@@ -5590,7 +5616,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/13_user_monitorization#create_a_web_analysis_module_in_pandora_fms_console';
             }
-        break;
+            break;
 
         case 'icmp_module_tab':
             if ($es) {
@@ -5598,7 +5624,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#icmp_Monitoring';
             }
-        break;
+            break;
 
         case 'snmp_module_tab':
             if ($es) {
@@ -5606,7 +5632,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#monitoring_through_network_modules_with_snmp';
             }
-        break;
+            break;
 
         case 'tcp_module_tab':
             if ($es) {
@@ -5614,7 +5640,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#tcp_monitoring';
             }
-        break;
+            break;
 
         case 'webserver_module_tab':
             if ($es) {
@@ -5622,7 +5648,7 @@ function get_help_info($section_name)
             } else {
                 $result .= 'Web_Monitoring#creating_web_modules';
             }
-        break;
+            break;
 
         case 'wmi_query_tab':
             if ($es) {
@@ -5630,7 +5656,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/03_remote_monitoring#windows_remote_monitoring_with_wmi';
             }
-        break;
+            break;
 
         case 'omnishell':
             if ($es) {
@@ -5638,7 +5664,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/16_omnishell';
             }
-        break;
+            break;
 
         case 'module_type_tab':
             if ($es) {
@@ -5646,7 +5672,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/02_operations#types_of_modules';
             }
-        break;
+            break;
 
         case 'render_view_tab':
             if ($es) {
@@ -5654,7 +5680,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/10_gis#operation';
             }
-        break;
+            break;
 
         case 'quickshell_settings':
             if ($es) {
@@ -5662,7 +5688,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#websocket_engine';
             }
-        break;
+            break;
 
         case 'discovery':
             if ($es) {
@@ -5677,7 +5703,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#correlation_alert_creation';
             }
-        break;
+            break;
 
         case 'alert_correlation':
             if ($es) {
@@ -5685,7 +5711,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#alert_correlationevent_and_log_alerts';
             }
-        break;
+            break;
 
         case 'alert_rules':
             if ($es) {
@@ -5693,7 +5719,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#rules_within_a_correlation_alert';
             }
-        break;
+            break;
 
         case 'alert_fields':
             if ($es) {
@@ -5701,7 +5727,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#step_3advanced_fields';
             }
-        break;
+            break;
 
         case 'alert_triggering':
             if ($es) {
@@ -5709,7 +5735,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/01_alerts#configuring_an_alert_template';
             }
-        break;
+            break;
 
         case 'log_viewer_advanced_options':
             if ($es) {
@@ -5717,7 +5743,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/09_log_monitoring#display_and_advanced_search';
             }
-        break;
+            break;
 
         case 'log_viewer':
             if ($es) {
@@ -5725,7 +5751,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/09_log_monitoring#display_and_search';
             }
-        break;
+            break;
 
         case 'elasticsearch_interface':
             if ($es) {
@@ -5733,7 +5759,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/09_log_monitoring#elasticsearch_interface';
             }
-        break;
+            break;
 
         case 'snmp_console':
             if ($es) {
@@ -5741,7 +5767,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/08_snmp_traps_monitoring#access_to_trap_reception_console';
             }
-        break;
+            break;
 
         case 'cluster_view':
             if ($es) {
@@ -5749,7 +5775,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/15_clusters#planning_monitoring';
             }
-        break;
+            break;
 
         case 'aws_view':
             if ($es) {
@@ -5757,7 +5783,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/04_discovery#discovery_cloudamazon_web_services_aws';
             }
-        break;
+            break;
 
         case 'sap_view':
             if ($es) {
@@ -5765,7 +5791,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/04_discovery#sap_view';
             }
-        break;
+            break;
 
         case 'vmware_view':
             if ($es) {
@@ -5773,7 +5799,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/05_virtual_environment_monitoring#vmware_virtual_architecture_management_and_display';
             }
-        break;
+            break;
 
         case 'visual_console_view':
             if ($es) {
@@ -5781,7 +5807,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/05_data_presentation_visual_maps#Elements_a_map_can_contain';
             }
-        break;
+            break;
 
         case 'create_container':
             if ($es) {
@@ -5789,7 +5815,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/07_data_presentation_visualization/#graph_containers';
             }
-        break;
+            break;
 
         case 'setup_integria_tab':
             if ($es) {
@@ -5797,7 +5823,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/14_incidence_management';
             }
-        break;
+            break;
 
         case 'integria_tab':
             if ($es) {
@@ -5805,7 +5831,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/14_incidence_management#ticket_display';
             }
-        break;
+            break;
 
         case 'deployment_center_tab':
             if ($es) {
@@ -5813,7 +5839,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/04_discovery#automatic_agent_deployment';
             }
-        break;
+            break;
 
         case 'Aws_credentials_tab':
             if ($es) {
@@ -5821,7 +5847,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/04_discovery#discovery_cloudamazon_web_services_aws';
             }
-        break;
+            break;
 
         case 'Google_credentials_tab':
             if ($es) {
@@ -5829,7 +5855,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/04_discovery#discovery_cloudgoogle_cloud_platform_gcp';
             }
-        break;
+            break;
 
         case 'Azure_credentials_tab':
             if ($es) {
@@ -5837,7 +5863,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/04_discovery#discovery_cloudmicrosoft_azure';
             }
-        break;
+            break;
 
         case 'add_policy_tab':
             if ($es) {
@@ -5845,7 +5871,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '03_monitoring/01_intro_monitoring#common_parameters';
             }
-        break;
+            break;
 
         case 'password_tab':
             if ($es) {
@@ -5853,7 +5879,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#password_policy';
             }
-        break;
+            break;
 
         case 'setup_netflow_tab':
             if ($es) {
@@ -5861,7 +5887,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#netflow';
             }
-        break;
+            break;
 
         case 'map_connection_tab':
             if ($es) {
@@ -5869,7 +5895,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/10_gis#gis_connections';
             }
-        break;
+            break;
 
         case 'command_definition':
             if ($es) {
@@ -5877,7 +5903,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/16_omnishell#usage_example';
             }
-        break;
+            break;
 
         case 'network_tools_tab':
             if ($es) {
@@ -5885,7 +5911,7 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/11_managing_and_administration#Network_Tools';
             }
-        break;
+            break;
 
         case 'reports_configuration_tab':
             if ($es) {
@@ -5893,11 +5919,11 @@ function get_help_info($section_name)
             } else {
                 $result .= '04_using/12_console_setup#reports_configuration';
             }
-        break;
+            break;
 
         default:
             // Default.
-        break;
+            break;
     }
 
     return $result;
@@ -5923,8 +5949,6 @@ if (!function_exists('getallheaders')) {
 
         return $headers;
     }
-
-
 }
 
 
@@ -6017,16 +6041,16 @@ function get_data_multiplier($unit)
             } else {
                 $multiplier = 1000;
             }
-        break;
+            break;
 
         case 2:
             $multiplier = 1024;
-        break;
+            break;
 
         case 1:
         default:
             $multiplier = 1000;
-        break;
+            break;
     }
 
     return $multiplier;
@@ -6051,7 +6075,7 @@ function get_data_multiplier($unit)
  */
 function send_test_email(
     string $to,
-    array $params=null
+    array $params = null
 ) {
     global $config;
 
@@ -6123,7 +6147,6 @@ function send_test_email(
     }
 
     return $result;
-
 }
 
 
@@ -6139,7 +6162,7 @@ function cidr_match($ip, $cidr)
 {
     list($subnet, $mask) = explode('/', $cidr);
 
-    if ((ip2long($ip) & ~((1 << (32 - $mask)) - 1) ) == ip2long($subnet)) {
+    if ((ip2long($ip) & ~((1 << (32 - $mask)) - 1)) == ip2long($subnet)) {
         return true;
     }
 
@@ -6174,9 +6197,9 @@ function get_ancestors(
     int $item,
     array $data,
     string $key,
-    ?string $extract=null,
-    array &$visited=[]
-) :array {
+    ?string $extract = null,
+    array &$visited = []
+): array {
     if (isset($visited[$item]) === true) {
         return [];
     }
@@ -6225,8 +6248,6 @@ if (function_exists('str_contains') === false) {
     {
         return $needle !== '' && mb_strpos($haystack, $needle) !== false;
     }
-
-
 }
 
 
@@ -6238,7 +6259,8 @@ if (function_exists('str_contains') === false) {
 function is_reporting_console_node()
 {
     global $config;
-    if (isset($config['reporting_console_enable']) === true
+    if (
+        isset($config['reporting_console_enable']) === true
         && (bool) $config['reporting_console_enable'] === true
         && isset($config['reporting_console_node']) === true
         && (bool) $config['reporting_console_node'] === true
@@ -6257,7 +6279,7 @@ function is_reporting_console_node()
  *
  * @return boolean
  */
-function acl_reporting_console_node($path, $tab='')
+function acl_reporting_console_node($path, $tab = '')
 {
     global $config;
     if (is_reporting_console_node() === false) {
@@ -6272,26 +6294,27 @@ function acl_reporting_console_node($path, $tab='')
                 case 'update_manager_history':
                 case 'update_manager_setup':
                 case 'file_manager':
-                return true;
+                    return true;
 
                 default:
-                return false;
+                    return false;
             }
         }
 
         if ($path === 'advanced/users_setup') {
             switch ($tab) {
                 case 'user_edit':
-                return true;
+                    return true;
 
                 default:
-                return false;
+                    return false;
             }
         }
 
-        if ($path === $config['homedir'].'/godmode/users/configure_user'
+        if (
+            $path === $config['homedir'] . '/godmode/users/configure_user'
             || $path === 'advanced/links'
-            || $path === $config['homedir'].'/enterprise/extensions/cron'
+            || $path === $config['homedir'] . '/enterprise/extensions/cron'
         ) {
             return true;
         }
@@ -6300,14 +6323,15 @@ function acl_reporting_console_node($path, $tab='')
             switch ($tab) {
                 case 'main':
                 case 'tasklist':
-                return true;
+                    return true;
 
                 default:
-                return false;
+                    return false;
             }
         }
 
-        if ($path === 'operation/users/user_edit'
+        if (
+            $path === 'operation/users/user_edit'
             || $path === 'operation/users/user_edit_notifications'
             || $path === 'godmode/setup/file_manager'
             || $path === 'godmode/update_manager/update_manager'
@@ -6317,7 +6341,6 @@ function acl_reporting_console_node($path, $tab='')
     }
 
     return false;
-
 }
 
 
@@ -6339,9 +6362,9 @@ function notify_reporting_console_node()
         }
 
         $msg = __("Not recommended '%s' value in PHP configuration", $PHPmemory_limit);
-        $msg .= '<br>'.__('Recommended value is: -1');
-        $msg .= '<br>'.__('Please, change it on your PHP configuration file (php.ini) or contact with administrator');
-        $msg .= '<br><a href="'.$url.'" target="_blank">'.__('Documentation').'</a>';
+        $msg .= '<br>' . __('Recommended value is: -1');
+        $msg .= '<br>' . __('Please, change it on your PHP configuration file (php.ini) or contact with administrator');
+        $msg .= '<br><a href="' . $url . '" target="_blank">' . __('Documentation') . '</a>';
 
         $return = ui_print_error_message($msg, '', true);
     }
@@ -6455,7 +6478,7 @@ function is_pandora_db_running()
     $db_name = db_get_sql('SELECT DATABASE()');
 
     $is_free_lock = mysql_db_process_sql(
-        'SELECT IS_FREE_LOCK("'.$db_name.'_pandora_db") AS "value"',
+        'SELECT IS_FREE_LOCK("' . $db_name . '_pandora_db") AS "value"',
         'affected_rows',
         '',
         false

@@ -2679,15 +2679,15 @@ function config_process_config()
     }
 
     if (!isset($config['custom_title_header'])) {
-        config_update_value('custom_title_header', __('Pandora FMS'));
+        config_update_value('custom_title_header', __('Ngeek visibility center NVC'));
     }
 
     if (!isset($config['custom_subtitle_header'])) {
-        config_update_value('custom_subtitle_header', __('the Flexible Monitoring System'));
+        config_update_value('custom_subtitle_header', __('Visibility and monitoring platform'));
     }
 
     if (!isset($config['meta_custom_title_header'])) {
-        config_update_value('meta_custom_title_header', __('PandoraFMS Metaconsole'));
+        config_update_value('meta_custom_title_header', __('Ngeek visibility center NVC Metaconsole'));
     }
 
     if (!isset($config['meta_custom_subtitle_header'])) {

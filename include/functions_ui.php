@@ -1947,7 +1947,7 @@ function ui_process_page_head($string, $bitfield)
         }
     }
 
-    $text_subtitle = isset($config['rb_product_name_alt']) ? '' : ' - '.__('the Flexible Monitoring System');
+    $text_subtitle = isset($config['rb_product_name_alt']) ? '' : ' - '.__('Visibility and monitoring platformem');
 
     $output .= "\n\t";
     $output .= '<title>'.get_product_name().$text_subtitle.'</title>
@@ -6983,7 +6983,7 @@ function ui_get_favicon()
     global $config;
 
     if (empty($config['custom_favicon'])) {
-        return (!is_metaconsole()) ? 'images/pandora.ico' : '/images/custom_favicon/favicon_meta.ico';
+        return (!is_metaconsole()) ? 'images/pandora.png' : '/images/custom_favicon/favicon_meta.png';
     }
 
     return 'images/custom_favicon/'.$config['custom_favicon'];

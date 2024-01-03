@@ -1604,7 +1604,7 @@ require 'include/php_to_js_values.php';
                         },
                         closeOnEscape: false,
                         open: function(event, ui) {
-                            $("Nvc monitoring-close").hide();
+                            $("Ngeek visibility center NVC monitoring-close").hide();
                         }
                     });
 

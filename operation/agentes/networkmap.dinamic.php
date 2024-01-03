@@ -225,7 +225,7 @@ if (!isset($text_filter)) {
 
 // Generate dot file.
 $graph = networkmap_generate_hash(
-    __('Pandora FMS'),
+    __('Ngeek visibility center NVC'),
     $group,
     $simple,
     $font_size,
