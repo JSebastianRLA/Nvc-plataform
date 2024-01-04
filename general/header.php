@@ -372,24 +372,24 @@ echo sprintf('<div id="header_table" class="header_table_%s">', $menuTypeClass);
 
 
         // Support.
-        if (enterprise_installed()) {
-            $header_support_link = $config['custom_support_url'];
-        } else {
-            $header_support_link = 'https://pandorafms.com/forums/';
-        }
+        // if (enterprise_installed()) {
+        //     $header_support_link = $config['custom_support_url'];
+        // } else {
+        //     $header_support_link = 'https://pandorafms.com/forums/';
+        // }
 
-        $header_support = '<div id="header_support">';
-        $header_support .= '<a href="'.ui_get_full_external_url($header_support_link).'" target="_blank">';
-        $header_support .= html_print_image(
-            'images/support@header.svg',
-            true,
-            [
-                'title' => __('Go to support'),
-                'class' => 'main_menu_icon bot invert_filter',
-                'alt'   => 'user',
-            ]
-        );
-        $header_support .= '</a></div>';
+        // $header_support = '<div id="header_support">';
+        // $header_support .= '<a href="'.ui_get_full_external_url($header_support_link).'" target="_blank">';
+        // $header_support .= html_print_image(
+        //     'images/support@header.svg',
+        //     true,
+        //     [
+        //         'title' => __('Go to support'),
+        //         'class' => 'main_menu_icon bot invert_filter',
+        //         'alt'   => 'user',
+        //     ]
+        // );
+        // $header_support .= '</a></div>';
 
         // Documentation.
         $header_docu = '<div id="header_docu">';
