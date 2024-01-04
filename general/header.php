@@ -137,219 +137,219 @@ echo sprintf('<div id="header_table" class="header_table_%s">', $menuTypeClass);
 
 
         // ======= Autorefresh code =============================
-        $autorefresh_txt = '';
-        $autorefresh_additional = '';
+        // $autorefresh_txt = '';
+        // $autorefresh_additional = '';
 
-        $ignored_params = [
-            'agent_config' => false,
-            'code'         => false,
-        ];
+        // $ignored_params = [
+        //     'agent_config' => false,
+        //     'code'         => false,
+        // ];
 
-        if (!isset($_GET['sec2'])) {
-            $_GET['sec2'] = '';
-        }
+        // if (!isset($_GET['sec2'])) {
+        //     $_GET['sec2'] = '';
+        // }
 
-        if ($_GET['sec'] == 'main' || !isset($_GET['sec'])) {
-            // Home screen chosen by the user.
-            $home_page = '';
-            if (isset($config['id_user'])) {
-                $user_info = users_get_user_by_id($config['id_user']);
-                $home_page = io_safe_output($user_info['section']);
-                $home_url = $user_info['data_section'];
-            }
+        // if ($_GET['sec'] == 'main' || !isset($_GET['sec'])) {
+        //     // Home screen chosen by the user.
+        //     $home_page = '';
+        //     if (isset($config['id_user'])) {
+        //         $user_info = users_get_user_by_id($config['id_user']);
+        //         $home_page = io_safe_output($user_info['section']);
+        //         $home_url = $user_info['data_section'];
+        //     }
 
-            if ($home_page != '') {
-                switch ($home_page) {
-                    case 'Event list':
-                        $_GET['sec2'] = 'operation/events/events';
-                    break;
+        //     if ($home_page != '') {
+        //         switch ($home_page) {
+        //             case 'Event list':
+        //                 $_GET['sec2'] = 'operation/events/events';
+        //             break;
 
-                    case 'Group view':
-                        $_GET['sec2'] = 'operation/agentes/group_view';
-                    break;
+        //             case 'Group view':
+        //                 $_GET['sec2'] = 'operation/agentes/group_view';
+        //             break;
 
-                    case 'Alert detail':
-                        $_GET['sec2'] = 'operation/agentes/alerts_status';
-                    break;
+        //             case 'Alert detail':
+        //                 $_GET['sec2'] = 'operation/agentes/alerts_status';
+        //             break;
 
-                    case 'Tactical view':
-                        $_GET['sec2'] = 'operation/agentes/tactical';
-                    break;
+        //             case 'Tactical view':
+        //                 $_GET['sec2'] = 'operation/agentes/tactical';
+        //             break;
 
-                    case 'Default':
-                    default:
-                        $_GET['sec2'] = 'general/logon_ok';
-                    break;
+        //             case 'Default':
+        //             default:
+        //                 $_GET['sec2'] = 'general/logon_ok';
+        //             break;
 
-                    case 'Dashboard':
-                        $_GET['sec2'] = 'operation/dashboard/dashboard';
-                    break;
+        //             case 'Dashboard':
+        //                 $_GET['sec2'] = 'operation/dashboard/dashboard';
+        //             break;
 
-                    case 'Visual console':
-                        $_GET['sec2'] = 'operation/visual_console/render_view';
-                    break;
+        //             case 'Visual console':
+        //                 $_GET['sec2'] = 'operation/visual_console/render_view';
+        //             break;
 
-                    case 'Other':
-                        $home_url = io_safe_output($home_url);
-                        $url_array = parse_url($home_url);
-                        parse_str($url_array['query'], $res);
-                        foreach ($res as $key => $param) {
-                            $_GET[$key] = $param;
-                        }
-                    break;
-                }
-            }
-        }
+        //             case 'Other':
+        //                 $home_url = io_safe_output($home_url);
+        //                 $url_array = parse_url($home_url);
+        //                 parse_str($url_array['query'], $res);
+        //                 foreach ($res as $key => $param) {
+        //                     $_GET[$key] = $param;
+        //                 }
+        //             break;
+        //         }
+        //     }
+        // }
 
-        if (!isset($_GET['refr'])) {
-            $_GET['refr'] = null;
-        }
+        // if (!isset($_GET['refr'])) {
+        //     $_GET['refr'] = null;
+        // }
 
-        $select = db_process_sql(
-            "SELECT autorefresh_white_list,time_autorefresh 
-            FROM tusuario 
-            WHERE id_user = '".$config['id_user']."'"
-        );
+        // $select = db_process_sql(
+        //     "SELECT autorefresh_white_list,time_autorefresh 
+        //     FROM tusuario 
+        //     WHERE id_user = '".$config['id_user']."'"
+        // );
 
-        $autorefresh_list = json_decode(
-            $select[0]['autorefresh_white_list']
-        );
+        // $autorefresh_list = json_decode(
+        //     $select[0]['autorefresh_white_list']
+        // );
 
-        $header_autorefresh = '';
-        $header_autorefresh_counter = '';
-        if ($config['legacy_vc']
-            || ($_GET['sec2'] !== 'operation/visual_console/render_view')
-            || (($_GET['sec2'] !== 'operation/visual_console/render_view')
-            && $config['legacy_vc'])
-        ) {
-            if ($autorefresh_list !== null
-                && array_search($_GET['sec2'], $autorefresh_list) !== false
-            ) {
-                $do_refresh = true;
-                if ($_GET['sec2'] == 'operation/agentes/pandora_networkmap') {
-                    if ((!isset($_GET['tab'])) || ($_GET['tab'] != 'view')) {
-                        $do_refresh = false;
-                    }
-                }
+        // $header_autorefresh = '';
+        // $header_autorefresh_counter = '';
+        // if ($config['legacy_vc']
+        //     || ($_GET['sec2'] !== 'operation/visual_console/render_view')
+        //     || (($_GET['sec2'] !== 'operation/visual_console/render_view')
+        //     && $config['legacy_vc'])
+        // ) {
+        //     if ($autorefresh_list !== null
+        //         && array_search($_GET['sec2'], $autorefresh_list) !== false
+        //     ) {
+        //         $do_refresh = true;
+        //         if ($_GET['sec2'] == 'operation/agentes/pandora_networkmap') {
+        //             if ((!isset($_GET['tab'])) || ($_GET['tab'] != 'view')) {
+        //                 $do_refresh = false;
+        //             }
+        //         }
 
-                if ($do_refresh) {
-                    $autorefresh_img = html_print_image(
-                        'images/auto_refresh@header.svg',
-                        true,
-                        [
-                            'class' => 'main_menu_icon bot',
-                            'alt'   => 'lightning',
-                            'title' => __('Configure autorefresh'),
-                        ]
-                    );
+        //         if ($do_refresh) {
+        //             $autorefresh_img = html_print_image(
+        //                 'images/auto_refresh@header.svg',
+        //                 true,
+        //                 [
+        //                     'class' => 'main_menu_icon bot',
+        //                     'alt'   => 'lightning',
+        //                     'title' => __('Configure autorefresh'),
+        //                 ]
+        //             );
 
-                    if ((isset($select[0]['time_autorefresh']) === true)
-                        && $select[0]['time_autorefresh'] !== 0
-                        && $config['refr'] === null
-                    ) {
-                        $config['refr'] = $select[0]['time_autorefresh'];
-                        $autorefresh_txt .= ' (<span id="refrcounter">';
-                        $autorefresh_txt .= date(
-                            'i:s',
-                            $config['refr']
-                        );
-                        $autorefresh_txt .= '</span>)';
-                    } else if ($_GET['refr']) {
-                        $autorefresh_txt .= ' (<span id="refrcounter">';
-                        $autorefresh_txt .= date('i:s', $config['refr']);
-                        $autorefresh_txt .= '</span>)';
-                    }
+        //             if ((isset($select[0]['time_autorefresh']) === true)
+        //                 && $select[0]['time_autorefresh'] !== 0
+        //                 && $config['refr'] === null
+        //             ) {
+        //                 $config['refr'] = $select[0]['time_autorefresh'];
+        //                 $autorefresh_txt .= ' (<span id="refrcounter">';
+        //                 $autorefresh_txt .= date(
+        //                     'i:s',
+        //                     $config['refr']
+        //                 );
+        //                 $autorefresh_txt .= '</span>)';
+        //             } else if ($_GET['refr']) {
+        //                 $autorefresh_txt .= ' (<span id="refrcounter">';
+        //                 $autorefresh_txt .= date('i:s', $config['refr']);
+        //                 $autorefresh_txt .= '</span>)';
+        //             }
 
-                    $ignored_params['refr'] = '';
-                    $values = get_refresh_time_array();
+        //             $ignored_params['refr'] = '';
+        //             $values = get_refresh_time_array();
 
-                    $autorefresh_additional = '<span id="combo_refr" class="invisible_events">';
-                    $autorefresh_additional .= html_print_select(
-                        $values,
-                        'ref',
-                        '',
-                        '',
-                        __('Select'),
-                        '0',
-                        true,
-                        false,
-                        false
-                    );
-                    $autorefresh_additional .= '</span>';
-                    unset($values);
-                    if ($home_page != '') {
-                        $autorefresh_link_open_img = '<a class="white autorefresh" href="index.php?refr=">';
-                    } else {
-                        $autorefresh_link_open_img = '<a class="white autorefresh" href="'.ui_get_url_refresh($ignored_params).'">';
-                    }
+        //             $autorefresh_additional = '<span id="combo_refr" class="invisible_events">';
+        //             $autorefresh_additional .= html_print_select(
+        //                 $values,
+        //                 'ref',
+        //                 '',
+        //                 '',
+        //                 __('Select'),
+        //                 '0',
+        //                 true,
+        //                 false,
+        //                 false
+        //             );
+        //             $autorefresh_additional .= '</span>';
+        //             unset($values);
+        //             if ($home_page != '') {
+        //                 $autorefresh_link_open_img = '<a class="white autorefresh" href="index.php?refr=">';
+        //             } else {
+        //                 $autorefresh_link_open_img = '<a class="white autorefresh" href="'.ui_get_url_refresh($ignored_params).'">';
+        //             }
 
-                    if ($_GET['refr']
-                        || ((isset($select[0]['time_autorefresh']) === true)
-                        && $select[0]['time_autorefresh'] !== 0)
-                    ) {
-                        if ($home_page != '') {
-                            $autorefresh_link_open_txt = '<a class="autorefresh autorefresh_txt" href="index.php?refr=">';
-                        } else {
-                            $autorefresh_link_open_txt = '<a class="autorefresh autorefresh_txt" href="'.ui_get_url_refresh($ignored_params).'">';
-                        }
-                    } else {
-                        $autorefresh_link_open_txt = '<a>';
-                    }
+        //             if ($_GET['refr']
+        //                 || ((isset($select[0]['time_autorefresh']) === true)
+        //                 && $select[0]['time_autorefresh'] !== 0)
+        //             ) {
+        //                 if ($home_page != '') {
+        //                     $autorefresh_link_open_txt = '<a class="autorefresh autorefresh_txt" href="index.php?refr=">';
+        //                 } else {
+        //                     $autorefresh_link_open_txt = '<a class="autorefresh autorefresh_txt" href="'.ui_get_url_refresh($ignored_params).'">';
+        //                 }
+        //             } else {
+        //                 $autorefresh_link_open_txt = '<a>';
+        //             }
 
-                    $autorefresh_link_close = '</a>';
-                    $display_counter = 'display:block';
-                } else {
-                    $autorefresh_img = html_print_image(
-                        'images/auto_refresh@header.svg',
-                        true,
-                        [
-                            'class' => 'main_menu_icon bot autorefresh_disabled invert_filter',
-                            'alt'   => 'lightning',
-                            'title' => __('Disabled autorefresh'),
-                        ]
-                    );
+        //             $autorefresh_link_close = '</a>';
+        //             $display_counter = 'display:block';
+        //         } else {
+        //             $autorefresh_img = html_print_image(
+        //                 'images/auto_refresh@header.svg',
+        //                 true,
+        //                 [
+        //                     'class' => 'main_menu_icon bot autorefresh_disabled invert_filter',
+        //                     'alt'   => 'lightning',
+        //                     'title' => __('Disabled autorefresh'),
+        //                 ]
+        //             );
 
-                    $ignored_params['refr'] = false;
+        //             $ignored_params['refr'] = false;
 
-                    $autorefresh_link_open_img = '';
-                    $autorefresh_link_open_txt = '';
-                    $autorefresh_link_close = '';
+        //             $autorefresh_link_open_img = '';
+        //             $autorefresh_link_open_txt = '';
+        //             $autorefresh_link_close = '';
 
-                    $display_counter = 'display:none';
-                }
-            } else {
-                $autorefresh_img = html_print_image(
-                    'images/auto_refresh@header.svg',
-                    true,
-                    [
-                        'class' => 'main_menu_icon bot autorefresh_disabled invert_filter',
-                        'alt'   => 'lightning',
-                        'title' => __('Disabled autorefresh'),
-                    ]
-                );
+        //             $display_counter = 'display:none';
+        //         }
+        //     } else {
+        //         $autorefresh_img = html_print_image(
+        //             'images/auto_refresh@header.svg',
+        //             true,
+        //             [
+        //                 'class' => 'main_menu_icon bot autorefresh_disabled invert_filter',
+        //                 'alt'   => 'lightning',
+        //                 'title' => __('Disabled autorefresh'),
+        //             ]
+        //         );
 
-                $ignored_params['refr'] = false;
+        //         $ignored_params['refr'] = false;
 
-                $autorefresh_link_open_img = '';
-                $autorefresh_link_open_txt = '';
-                $autorefresh_link_close = '';
+        //         $autorefresh_link_open_img = '';
+        //         $autorefresh_link_open_txt = '';
+        //         $autorefresh_link_close = '';
 
-                $display_counter = 'display:none';
-            }
+        //         $display_counter = 'display:none';
+        //     }
 
-            $header_autorefresh = '<div id="header_autorefresh">';
-            $header_autorefresh .= $autorefresh_link_open_img;
-            $header_autorefresh .= $autorefresh_img;
-            $header_autorefresh .= $autorefresh_link_close;
-            $header_autorefresh .= '</div>';
+        //     $header_autorefresh = '<div id="header_autorefresh">';
+        //     $header_autorefresh .= $autorefresh_link_open_img;
+        //     $header_autorefresh .= $autorefresh_img;
+        //     $header_autorefresh .= $autorefresh_link_close;
+        //     $header_autorefresh .= '</div>';
 
-            $header_autorefresh_counter = '<div id="header_autorefresh_counter" style="'.$display_counter.'">';
-            $header_autorefresh_counter .= $autorefresh_link_open_txt;
-            $header_autorefresh_counter .= $autorefresh_txt;
-            $header_autorefresh_counter .= $autorefresh_link_close;
-            $header_autorefresh_counter .= $autorefresh_additional;
-            $header_autorefresh_counter .= '</div>';
-        }
+        //     $header_autorefresh_counter = '<div id="header_autorefresh_counter" style="'.$display_counter.'">';
+        //     $header_autorefresh_counter .= $autorefresh_link_open_txt;
+        //     $header_autorefresh_counter .= $autorefresh_txt;
+        //     $header_autorefresh_counter .= $autorefresh_link_close;
+        //     $header_autorefresh_counter .= $autorefresh_additional;
+        //     $header_autorefresh_counter .= '</div>';
+        // }
 
         // Button for feedback pandora.
         if (enterprise_installed()) {
