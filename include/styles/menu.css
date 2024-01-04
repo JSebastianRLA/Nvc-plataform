@@ -207,7 +207,7 @@
 .element_submenu_selected {
   min-height: 0px !important;
   height: 20px;
-  border-left: 4px solid #0B579B;
+  border-left: 4px solid #0b579b;
   position: absolute;
   left: 4%;
   border-radius: 5px;
@@ -477,7 +477,9 @@ ul li {
 }
 
 .logo_green {
-  background-color: #fff;
+  background: #f7f7f7;
+  border-radius: 15px;
+  margin: 4px 6px;
   min-height: 61px;
   display: flex;
   justify-content: space-around;
@@ -612,7 +614,7 @@ ul li {
 }
 
 .tabs_selected {
-  background-color: #0B579B;
+  background-color: #0b579b;
 }
 
 .arrow_menu_down {
@@ -626,7 +628,7 @@ ul li {
 }
 
 .span_selected {
-  color: #4472FF !important;
+  color: #4472ff !important;
   font-weight: bold !important;
 }
 
