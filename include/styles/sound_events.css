@@ -305,7 +305,7 @@ button#button-no-alerts.silence-alerts:hover {
 @keyframes progressbar-countdown {
   0% {
     width: 100%;
-    background: #0B579B;
+    background: #18f108;
   }
   100% {
     width: 0%;

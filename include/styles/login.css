@@ -73,6 +73,7 @@ div#login_f {
   font-weight: 350;
   font-size: 10px;
   margin-bottom: 12px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /*
@@ -142,7 +143,8 @@ li#li_margin_support {
 div.login_page {
   /* background-color: rgba(0, 0, 0, 0.8); */
   /* background-color: rgba(255, 255, 255, 0.2); */
-  background-color: var(--login-background-color);
+  /* background-color: var(--login-background-color); */
+  background-color: rgba(255, 255, 255, 0.6);
   width: 40vw;
   min-width: 300px;
   height: 100vh;
@@ -151,6 +153,7 @@ div.login_page {
   flex-direction: column;
   flex-wrap: nowrap;
   justify-content: center;
+  border-radius: 0 25px 25px 0;
 }
 
 /* @media only screen and (max-width: 1280px) {
@@ -450,8 +453,8 @@ div.button_message_alert input {
   float: right;
   width: 87px;
   height: 33px;
-  color: #0B579B;
-  border: 1px solid #0B579B;
+  color: #0b579b;
+  border: 1px solid #0b579b;
   font-weight: bold;
   margin-right: 20px;
   margin-top: 20px;
@@ -495,8 +498,8 @@ div.button_message_alert_form input {
   float: right;
   width: 87px;
   height: 33px;
-  color: #0B579B;
-  border: 1px solid #0B579B;
+  color: #0b579b;
+  border: 1px solid #0b579b;
   font-weight: bold;
   font-size: 10pt;
   margin-right: 25px;
@@ -693,7 +696,7 @@ div.button_message_alert_form input {
   width: 100px;
   height: 100px;
   border-radius: 100%;
-  background: linear-gradient(#0B579B, #c1ccdc);
+  background: linear-gradient(#0b579b, #c1ccdc);
   animation: animate 1.2s linear infinite;
   margin: auto;
   margin-bottom: 40px;
@@ -704,7 +707,7 @@ div.button_message_alert_form input {
   width: 100%;
   height: 100%;
   border-radius: 100%;
-  background: linear-gradient(#0B579B, #c1ccdc);
+  background: linear-gradient(#0b579b, #c1ccdc);
 }
 
 .loader span:nth-child(1) {
@@ -802,14 +805,15 @@ button.submitButton {
 
 button.buttonButton:not(.secondary):not(.link):not(.mini),
 button.submitButton:not(.secondary):not(.link):not(.mini) {
-  background: linear-gradient(90deg, #38C5FF 0%, #022243 100%);
+  background: linear-gradient(90deg, #38c5ff 0%, #022243 100%);
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
 button.submitButton:hover {
   background-position: 0 !important;
 }
 
-button.submitButton:not(.mini)>span {
+button.submitButton:not(.mini) > span {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 15pt;
 }
@@ -837,13 +841,13 @@ button.submitButton:not(.mini)>span {
   transform: translateY(0px) scale(0.75);
 } */
 
-.input:not(:placeholder-shown)~.placeholder {
+.input:not(:placeholder-shown) ~ .placeholder {
   color: #c5c5c5;
   font-size: 9pt;
   top: -10px;
 }
 
-.input:focus~.placeholder {
+.input:focus ~ .placeholder {
   color: #fff;
   font-size: 9pt;
   top: -10px;
@@ -863,19 +867,20 @@ div.login_pass.white-theme input {
   background-size: 27px;
   background-position: right 10px bottom 50%;
   box-sizing: border-box;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3);
 }
 
-div.white-theme>.placeholder {
+div.white-theme > .placeholder {
   color: #8b8b8b;
   left: 24px;
 }
 
-div.white-theme>.input:not(:placeholder-shown)~.placeholder {
+div.white-theme > .input:not(:placeholder-shown) ~ .placeholder {
   top: 15px;
   color: transparent;
 }
 
-div.white-theme>.input:focus~.placeholder {
+div.white-theme > .input:focus ~ .placeholder {
   top: 15px;
   color: transparent;
 }
