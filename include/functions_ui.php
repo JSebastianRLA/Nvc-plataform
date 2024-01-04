@@ -7926,7 +7926,7 @@ function ui_print_status_div($status)
 {
     switch ((int) $status) {
         case 0:
-            $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #4BDD3C;" title="OK" data-title="OK" data-use_title_for_force_title="1">&nbsp;</div>';
+            $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #63e63c;" title="OK" data-title="OK" data-use_title_for_force_title="1">&nbsp;</div>';
             break;
 
         case 1:
