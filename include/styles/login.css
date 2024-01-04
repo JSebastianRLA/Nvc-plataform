@@ -144,7 +144,7 @@ div.login_page {
   /* background-color: rgba(0, 0, 0, 0.8); */
   /* background-color: rgba(255, 255, 255, 0.2); */
   /* background-color: var(--login-background-color); */
-  background-color: linear-gradient(161deg, #fff 0%, rgba(107, 136, 161, 0.8) 100%);
+  background: linear-gradient(161deg, #fff 0%, rgba(107, 136, 161, 0.8) 100%);
   width: 40vw;
   min-width: 300px;
   height: 100vh;
