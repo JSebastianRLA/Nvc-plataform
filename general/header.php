@@ -392,18 +392,18 @@ echo sprintf('<div id="header_table" class="header_table_%s">', $menuTypeClass);
         // $header_support .= '</a></div>';
 
         // Documentation.
-        $header_docu = '<div id="header_docu">';
-        $header_docu .= '<a href="'.ui_get_full_external_url($config['custom_docs_url']).'" target="_blank">';
-        $header_docu .= html_print_image(
-            'images/documentation@header.svg',
-            true,
-            [
-                'title' => __('Go to documentation'),
-                'class' => 'main_menu_icon bot invert_filter',
-                'alt'   => 'user',
-            ]
-        );
-        $header_docu .= '</a></div>';
+        // $header_docu = '<div id="header_docu">';
+        // $header_docu .= '<a href="'.ui_get_full_external_url($config['custom_docs_url']).'" target="_blank">';
+        // $header_docu .= html_print_image(
+        //     'images/documentation@header.svg',
+        //     true,
+        //     [
+        //         'title' => __('Go to documentation'),
+        //         'class' => 'main_menu_icon bot invert_filter',
+        //         'alt'   => 'user',
+        //     ]
+        // );
+        // $header_docu .= '</a></div>';
 
 
         // User.
