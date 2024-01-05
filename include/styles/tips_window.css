@@ -153,7 +153,7 @@ span.count-round-tip {
   margin: 0px 2px;
 }
 span.count-round-tip.active {
-  background-color: #4472FF;
+  background-color: #4472ff;
 }
 .counter-tips {
   display: flex;
@@ -175,7 +175,7 @@ span.enable {
   width: 40px;
   height: 20px;
   border-radius: 4px;
-  background-color: #0B579B;
+  background-color: #4db739c9;
   margin: 0 auto;
 }
 span.disable {
