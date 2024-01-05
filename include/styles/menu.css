@@ -477,9 +477,9 @@ ul li {
 }
 
 .logo_green {
-  background: #f7f7f7;
-  border-radius: 15px;
-  margin: 4px 6px;
+  background: #022243;
+  /* border-radius: 15px; */
+  /* margin: 4px 6px; */
   min-height: 61px;
   display: flex;
   justify-content: space-around;
