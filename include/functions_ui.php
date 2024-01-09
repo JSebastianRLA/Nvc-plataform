@@ -7934,7 +7934,7 @@ function ui_print_status_div($status)
             break;
 
         default:
-            $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #fff;" title="UNDEFINED" data-title="UNDEFINED" data-use_title_for_force_title="1">&nbsp;</div>';
+            $return = '<div class="status_rounded_rectangles forced_title" style="display: inline-block; background: #b2b2b2;" title="UNDEFINED" data-title="UNDEFINED" data-use_title_for_force_title="1">&nbsp;</div>';
             break;
     }
 
